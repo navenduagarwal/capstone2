@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grey">#EDEEEF</color>
+    <color name="dark_orange">#E65100</color>
+
+    <color name="dark_grey">#AEAEAE</color>
+
+    <color name="accent">#EF6C00</color>
+
+    <color name="primary">#FF9800   </color>
+    <color name="primary_dark">#F57C00</color>
+    <color name="primary_light">#FFCC80</color>
+
+    <color name="light_black">#747474</color>
+    <color name="black">#616161</color>
+    <color name="google">#C6412C</color>
+
+
+</resources>

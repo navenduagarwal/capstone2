@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "899697366784",
+    "firebase_url": "https://yogicapple-b288e.firebaseio.com",
+    "project_id": "yogicapple-b288e",
+    "storage_bucket": "yogicapple-b288e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899697366784:android:be4658863a4839a2",
+        "android_client_info": {
+          "package_name": "com.sparshik.yogicapple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899697366784-h92g8th2g73pvlr87ba5fnd47ssos7lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sparshik.yogicapple",
+            "certificate_hash": "6B98A2D4D7AFA08123B8489CD9FE30A083ACF2E8"
+          }
+        },
+        {
+          "client_id": "899697366784-u9nvlpr105stge4jf6j4m89mlpvq711u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxrAUiGvouuoH26Y2a0e_V1CilxxRrji4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899697366784-u9nvlpr105stge4jf6j4m89mlpvq711u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

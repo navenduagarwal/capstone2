@@ -1,0 +1,55 @@
+// Objects for ShoppingList++
+type Timestamp {
+	timestamp : Number
+}
+
+type EncodedEmail extends String {
+	validate() = this.test(/^[A-Z0-9,_%+-]+@[A-Z0-9,-]+,[A-Z]{2,4}$/i);
+}
+
+type User {
+	name : String,
+	email : EncodedEmail,
+	timestampJoined : Timestamp,
+	hasLoggedInWithPassword : Boolean
+}
+
+//Functions
+
+function isOwner(ownerEmail) {
+	(isLoggedIn() && getEncodedEmail() == ownerEmail);
+}
+function isLoggedIn() {
+	auth != null;
+}
+
+function getEncodedEmail() {
+	prior(root).uidMappings[auth.uid];
+}
+
+//Paths
+
+/** Users **/
+
+//Read: Logged in
+path /users {
+	read() = isLoggedIn();
+}
+
+//Write: The user can add themselves
+path /users/$userEncodedEmail is User {
+	write() = isLoggedIn() && root.uidMappings[auth.uid] == $userEncodedEmail && prior(this) == null;
+}
+
+//Write: The user can change if it's false
+path /users/$userEncodedEmail/hasLoggedInWithPassword {
+	write() = isOwner($userEncodedEmail) && !prior(this);
+}
+
+/** uidMappings **/
+//Read: Anyone logged in
+//Write: The user can add themselves
+path /uidMappings/$uid is EncodedEmail{
+	read() = isLoggedIn();
+	write() = auth.uid == $uid && prior(this) == null;
+}
