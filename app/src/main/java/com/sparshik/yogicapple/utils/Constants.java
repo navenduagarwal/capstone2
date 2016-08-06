@@ -16,6 +16,7 @@ public class Constants {
     public static final String FIREBASE_LOCATION_UID_MAPPINGS = "uidMappings";
     public static final String FIREBASE_LOCATION_OWNER_MAPPINGS = "ownerMappings";
     public static final String FIREBASE_LOCATION_IMAGES = "images";
+    public static final String FIREBASE_LOCATION_AUDIOS = "audios";
 
 
     /**
@@ -32,6 +33,7 @@ public class Constants {
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
     public static final String FIREBASE_URL_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
     public static final String FIREBASE_URL_IMAGES = FIREBASE_URL + "/" + FIREBASE_LOCATION_IMAGES;
+    public static final String FIREBASE_URL_AUDIOS = FIREBASE_URL + "/" + FIREBASE_LOCATION_AUDIOS;
     public static final String FIREBASE_URL_STORAGE = BuildConfig.FIREBASE_STORAGE_ROOT_URL;
 
     /**

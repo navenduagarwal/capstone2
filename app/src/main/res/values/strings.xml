@@ -10,6 +10,10 @@
     <string name="remove_item_option">Remove Item</string>
     <string name="positive_button_create">Create</string>
     <string name="text_you">You</string>
+    <string name="lock_lesson_view">Lesson Locked</string>
+    <string name="download_lesson_option">Download Lesson</string>
+    <string name="download_progress_lesson_view">Lesson Downloading Progress</string>
+    <string name="play_lesson_option">Play Lesson</string>
 
 
     <!-- Base Error Strings-->

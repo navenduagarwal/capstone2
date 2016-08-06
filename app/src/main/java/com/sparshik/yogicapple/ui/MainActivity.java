@@ -1,6 +1,5 @@
 package com.sparshik.yogicapple.ui;
 
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +21,7 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
 import com.sparshik.yogicapple.ui.timeline.TimelineFragment;
-import com.sparshik.yogicapple.ui.upload.UploadImageActivity;
+import com.sparshik.yogicapple.ui.upload.FirebaseActivity;
 import com.sparshik.yogicapple.utils.Constants;
 
 public class MainActivity extends BaseActivity {
@@ -89,7 +87,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_upload) {
-            startActivity(new Intent(MainActivity.this, UploadImageActivity.class));
+            startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

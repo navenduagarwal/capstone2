@@ -10,6 +10,7 @@
         files from the camera and upload them to Firebase Storage as a demonstration.
     -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".YogicAppleApplication"
@@ -26,10 +27,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
@@ -48,9 +45,32 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.login.LoginActivity" />
         </activity>
-        <activity android:name=".ui.upload.UploadImageActivity">
-
+        <activity android:name=".ui.upload.FirebaseActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".ui.MainActivity"
+            android:label="Firebase"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
         </activity>
+        <service
+            android:name=".MyDownloadService"
+            android:exported="false"/>
+
+        <!--
+          Android N SDK has new restrictions around sharing file:// URIs
+          https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition
+        -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.sparshik.yogicapple.ui.upload.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

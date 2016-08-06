@@ -1,17 +1,31 @@
 package com.sparshik.yogicapple.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.sparshik.yogicapple.R;
+import com.sparshik.yogicapple.model.AudioFile;
 import com.sparshik.yogicapple.model.User;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +80,6 @@ public class Utils {
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
-        Log.d("testing","1"+uid +encodedEmail);
         User newUser = new User(encodedEmail, mUserName, timestampJoined);
         HashMap<String, Object> newUserMap = (HashMap<String, Object>)
                 new ObjectMapper().convertValue(newUser, Map.class);
@@ -83,12 +96,65 @@ public class Utils {
                              /* Try just making a uid mapping */
                     firebaseRef.child(Constants.FIREBASE_LOCATION_UID_MAPPINGS)
                             .child(uid).setValue(encodedEmail);
-                    Log.d("testing","2");
-                } else {
-                    Log.d("testing","3");
                 }
             }
         });
     }
 
+    public static String uploadFileToFirebase(String encodedEmail, String filePath, String fileType, Activity activity) {
+        if (filePath != null && fileType != null) {
+            Uri file = Uri.fromFile(new File(filePath));
+            final String name = file.getLastPathSegment();
+            String extension = file.getLastPathSegment();
+            extension = extension.substring(extension.lastIndexOf("."));
+            final DatabaseReference firebaseRef = FirebaseDatabase.getInstance()
+                    .getReferenceFromUrl(Constants.FIREBASE_URL_AUDIOS).child("Introduction");
+            final DatabaseReference audioFileRef = firebaseRef.push();
+//            final String filename = audioFileRef.getKey()+extension;
+
+            final StorageReference fileRef = FirebaseStorage.getInstance()
+                    .getReferenceFromUrl(Constants.FIREBASE_URL_STORAGE).child(fileType+"/"
+                            +encodedEmail+"/"+name);
+            UploadTask uploadTask = fileRef.putFile(file);
+            final TextView audioUrlTextView = (TextView) activity.findViewById(R.id.selected_url_textview);
+            final TextView resultUrlTextView = (TextView) activity.findViewById(R.id.link_firebase_uploaded_textview);
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    if(downloadUrl !=null) {
+                        Log.i(LOG_TAG, downloadUrl.toString());
+                        HashMap<String, Object> timestampCreated = new HashMap<>();
+                        timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+                        AudioFile audioFile = new AudioFile(1,false,downloadUrl.toString(),timestampCreated);
+                        audioFileRef.setValue(audioFile);
+                        audioUrlTextView.setText(name);
+                        resultUrlTextView.setText(downloadUrl.toString());
+
+                    }
+                }
+            })// Observe state change events such as progress, pause, and resume
+            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    audioUrlTextView.setText("Upload is " + progress + "% done");
+                }
+            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
+                    audioUrlTextView.setText("Upload is paused");
+                }
+            });
+            return name;
+        }
+        return null;
+    }
 }
