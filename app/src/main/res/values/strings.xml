@@ -283,5 +283,6 @@
     <string name="label_link">Link to Uploaded File</string>
     <string name="label_download">Download File</string>
     <string name="success">Success</string>
+    <string name="title_activity_media_player">MediaPlayerActivity</string>
 
 </resources>

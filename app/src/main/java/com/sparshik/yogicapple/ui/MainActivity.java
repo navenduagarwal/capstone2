@@ -1,12 +1,12 @@
 package com.sparshik.yogicapple.ui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
+import com.sparshik.yogicapple.ui.mediaplayer.MediaPlayerActivity;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
 import com.sparshik.yogicapple.ui.timeline.TimelineFragment;
 import com.sparshik.yogicapple.ui.upload.FirebaseActivity;
@@ -88,6 +89,9 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.action_upload) {
             startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
+            return true;
+        } else if (id == R.id.action_play) {
+            startActivity(new Intent(MainActivity.this, MediaPlayerActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

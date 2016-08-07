@@ -1,4 +1,4 @@
-package com.sparshik.yogicapple.utils;
+package com.sparshik.yogicapple.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -16,7 +16,7 @@ import com.sparshik.yogicapple.R;
 /**
  * Circular Progress Bar Custom View
  */
-public class CircleProgressBar extends View {
+public class CircularProgressPlayerView extends View {
 
     /**
      * ProgressBar's line thickness
@@ -33,6 +33,11 @@ public class CircleProgressBar extends View {
     private RectF rectF;
     private Paint backgroundPaint;
     private Paint foregroundPaint;
+
+    public CircularProgressPlayerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs);
+    }
 
     public float getStrokeWidth() {
         return strokeWidth;
@@ -85,24 +90,19 @@ public class CircleProgressBar extends View {
         requestLayout();
     }
 
-    public CircleProgressBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
     private void init(Context context, AttributeSet attrs) {
         rectF = new RectF();
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.CircleProgressBar,
+                R.styleable.CircularProgressPlayerView,
                 0, 0);
         //Reading values from the XML layout
         try {
-            strokeWidth = typedArray.getDimension(R.styleable.CircleProgressBar_progressBarThickness, strokeWidth);
-            progress = typedArray.getFloat(R.styleable.CircleProgressBar_progress, progress);
-            color = typedArray.getInt(R.styleable.CircleProgressBar_progressbarColor, color);
-            min = typedArray.getInt(R.styleable.CircleProgressBar_min, min);
-            max = typedArray.getInt(R.styleable.CircleProgressBar_max, max);
+            strokeWidth = typedArray.getDimension(R.styleable.CircularProgressPlayerView_progressBarThickness, strokeWidth);
+            progress = typedArray.getFloat(R.styleable.CircularProgressPlayerView_progress, progress);
+            color = typedArray.getInt(R.styleable.CircularProgressPlayerView_progressbarColor, color);
+            min = typedArray.getInt(R.styleable.CircularProgressPlayerView_min, min);
+            max = typedArray.getInt(R.styleable.CircularProgressPlayerView_max, max);
         } finally {
             typedArray.recycle();
         }
@@ -174,7 +174,7 @@ public class CircleProgressBar extends View {
     /**
      * Set the progress with an animation.
      * Note that the {@link android.animation.ObjectAnimator} Class automatically set the progress
-     * so don't call the {@link CircleProgressBar#setProgress(float)} directly within this method.
+     * so don't call the {@link CircularProgressPlayerView#setProgress(float)} directly within this method.
      *
      * @param progress The progress it should animate to it.
      */

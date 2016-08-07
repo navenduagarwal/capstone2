@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.MainActivity">
     <item
+        android:id="@+id/action_play"
+        android:icon="@drawable/ic_play_arrow_white_24dp"
+        android:orderInCategory="100"
+        android:title="Play"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_upload"
         android:icon="@drawable/ic_firebase_discs"
         android:orderInCategory="100"

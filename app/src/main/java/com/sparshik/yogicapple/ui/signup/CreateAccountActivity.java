@@ -1,4 +1,4 @@
-package com.sparshik.yogicapple.ui.login;
+package com.sparshik.yogicapple.ui.signup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,8 +23,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.ui.BaseActivity;
+import com.sparshik.yogicapple.ui.login.LoginActivity;
 import com.sparshik.yogicapple.utils.Constants;
-import com.sparshik.yogicapple.utils.Utils;
+import com.sparshik.yogicapple.utils.FireBaseUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -166,7 +167,7 @@ public class CreateAccountActivity extends BaseActivity {
                                                  */
                                                 spe.putString(Constants.KEY_SIGNUP_EMAIL, mUserEmail).apply();
                                                 Log.d(LOG_TAG,mUserEmail+mUserName+uid);
-                                                Utils.createUserInFirebaseHelper(mUserEmail, mUserName, uid);
+                                                FireBaseUtils.createUserInFirebaseHelper(mUserEmail, mUserName, uid);
 
                                                 /**
                                                  * Password reset email sent, open app chooser to pick app

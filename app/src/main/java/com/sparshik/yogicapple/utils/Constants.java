@@ -51,7 +51,12 @@ public class Constants {
     public static final String PROVIDER_DATA_DISPLAY_NAME = "displayName";
 
     /**
-     * Constants for sorting data
+     * Constants for files
      */
+    public static final String SUFFIX_AUDIO = ".audio";
+    public static final String SUFFIX_AUDIO_OLD = ".caudio";
+    public static final String SUFFIX_DECODED = ".decoded";
+    public static final String SUFFIX_DOWNLOADING = ".downloading";
+    public static final String SUFFIX_VIDEO = ".video";
 
 }

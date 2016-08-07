@@ -20,10 +20,9 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import com.sparshik.yogicapple.R;
-import com.sparshik.yogicapple.ui.login.CreateAccountActivity;
 import com.sparshik.yogicapple.ui.login.LoginActivity;
+import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
 import com.sparshik.yogicapple.utils.Constants;
 
 /**

@@ -1,14 +1,14 @@
 package com.sparshik.yogicapple.ui.upload;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +19,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,25 +27,26 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.sparshik.yogicapple.MyDownloadService;
 import com.sparshik.yogicapple.R;
+import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.utils.Constants;
-import com.sparshik.yogicapple.utils.Utils;
+import com.sparshik.yogicapple.utils.FireBaseUtils;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
+import java.io.File;
 import java.util.Locale;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Upload Documents
  */
-public class FirebaseActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+public class FirebaseActivity extends BaseActivity {
     private static final String LOG_TAG = FirebaseActivity.class.getSimpleName();
+    private static final String KEY_FILE_URI = "key_file_uri";
+    private static final String KEY_DOWNLOAD_URL = "key_download_url";
     private int REQUEST_IMAGE_CAPTURE = 1;
     private int REQUEST_AUDIO_PATH = 2;
     private byte[] image;
@@ -52,12 +54,13 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
     private String selectedAudioUrl;
     private Bitmap imageBitmap;
     private int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
-    private static final String KEY_FILE_URI = "key_file_uri";
-    private static final String KEY_DOWNLOAD_URL = "key_download_url";
     private BroadcastReceiver mDownloadReceiver;
-    private ProgressDialog mProgressDialog;
 
-    private StorageReference mStorageRef;
+    //handles playback of all sound files
+    private MediaPlayer mPlayer;
+    private AudioManager mAudio;
+    private String musicPath;
+
 
     private Uri mDownloadUrl = null;
     private Uri mFileUri = null;
@@ -75,8 +78,6 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-
         final StorageReference imageRef = FirebaseStorage.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_STORAGE).child("trial");
 
@@ -91,33 +92,32 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                TextView resultUrlTextView = (TextView) findViewById(R.id.download_textview);
                 Log.d(LOG_TAG, "downloadReceiver:onReceive:" + intent);
-                if (MyDownloadService.ACTION_COMPLETED.equals(intent.getAction()))
+                TextView resultUrlTextView = (TextView) findViewById(R.id.download_textview);
+                resultUrlTextView.setVisibility(View.GONE);
+                ImageButton imageButton = (ImageButton) findViewById(R.id.download_play);
+
+                if (DownloadService.ACTION_COMPLETED.equals(intent.getAction()))
 
                 {
-                    String path = intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH);
-                    long numBytes = intent.getLongExtra(MyDownloadService.EXTRA_BYTES_DOWNLOADED, 0);
-                     // Alert success
-                    resultUrlTextView.setText(String.format(Locale.getDefault(),
-                            "%d bytes downloaded from %s", numBytes, path));
+                    String path = intent.getStringExtra(DownloadService.EXTRA_DOWNLOAD_PATH);
+                    long numBytes = intent.getLongExtra(DownloadService.EXTRA_BYTES_DOWNLOADED, 0);
+                    // Alert success
+                    musicPath = intent.getStringExtra(DownloadService.EXTRA_DOWNLOADED_PATH);
+                    imageButton.setVisibility(View.VISIBLE);
                 }
 
-                if (MyDownloadService.ACTION_ERROR.equals(intent.getAction()))
+                if (DownloadService.ACTION_ERROR.equals(intent.getAction()))
 
                 {
-                    String path = intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH);
+                    String path = intent.getStringExtra(DownloadService.EXTRA_DOWNLOAD_PATH);
 
                     // Alert failure
+                    resultUrlTextView.setVisibility(View.VISIBLE);
                     resultUrlTextView.setText(String.format(Locale.getDefault(),
                             "Failed to download from %s", path));
                 }
 
-                if (MyDownloadService.ACTION_PROGRESS.equals(intent.getAction())){
-                    String progressDownload = intent.getStringExtra(MyDownloadService.EXTRA_PROGRESS_COMPLETED);
-                    resultUrlTextView.setText(String.format(Locale.getDefault(),"Uploaded %s",progressDownload));
-                    Log.d(LOG_TAG,"Reached Progress");
-                }
             }
         };
 
@@ -179,7 +179,7 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
             public void onClick(View view) {
                 if (selectedAudioUrl != null) {
                     String fileType = "audio";
-                    segment = Utils.uploadFileToFirebase(mEncodedEmail, selectedAudioUrl, fileType, FirebaseActivity.this);
+                    segment = FireBaseUtils.uploadFileToFirebase(mEncodedEmail, selectedAudioUrl, fileType, FirebaseActivity.this);
                 } else {
                     Toast.makeText(FirebaseActivity.this, "First select file to upload", Toast.LENGTH_SHORT).show();
                 }
@@ -194,6 +194,14 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
                 downloadAudio();
             }
         });
+
+        ImageButton playMusic = (ImageButton) findViewById(R.id.download_play);
+        playMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPlaying();
+            }
+        });
     }
 
     @Override
@@ -201,7 +209,7 @@ public class FirebaseActivity extends BaseActivity implements EasyPermissions.Pe
         super.onStart();
         // Register download receiver
         LocalBroadcastManager.getInstance(this)
-                .registerReceiver(mDownloadReceiver, MyDownloadService.getIntentFilter());
+                .registerReceiver(mDownloadReceiver, DownloadService.getIntentFilter());
     }
 
     @Override
@@ -257,30 +265,66 @@ This method show the uploaded image in the activity layout
 
 
     public void downloadAudio() {
-        String path = "audio" + "/"
+        final String path = "audio" + "/"
                 + mEncodedEmail + "/" + segment;
-        // Kick off download service
-        Intent intent = new Intent(this, MyDownloadService.class);
-        intent.setAction(MyDownloadService.ACTION_DOWNLOAD);
-        intent.putExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH, path);
-        startService(intent);
+        //Find file size
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        if (segment != null) {
+            StorageReference storageReference = storage.getReferenceFromUrl(Constants.FIREBASE_URL_STORAGE)
+                    .child(path);
+            storageReference.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                @Override
+                public void onSuccess(StorageMetadata storageMetadata) {
+                    // Metadata now contains the metadata for 'images/forest.jpg'
+                    // Kick off download service
+                    double fileSize = storageMetadata.getSizeBytes();
+                    if (fileSize == 0) {
+                        return;
+                    }
+                    Intent intent = new Intent(FirebaseActivity.this, DownloadService.class);
+                    intent.setAction(DownloadService.ACTION_DOWNLOAD);
+                    intent.putExtra(DownloadService.EXTRA_DOWNLOAD_PATH, path);
+                    intent.putExtra(DownloadService.EXTRA_FILE_SIZE, fileSize);
+                    startService(intent);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Uh-oh, an error occurred!
+                }
+            });
+
+        } else {
+            TextView resultUrlTextView = (TextView) findViewById(R.id.download_textview);
+            resultUrlTextView.setText("File not available");
+        }
     }
 
+    private void startPlaying() {
+        //stop if any audio is still playing
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        File path = new File(getApplicationContext().getFilesDir(), "misc");
+        path.mkdirs();
+        File localFile = new File(path, "ankita.mp3");
+
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(localFile.toString());
+        } catch (IllegalArgumentException e1) {
+            e1.printStackTrace();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        try {
+            mPlayer.prepare();
+        } catch (IllegalStateException e1) {
+            e1.printStackTrace();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        mPlayer.start();
     }
 
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
     }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-
-    }
-
-}

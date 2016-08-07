@@ -1,7 +1,6 @@
 package com.sparshik.yogicapple.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -18,42 +17,24 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnPausedListener;
 import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.AudioFile;
 import com.sparshik.yogicapple.model.User;
+import com.sparshik.yogicapple.views.CircleProgressBar;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Utility Class
+ * Utility Class for Firebase
  */
-public class Utils {
-
-    /**
-     * Format the timestamp with SimpleDateFormat
-     */
-    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    private static final String LOG_TAG = Utils.class.getSimpleName();
-    private Context mContext = null;
+public class FireBaseUtils {
 
 
-    /**
-     * Public constructor that takes mContext for later use
-     */
-    public Utils(Context con) {
-        mContext = con;
-    }
-
-    /**
-     * Return true if currentUserEmail equals to shoppingList.owner()
-     * Return false otherwise
-     */
+    private static final String LOG_TAG = FireBaseUtils.class.getSimpleName();
 
     /**
      * Encode user email to use it as a Firebase key (Firebase does not allow "." in the key name)
@@ -68,7 +49,7 @@ public class Utils {
     }
 
     public static void createUserInFirebaseHelper(final String mUserEmail, final String mUserName, final String uid) {
-        final String encodedEmail = Utils.encodeEmail(mUserEmail);
+        final String encodedEmail = FireBaseUtils.encodeEmail(mUserEmail);
         final DatabaseReference firebaseRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL);
         /**
@@ -113,11 +94,12 @@ public class Utils {
 //            final String filename = audioFileRef.getKey()+extension;
 
             final StorageReference fileRef = FirebaseStorage.getInstance()
-                    .getReferenceFromUrl(Constants.FIREBASE_URL_STORAGE).child(fileType+"/"
-                            +encodedEmail+"/"+name);
+                    .getReferenceFromUrl(Constants.FIREBASE_URL_STORAGE).child(fileType + "/"
+                            + encodedEmail + "/" + name);
             UploadTask uploadTask = fileRef.putFile(file);
             final TextView audioUrlTextView = (TextView) activity.findViewById(R.id.selected_url_textview);
             final TextView resultUrlTextView = (TextView) activity.findViewById(R.id.link_firebase_uploaded_textview);
+            final CircleProgressBar progressView = (CircleProgressBar) activity.findViewById(R.id.progress);
             // Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -129,25 +111,25 @@ public class Utils {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    if(downloadUrl !=null) {
+                    if (downloadUrl != null) {
                         Log.i(LOG_TAG, downloadUrl.toString());
                         HashMap<String, Object> timestampCreated = new HashMap<>();
                         timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-                        AudioFile audioFile = new AudioFile(1,false,downloadUrl.toString(),timestampCreated);
+                        AudioFile audioFile = new AudioFile(1, false, downloadUrl.toString(), timestampCreated);
                         audioFileRef.setValue(audioFile);
                         audioUrlTextView.setText(name);
                         resultUrlTextView.setText(downloadUrl.toString());
-
                     }
                 }
             })// Observe state change events such as progress, pause, and resume
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                    audioUrlTextView.setText("Upload is " + progress + "% done");
-                }
-            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            audioUrlTextView.setText("Upload is " + progress + "% done");
+                            progressView.setProgress((int) progress);
+                        }
+                    }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
                     audioUrlTextView.setText("Upload is paused");

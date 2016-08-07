@@ -45,8 +45,9 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.MainActivity;
+import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
 import com.sparshik.yogicapple.utils.Constants;
-import com.sparshik.yogicapple.utils.Utils;
+import com.sparshik.yogicapple.utils.FireBaseUtils;
 
 /**
  * Represents Sign in screen and functionality of the app
@@ -210,7 +211,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
      */
     private void setAuthenticatedUserPasswordProvider(UserInfo user) {
         final String unprocessedEmail = user.getEmail().toLowerCase();
-        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
+        mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
         final DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
         /**
@@ -244,9 +245,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
      */
     private void setAuthenticatedUserGoogle(UserInfo user) {
         final String unprocessedEmail = user.getEmail().toLowerCase();
-        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
+        mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
         final String userName = user.getDisplayName();
-        Utils.createUserInFirebaseHelper(mEncodedEmail, userName, user.getUid());
+        FireBaseUtils.createUserInFirebaseHelper(mEncodedEmail, userName, user.getUid());
     }
 
     /**
@@ -357,7 +358,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
-
             if (!task.isSuccessful()) {
                 mAuthProgressDialog.dismiss();
                             /* Error occurred, log the error and dismiss the progress dialog */
@@ -380,7 +380,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             } else {
                 mAuthProgressDialog.dismiss();
                 Log.i(LOG_TAG, " " + getString(R.string.log_message_auth_successful));
-
                 UserInfo user = task.getResult().getUser().getProviderData().get(0);
                 String userProvider = task.getResult().getUser().getProviderData().get(1).getProviderId();
                 if (user != null) {
