@@ -118,6 +118,8 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                             } else {
                                 downloadAppleFiles(appleId, audioUrl);
                             }
+                        } else {
+                            downloadAppleFiles(appleId, audioUrl);
                         }
                     }
 

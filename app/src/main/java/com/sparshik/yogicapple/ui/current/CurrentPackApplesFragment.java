@@ -29,9 +29,7 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.model.PackApple;
 import com.sparshik.yogicapple.model.User;
-import com.sparshik.yogicapple.model.UserApplesStatus;
 import com.sparshik.yogicapple.services.DownloadService;
-import com.sparshik.yogicapple.ui.player.ExoPlayerActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.views.CircleProgressBar;
@@ -120,53 +118,6 @@ public class CurrentPackApplesFragment extends Fragment {
          */
         initializeScreen(rootView);
 
-        /**
-         * Set interactive bits, such as click events/adapters
-         *
-         */
-
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                PackApple packApple = mCurrentPackAppleRecyclerAdapter.getItem(position);
-//                if (packApple != null) {
-//                    final String appleId = mCurrentPackAppleRecyclerAdapter.getRef(position).getKey();
-//                    final String audioUrl = packApple.getAudioURL();
-//                    //check for apple offline status
-//
-//                    DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-//                            .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
-//                            .child(mEncodedEmail).child(appleId);
-//
-//                    userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            UserApplesStatus userApplesStatus = dataSnapshot.getValue(UserApplesStatus.class);
-//                            if (userApplesStatus != null) {
-//
-//                                File file = new File(userApplesStatus.getLocalAudioFile());
-//
-//                                if (!userApplesStatus.isOffline() || !file.exists()) {
-//                                    downloadAppleFiles(appleId, audioUrl);
-//                                    mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
-//                                } else {
-//                                    startPlayer(appleId, userApplesStatus);
-//                                }
-//                            } else {
-//                                downloadAppleFiles(appleId, audioUrl);
-//                                mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//
-//        });
 
         return rootView;
     }
@@ -218,15 +169,6 @@ public class CurrentPackApplesFragment extends Fragment {
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    public void downloadAppleFiles(String appleId, String audioUrl) {
-        Intent intent = new Intent(getActivity(), DownloadService.class);
-        intent.setAction(DownloadService.ACTION_DOWNLOAD);
-        intent.putExtra(DownloadService.EXTRA_APPLE_ID, appleId);
-        intent.putExtra(DownloadService.EXTRA_DOWNLOAD_PATH, audioUrl);
-        intent.putExtra(DownloadService.EXTRA_FILE_SUFFIX, Constants.SUFFIX_AUDIO);
-        intent.putExtra(DownloadService.EXTRA_ENCODED_EMAIL, mEncodedEmail);
-        getActivity().startService(intent);
-    }
 
     public void populateListView(final String programId, final String packId) {
 
@@ -274,37 +216,6 @@ public class CurrentPackApplesFragment extends Fragment {
                 .registerReceiver(mDownloadReceiver, DownloadService.getIntentFilter());
     }
 
-    public void startPlayer(final String appleId, final UserApplesStatus userApplesStatus) {
-
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userData = dataSnapshot.getValue(User.class);
-                if (userData != null) {
-                    String programId = userData.getDefaultProgramId();
-                    String packId = userData.getDefaultPackId();
-
-                    // Start Audio Player
-                    Intent intent = new Intent(getActivity(), ExoPlayerActivity.class);
-                    intent.putExtra(Constants.KEY_APPLE_ID, appleId);
-                    intent.putExtra(Constants.KEY_PACK_ID, packId);
-                    intent.putExtra(Constants.KEY_PROGRAM_ID, programId);
-                    intent.putExtra(Constants.KEY_AUDIO_URL, userApplesStatus.getLocalAudioFile());
-                    /* Start an activity showing the packs for selected program */
-                    Log.d("To Player", packId + " " + appleId);
-                    getActivity().startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(LOG_TAG, getResources().getString(R.string.log_error_the_read_failed));
-            }
-        });
-    }
 
     public static class PackApplesHolder extends RecyclerView.ViewHolder {
         View mView;
