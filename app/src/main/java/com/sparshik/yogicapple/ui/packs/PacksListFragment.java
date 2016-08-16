@@ -24,6 +24,7 @@ import com.sparshik.yogicapple.model.Program;
 import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
+import com.sparshik.yogicapple.utils.RecyclerViewUtils;
 
 /**
  * Fragment to populate Program Packs List
@@ -116,6 +117,7 @@ public class PacksListFragment extends Fragment {
         mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view_pack);
         mRecycleView.setHasFixedSize(true);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecycleView.addItemDecoration(new RecyclerViewUtils.DividerItemDecoration(getResources().getDrawable(R.drawable.recycler_divider)));
         View footer = getActivity().getLayoutInflater().inflate(R.layout.footer_empty, null);
     }
 }

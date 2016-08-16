@@ -1,14 +1,10 @@
 package com.sparshik.yogicapple.ui.packs;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
-import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Pack;
 
 /**
@@ -60,23 +56,5 @@ public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksView
 //                startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public PacksViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_FOOTER) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_empty, parent, false);
-            return new FooterViewHolder(v);
-        }
-        return super.onCreateViewHolder(parent, viewType);
-    }
-
-    class FooterViewHolder extends PacksViewHolder {
-        TextView txtTitleFooter;
-
-        public FooterViewHolder(View itemView) {
-            super(itemView);
-            this.txtTitleFooter = (TextView) itemView.findViewById(R.id.text_view_listview_footer);
-        }
     }
 }
