@@ -122,7 +122,9 @@ public class CurrentPackApplesFragment extends Fragment {
 
         /**
          * Set interactive bits, such as click events/adapters
+         *
          */
+
 //        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -250,7 +252,9 @@ public class CurrentPackApplesFragment extends Fragment {
                     Query orderdApplesListRef =
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
-                    mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple, PackApplesHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
+                    mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple,
+                            PackApplesHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
+
                     mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);
 
                 }
@@ -348,6 +352,7 @@ public class CurrentPackApplesFragment extends Fragment {
             TextView field = (TextView) mView.findViewById(R.id.download_text);
             field.setBackgroundColor(color);
         }
+
     }
 
 }
