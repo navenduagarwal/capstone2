@@ -3,17 +3,20 @@ package com.sparshik.yogicapple.ui.current;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,17 +34,17 @@ import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.ui.player.ExoPlayerActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
-
-import java.io.File;
+import com.sparshik.yogicapple.views.CircleProgressBar;
 
 /**
  * Show current list of audio completed
  */
-public class CurrentFragment extends Fragment {
-    private static final String LOG_TAG = CurrentFragment.class.getSimpleName();
+public class CurrentPackApplesFragment extends Fragment {
+    private static final String LOG_TAG = CurrentPackApplesFragment.class.getSimpleName();
     private String mEncodedEmail;
     private ListView mListView;
-    private CurrentFragmentListAdapter mCurrentFragmentListAdapter;
+    private RecyclerView mRecycleView;
+    private CurrentPackApplesRecyclerAdapter mCurrentPackAppleRecyclerAdapter;
     private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
     private ImageView mImageViewHeaderIcon, mImageViewHeaderPackImage;
     private Pack mPack;
@@ -49,15 +52,15 @@ public class CurrentFragment extends Fragment {
     private BroadcastReceiver mDownloadReceiver;
     private LinearLayout mTopContainer;
 
-    public CurrentFragment() {
+    public CurrentPackApplesFragment() {
         super();
     }
 
     /**
      * Create fragment and pass bundle with data as its' arguments
      */
-    public static CurrentFragment newInstance(String encodedEmail) {
-        CurrentFragment fragment = new CurrentFragment();
+    public static CurrentPackApplesFragment newInstance(String encodedEmail) {
+        CurrentPackApplesFragment fragment = new CurrentPackApplesFragment();
         Bundle args = new Bundle();
         args.putString(Constants.KEY_ENCODED_EMAIL, encodedEmail);
         fragment.setArguments(args);
@@ -89,12 +92,12 @@ public class CurrentFragment extends Fragment {
                 if (DownloadService.ACTION_COMPLETED.equals(intent.getAction())) {
                     String path = intent.getStringExtra(DownloadService.EXTRA_DOWNLOAD_PATH);
                     long numBytes = intent.getLongExtra(DownloadService.EXTRA_BYTES_DOWNLOADED, 0);
-                    mCurrentFragmentListAdapter.notifyDataSetInvalidated();
+                    mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
                     // Alert success
                 }
 
                 if (DownloadService.ACTION_PROGRESS.equals(intent.getAction())) {
-                    mCurrentFragmentListAdapter.notifyDataSetInvalidated();
+                    mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
                 }
 
                 if (DownloadService.ACTION_ERROR.equals(intent.getAction())) {
@@ -120,48 +123,48 @@ public class CurrentFragment extends Fragment {
         /**
          * Set interactive bits, such as click events/adapters
          */
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PackApple packApple = mCurrentFragmentListAdapter.getItem(position);
-                if (packApple != null) {
-                    final String appleId = mCurrentFragmentListAdapter.getRef(position).getKey();
-                    final String audioUrl = packApple.getAudioURL();
-                    //check for apple offline status
-
-                    DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-                            .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
-                            .child(mEncodedEmail).child(appleId);
-
-                    userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            UserApplesStatus userApplesStatus = dataSnapshot.getValue(UserApplesStatus.class);
-                            if (userApplesStatus != null) {
-
-                                File file = new File(userApplesStatus.getLocalAudioFile());
-
-                                if (!userApplesStatus.isOffline() || !file.exists()) {
-                                    downloadAppleFiles(appleId, audioUrl);
-                                    mCurrentFragmentListAdapter.notifyDataSetChanged();
-                                } else {
-                                    startPlayer(appleId, userApplesStatus);
-                                }
-                            } else {
-                                downloadAppleFiles(appleId, audioUrl);
-                                mCurrentFragmentListAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-        });
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                PackApple packApple = mCurrentPackAppleRecyclerAdapter.getItem(position);
+//                if (packApple != null) {
+//                    final String appleId = mCurrentPackAppleRecyclerAdapter.getRef(position).getKey();
+//                    final String audioUrl = packApple.getAudioURL();
+//                    //check for apple offline status
+//
+//                    DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
+//                            .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
+//                            .child(mEncodedEmail).child(appleId);
+//
+//                    userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            UserApplesStatus userApplesStatus = dataSnapshot.getValue(UserApplesStatus.class);
+//                            if (userApplesStatus != null) {
+//
+//                                File file = new File(userApplesStatus.getLocalAudioFile());
+//
+//                                if (!userApplesStatus.isOffline() || !file.exists()) {
+//                                    downloadAppleFiles(appleId, audioUrl);
+//                                    mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
+//                                } else {
+//                                    startPlayer(appleId, userApplesStatus);
+//                                }
+//                            } else {
+//                                downloadAppleFiles(appleId, audioUrl);
+//                                mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//        });
 
         return rootView;
     }
@@ -195,21 +198,22 @@ public class CurrentFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mCurrentFragmentListAdapter != null) {
-            mCurrentFragmentListAdapter.cleanup();
+        if (mCurrentPackAppleRecyclerAdapter != null) {
+            mCurrentPackAppleRecyclerAdapter.cleanup();
         }
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDownloadReceiver);
     }
 
     private void initializeScreen(View view) {
-        mListView = (ListView) view.findViewById(R.id.list_view_current_pack);
         View footer = getActivity().getLayoutInflater().inflate(R.layout.footer_empty, null);
-        mListView.addFooterView(footer);
         mTextViewHeaderTitle = (TextView) view.findViewById(R.id.text_view_title_header);
         mTextViewHeaderBody = (TextView) view.findViewById(R.id.text_view_body_header);
         mImageViewHeaderIcon = (ImageView) view.findViewById(R.id.image_view_icon_header);
         mImageViewHeaderPackImage = (ImageView) view.findViewById(R.id.image_view_pack_image_header);
         mTopContainer = (LinearLayout) view.findViewById(R.id.header_container);
+        mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view_current_pack);
+        mRecycleView.setHasFixedSize(true);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     public void downloadAppleFiles(String appleId, String audioUrl) {
@@ -246,10 +250,8 @@ public class CurrentFragment extends Fragment {
                     Query orderdApplesListRef =
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
-                    mCurrentFragmentListAdapter = new CurrentFragmentListAdapter(getActivity(), PackApple.class,
-                            R.layout.list_single_item_apple, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
-
-                    mListView.setAdapter(mCurrentFragmentListAdapter);
+                    mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple, PackApplesHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
+                    mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);
 
                 }
             }
@@ -298,7 +300,54 @@ public class CurrentFragment extends Fragment {
                 Log.e(LOG_TAG, getResources().getString(R.string.log_error_the_read_failed));
             }
         });
-
-
     }
+
+    public static class PackApplesHolder extends RecyclerView.ViewHolder {
+        View mView;
+
+        public PackApplesHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setBackGroundColor(int color) {
+            RelativeLayout field = (RelativeLayout) mView.findViewById(R.id.container_list_item);
+            field.setBackgroundColor(color);
+        }
+
+        public void setSeqText(String seq) {
+            TextView field = (TextView) mView.findViewById(R.id.apple_number);
+            field.setText(seq);
+        }
+
+        public void setProgress(int progress) {
+            CircleProgressBar field = (CircleProgressBar) mView.findViewById(R.id.apple_progress_circle);
+            field.setProgress(progress);
+        }
+
+        public void setCircleColor(int color) {
+            int altColor = ColorUtils.darkenColor(color);
+            CircleProgressBar field = (CircleProgressBar) mView.findViewById(R.id.apple_progress_circle);
+            field.setBackgroundColor(color);
+            field.setInnerColor(altColor);
+            field.setStrokeColor(altColor);
+            field.setUseRing(true);
+        }
+
+        public void setLineColor(int color) {
+            View field = mView.findViewById(R.id.current_line);
+            field.setBackgroundColor(color);
+        }
+
+        public void setLockColor(int color) {
+            ImageView field = (ImageView) mView.findViewById(R.id.apple_locked);
+            field.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+        }
+
+        public void setDownloadTextColor(int color) {
+            TextView field = (TextView) mView.findViewById(R.id.download_text);
+            field.setBackgroundColor(color);
+        }
+    }
+
 }

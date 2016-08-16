@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.BaseActivity;
-import com.sparshik.yogicapple.ui.current.CurrentFragment;
+import com.sparshik.yogicapple.ui.current.CurrentPackApplesFragment;
 import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
 import com.sparshik.yogicapple.utils.Constants;
@@ -146,13 +146,13 @@ public class MainActivity extends BaseActivity {
              */
             switch (position) {
                 case 0:
-                    fragment = CurrentFragment.newInstance(mEncodedEmail);
+                    fragment = CurrentPackApplesFragment.newInstance(mEncodedEmail);
                     break;
                 case 1:
                     fragment = ProgressFragment.newInstance();
                     break;
                 default:
-                    fragment = CurrentFragment.newInstance(mEncodedEmail);
+                    fragment = CurrentPackApplesFragment.newInstance(mEncodedEmail);
                     break;
             }
 

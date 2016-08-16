@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".ui.current.CurrentFragment">
+    tools:context=".ui.current.CurrentPackApplesFragment">
 
 
     <LinearLayout
@@ -66,13 +66,12 @@
             android:layout_weight="1.5" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_view_current_pack"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view_current_pack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header_container"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:scrollbars="none" />
+        android:scrollbars="none"
+        android:visibility="visible"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
