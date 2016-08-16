@@ -9,16 +9,20 @@ public class User {
     private String email;
     private String name;
     private HashMap<String, Object> timestampJoined;
-    private boolean hasLoggedInWithPassword;
+    private boolean verified;
+    private String defaultPackId;
+    private String defaultProgramId;
 
     public User() {
     }
 
-    public User(String email, String name, HashMap<String, Object> timestampJoined) {
+    public User(String email, String name, boolean verified, String defaultProgramId, String defaultPackId, HashMap<String, Object> timestampJoined) {
         this.email = email;
         this.name = name;
         this.timestampJoined = timestampJoined;
-        this.hasLoggedInWithPassword = false;
+        this.verified = verified;
+        this.defaultPackId = defaultPackId;
+        this.defaultProgramId = defaultProgramId;
     }
 
     public String getEmail() {
@@ -33,7 +37,15 @@ public class User {
         return timestampJoined;
     }
 
-    public boolean isHasLoggedInWithPassword() {
-        return hasLoggedInWithPassword;
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public String getDefaultPackId() {
+        return defaultPackId;
+    }
+
+    public String getDefaultProgramId() {
+        return defaultProgramId;
     }
 }

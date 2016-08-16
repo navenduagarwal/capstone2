@@ -166,8 +166,8 @@ public class CreateAccountActivity extends BaseActivity {
                                                  *  when the registered user will sign in for the first time
                                                  */
                                                 spe.putString(Constants.KEY_SIGNUP_EMAIL, mUserEmail).apply();
-                                                Log.d(LOG_TAG,mUserEmail+mUserName+uid);
-                                                FireBaseUtils.createUserInFirebaseHelper(mUserEmail, mUserName, uid);
+                                                Log.d(LOG_TAG, mUserEmail + mUserName + uid);
+                                                FireBaseUtils.createUserInFirebaseHelper(mUserEmail, mUserName, uid, Constants.PASSWORD_PROVIDER);
 
                                                 /**
                                                  * Password reset email sent, open app chooser to pick app

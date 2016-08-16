@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YogicApple.iml" filepath="$PROJECT_DIR$/YogicApple.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YogicApple - Copy.iml" filepath="$PROJECT_DIR$/YogicApple - Copy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -16,12 +16,12 @@ import android.widget.ProgressBar;
 
 import com.google.android.gms.cast.TextTrackStyle;
 
-
 /**
  * Circular progress bar
  */
+
 public class CircleProgressBar extends ProgressBar {
-    private static final String TAG = CircleProgressBar.class.getSimpleName();
+    private static final String TAG = "CircleProgressBar";
     private static final int TIME = 2000;
     private Bitmap canvasBitmap;
     private Paint cleanPaint;
@@ -126,6 +126,7 @@ public class CircleProgressBar extends ProgressBar {
         }
     }
 
+
     public void setStrokeColor(int color) {
         this.mStrokeColor = color;
         replaceColors();
@@ -151,7 +152,7 @@ public class CircleProgressBar extends ProgressBar {
     protected synchronized void onDraw(Canvas canvas) {
         if (this.canvasBitmap == null) {
             redoCanvasBitmap(canvas);
-            this.clearPaint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
+            this.clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             replaceColors();
         }
         this.tempCanvas.drawPaint(this.clearPaint);

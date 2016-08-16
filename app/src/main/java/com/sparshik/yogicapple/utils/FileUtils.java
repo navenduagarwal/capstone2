@@ -56,18 +56,5 @@ public class FileUtils extends Thread {
         return externalDownloadDir.listFiles().length;
     }
 
-    public void run(Context context) {
-        File[] files = FileUtils.getSaveFolder(context).listFiles();
-        for (int i = 0; i < files.length; i++) {
-            String filename = files[i].getName();
-            if (filename.endsWith(Constants.SUFFIX_AUDIO) ||
-                    filename.endsWith(Constants.SUFFIX_AUDIO_OLD) ||
-                    filename.endsWith(Constants.SUFFIX_VIDEO) ||
-                    filename.endsWith(Constants.SUFFIX_DOWNLOADING)) {
-                files[i].delete();
-            }
-        }
-
-    }
 
 }

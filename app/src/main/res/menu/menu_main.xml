@@ -1,19 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
     <item
-        android:id="@+id/action_play"
-        android:icon="@drawable/ic_play_arrow_white_24dp"
+        android:id="@+id/action_programs"
+        android:animateLayoutChanges="true"
+        android:icon="@drawable/ic_collections_bookmark_white_24dp"
         android:orderInCategory="100"
-        android:title="Play"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_upload"
-        android:icon="@drawable/ic_firebase_discs"
-        android:orderInCategory="100"
-        android:title="@string/action_upload"
+        android:title="@string/action_programs"
         android:visible="true"
         app:showAsAction="ifRoom" />
     <item

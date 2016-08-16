@@ -1,9 +1,24 @@
 <resources>
 
-    <style name="SeriesLessonText">
+    <style name="ListHeaderTitleText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/list_header_title_text</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ListHeaderBodyText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/list_header_body_text</item>
+    </style>
+
+    <style name="ListItemText">
         <item name="android:textColor">@color/light_black</item>
-        <item name="android:textSize">@dimen/series_lesson_text_size</item>
-        <item name="android:layout_margin">2dp</item>
+        <item name="android:textSize">@dimen/list_item_text_size</item>
+    </style>
+
+    <style name="ListItemSecondLineText">
+        <item name="android:textColor">@color/light_black</item>
+        <item name="android:textSize">@dimen/list_item_second_line_text_size</item>
     </style>
 
     <style name="HeaderText">
@@ -13,14 +28,8 @@
         <item name="android:layout_margin">2dp</item>
     </style>
 
-    <style name="LoginCreateText">
-        <item name="android:textSize">@dimen/login_buttons_text_size</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_margin">2dp</item>
-    </style>
-
     <style name="HintText">
-        <item name="android:textSize">0dp</item>
+        <item name="android:textSize">8sp</item>
     </style>
 
     <style name="LoginCreateTextButton">
@@ -29,6 +38,12 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_margin">2dp</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="LoginCreateText">
+        <item name="android:textSize">@dimen/login_buttons_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">2dp</item>
     </style>
 
     <style name="FAB">

@@ -1,4 +1,4 @@
-package com.sparshik.yogicapple.ui.mediaplayer;
+package com.sparshik.yogicapple.views;
 
 /**
  * Interface for InteractivePlayerView

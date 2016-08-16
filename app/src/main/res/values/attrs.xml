@@ -1,4 +1,11 @@
 <resources>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeColor" format="color" />
+        <attr name="innerColor" format="color" />
+    </declare-styleable>
+
     <declare-styleable name="CircularProgressPlayerView">
         <attr name="min" format="integer" />
         <attr name="max" format="integer" />
@@ -18,12 +25,6 @@
         <attr name="unselectedAction2" format="integer" />
         <attr name="selectedAction3" format="integer" />
         <attr name="unselectedAction3" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="CircleProgressBar">
-        <attr name="strokeWidth" format="dimension" />
-        <attr name="strokeColor" format="color" />
-        <attr name="innerColor" format="color" />
     </declare-styleable>
 
 </resources>

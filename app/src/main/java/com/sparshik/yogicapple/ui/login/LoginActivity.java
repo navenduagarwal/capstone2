@@ -32,7 +32,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
@@ -44,7 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.BaseActivity;
-import com.sparshik.yogicapple.ui.MainActivity;
+import com.sparshik.yogicapple.ui.main.MainActivity;
 import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.FireBaseUtils;
@@ -87,6 +86,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -226,8 +226,8 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                      * If recently registered user has hasLoggedInWithPassword = "false"
                      * (never logged in using password provider)
                      */
-                    if (!user.isHasLoggedInWithPassword()) {
-                        userRef.child(Constants.FIREBASE_PROPERTY_USER_HAS_LOGGED_IN_WITH_PASSWORD).setValue(true);
+                    if (!user.isVerified()) {
+                        userRef.child(Constants.FIREBASE_PROPERTY_USER_IS_VERIFIED).setValue(true);
                     }
                 }
             }
@@ -247,7 +247,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         final String unprocessedEmail = user.getEmail().toLowerCase();
         mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
         final String userName = user.getDisplayName();
-        FireBaseUtils.createUserInFirebaseHelper(mEncodedEmail, userName, user.getUid());
+        FireBaseUtils.createUserInFirebaseHelper(mEncodedEmail, userName, user.getUid(), Constants.GOOGLE_PROVIDER);
     }
 
     /**
@@ -369,8 +369,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 } catch (FirebaseAuthInvalidCredentialsException e) {
                     mEditTextPasswordInput.setError(e.getMessage());
                     mEditTextPasswordInput.requestFocus();
-                } catch (FirebaseAuthUserCollisionException e) {
-                    showErrorToast("User already exists and collison - need to handle this case");
                 } catch (FirebaseNetworkException e) {
                     showErrorToast(getString(R.string.error_message_failed_sign_in_no_network));
                 } catch (Exception e) {

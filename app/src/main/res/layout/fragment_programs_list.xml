@@ -1,15 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_fragment_meals"
+    android:id="@+id/rl_fragment_programs"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_below="@+id/app_bar"
     android:background="@color/grey"
-    tools:context=".ui.timeline.TimelineFragment">
+    tools:context=".ui.programs.ProgramsListActivity">
 
     <ListView
-        android:id="@+id/list_view_timeline_list"
+        android:id="@+id/list_view_programs_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none" />
+
 </RelativeLayout>

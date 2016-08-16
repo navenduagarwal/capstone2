@@ -1,19 +1,20 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <!--
 
     == Base Strings For the App ==
 
      -->
     <string name="app_name">YogicApple</string>
-    <string name="pager_title_timeline">TIMELINE</string>
-    <string name="pager_title_progress">PROGRESS</string>
+    <string name="activity_title_programs">Programs</string>
+    <string name="pager_title_current">Current Meditation</string>
+    <string name="pager_title_progress">My Progress</string>
     <string name="remove_item_option">Remove Item</string>
     <string name="positive_button_create">Create</string>
     <string name="text_you">You</string>
     <string name="lock_lesson_view">Lesson Locked</string>
     <string name="download_lesson_option">Download Lesson</string>
     <string name="download_progress_lesson_view">Lesson Downloading Progress</string>
-    <string name="play_lesson_option">Play Lesson</string>
+    <string name="play_apple_option">Play Lesson</string>
 
 
     <!-- Base Error Strings-->
@@ -23,11 +24,8 @@
 
     <!-- Menu Strings -->
     <string name="action_logout">Logout</string>
-    <string name="action_share_list">Share List</string>
     <string name="action_sort">Sort</string>
-    <string name="action_upload">Upload</string>
-    <string name="action_remove_list">Remove list</string>
-    <string name="action_archive">Archive</string>
+    <string name="action_programs">Programs</string>
 
 
     <!--
@@ -152,6 +150,8 @@
     <string name="error_email_taken">The email is already taken.</string>
     <string name="error_invalid_password_not_valid">Please enter a password that is at least 6 characters long.</string>
     <string name="error_cannot_be_empty">This cannot be empty.</string>
+    <string name="storage_permission_denied">You must give application permission to read external storage</string>
+
 
     <!-- Google Errors -->
     <string name="google_error_recoverable_oauth_error">"Recoverable Google OAuth error: "</string>
@@ -267,6 +267,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="format_built_by">Built by: <xliff:g id="partner">%1$s</xliff:g></string>
 
 
     <!-- Values -->
@@ -284,5 +285,14 @@
     <string name="label_download">Download File</string>
     <string name="success">Success</string>
     <string name="title_activity_media_player">MediaPlayerActivity</string>
+
+
+    <string name="next_session">Next Session</string>
+    <string name="downloading_pending_dots">Waiting to download...</string>
+
+    <!-- Image Content Description -->
+    <string name="image_icon">Icon Image</string>
+    <string name="image_state">State Image</string>
+
 
 </resources>

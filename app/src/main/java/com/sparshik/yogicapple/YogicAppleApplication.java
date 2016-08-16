@@ -13,6 +13,7 @@ public class YogicAppleApplication extends android.app.Application{
         super.onCreate();
         if (!FirebaseApp.getApps(this).isEmpty()) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//            FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG);
         }
 
     }

@@ -7,17 +7,12 @@ import com.sparshik.yogicapple.BuildConfig;
  */
 public class Constants {
 
-    /**
-     * Constants related to locations in Firebase, such as the name of the node
-     * where active lists are stored (ie "userLists")
-     */
-    public static final String FIREBASE_LOCATION_USER_FRIENDS = "userFriends";
     public static final String FIREBASE_LOCATION_USERS = "users";
     public static final String FIREBASE_LOCATION_UID_MAPPINGS = "uidMappings";
-    public static final String FIREBASE_LOCATION_OWNER_MAPPINGS = "ownerMappings";
-    public static final String FIREBASE_LOCATION_IMAGES = "images";
-    public static final String FIREBASE_LOCATION_AUDIOS = "audios";
-
+    public static final String FIREBASE_LOCATION_PROGRAMS = "programs";
+    public static final String FIREBASE_LOCATION_PROGRAM_PACKS = "programPacks";
+    public static final String FIREBASE_LOCATION_PACK_APPLES = "packApples";
+    public static final String FIREBASE_LOCATION_USER_APPLES_STATUS = "userApplesStatus";
 
     /**
      * Constants for Firebase object properties
@@ -25,16 +20,28 @@ public class Constants {
 
     public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
     public static final String FIREBASE_PROPERTY_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";
-    public static final String FIREBASE_PROPERTY_USER_HAS_LOGGED_IN_WITH_PASSWORD = "hasLoggedInWithPassword";
-
+    public static final String FIREBASE_PROPERTY_CREATED_BY = "createdBy";
+    public static final String FIREBASE_PROPERTY_LAST_CHANGED_BY = "lastChangedBy";
+    public static final String FIREBASE_PROPERTY_USER_IS_VERIFIED = "verified";
+    public static final String FIREBASE_PROPERTY_APPLE_SEQ_NUMBER = "appleSeqNumber";
+    public static final String FIREBASE_PROPERTY_APPLE_STATUS_OFFLINE = "offline";
     /**
-     * Constants for Firebase URL
+     * Constants for Firebase Database URL
      */
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
     public static final String FIREBASE_URL_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
-    public static final String FIREBASE_URL_IMAGES = FIREBASE_URL + "/" + FIREBASE_LOCATION_IMAGES;
-    public static final String FIREBASE_URL_AUDIOS = FIREBASE_URL + "/" + FIREBASE_LOCATION_AUDIOS;
-    public static final String FIREBASE_URL_STORAGE = BuildConfig.FIREBASE_STORAGE_ROOT_URL;
+    public static final String FIREBASE_URL_PROGRAMS = FIREBASE_URL + "/" + FIREBASE_LOCATION_PROGRAMS;
+    public static final String FIREBASE_URL_PROGRAM_PACKS = FIREBASE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
+    public static final String FIREBASE_URL_PACK_APPLES = FIREBASE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
+    public static final String FIREBASE_URL_USER_APPLES_STATUS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_APPLES_STATUS;
+
+    /**
+     * Constants for Firebase Storage URL
+     */
+    public static final String FIREBASE_STORAGE_URL = BuildConfig.FIREBASE_STORAGE_ROOT_URL;
+    public static final String FIREBASE_STORAGE_URL_PROGRAMS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PROGRAMS;
+    public static final String FIREBASE_STORAGE_URL_PROGRAM_PACKS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
+    public static final String FIREBASE_STORAGE_URL_PACK_APPLES = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
 
     /**
      * Constants for bundles, extras and shared preferences keys
@@ -43,6 +50,11 @@ public class Constants {
     public static final String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
     public static final String KEY_PROVIDER_ID = "PROVIDER_ID";
     public static final String KEY_SIGNUP_EMAIL = "SIGNUP_EMAIL";
+    public static final String KEY_PROGRAM_ID = "PROGRAM_ID";
+    public static final String KEY_PACK_ID = "PACK_ID";
+    public static final String KEY_APPLE_ID = "APPLE_ID";
+    public static final String KEY_AUDIO_URL = "AUDIO_URL";
+
     /**
      * Constants for Firebase login
      */
@@ -50,13 +62,15 @@ public class Constants {
     public static final String GOOGLE_PROVIDER = "google.com";
     public static final String PROVIDER_DATA_DISPLAY_NAME = "displayName";
 
+
     /**
-     * Constants for files
+     * Suffix for firebase storage files
      */
-    public static final String SUFFIX_AUDIO = ".audio";
-    public static final String SUFFIX_AUDIO_OLD = ".caudio";
-    public static final String SUFFIX_DECODED = ".decoded";
-    public static final String SUFFIX_DOWNLOADING = ".downloading";
-    public static final String SUFFIX_VIDEO = ".video";
+    public static final String SUFFIX_AUDIO = "_audio";
+    public static final String SUFFIX_VIDEO = "_video";
+    public static final String SUFFIX_ICON_IMAGE = "_iconImage";
+    public static final String SUFFIX_BANNER_IMAGE = "_bannerImage";
+
+    public static final String DEFUALT_PROGRAM_COLOR = "#616161";
 
 }

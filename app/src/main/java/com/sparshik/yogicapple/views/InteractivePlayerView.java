@@ -1,4 +1,4 @@
-package com.sparshik.yogicapple.ui.mediaplayer;
+package com.sparshik.yogicapple.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -27,10 +27,10 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 /**
- * View based on mertsimsek
- * Interactive music player view
+ * player to play audio
  */
 public class InteractivePlayerView extends View {
+
 
     /**
      * Default empty progress color
@@ -367,8 +367,8 @@ public class InteractivePlayerView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        mWidth = MeasureSpec.getSize(widthMeasureSpec);
-        mHeight = MeasureSpec.getSize(heightMeasureSpec);
+        mWidth = View.MeasureSpec.getSize(widthMeasureSpec);
+        mHeight = View.MeasureSpec.getSize(heightMeasureSpec);
 
         int minSide = Math.min(mWidth, mHeight);
         mWidth = minSide;
@@ -693,4 +693,5 @@ public class InteractivePlayerView extends View {
         mPaintEmptyProgress.setColor(mEmptyProgressColor);
         postInvalidate();
     }
+
 }

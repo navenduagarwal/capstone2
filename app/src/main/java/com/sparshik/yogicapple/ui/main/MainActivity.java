@@ -1,4 +1,4 @@
-package com.sparshik.yogicapple.ui;
+package com.sparshik.yogicapple.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
-import com.sparshik.yogicapple.ui.mediaplayer.MediaPlayerActivity;
+import com.sparshik.yogicapple.ui.BaseActivity;
+import com.sparshik.yogicapple.ui.current.CurrentFragment;
+import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
-import com.sparshik.yogicapple.ui.timeline.TimelineFragment;
-import com.sparshik.yogicapple.ui.upload.FirebaseActivity;
 import com.sparshik.yogicapple.utils.Constants;
 
 public class MainActivity extends BaseActivity {
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
          * Create Firebase references
          */
         mUserRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child("navendu");
+                .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
         /**
          * Link layout elements from XML and setup the toolbar
          */
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
                 if (user != null && user.getName() != null) {
                     /* Assumes that the first word in the user's name is the user's first name. */
                     String firstName = user.getName().split("\\s+")[0];
-                    String title = firstName + "'s Zone";
+                    String title = firstName + "'s Discovery";
                     setTitle(title);
                 }
             }
@@ -87,11 +87,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_upload) {
-            startActivity(new Intent(MainActivity.this, FirebaseActivity.class));
-            return true;
-        } else if (id == R.id.action_play) {
-            startActivity(new Intent(MainActivity.this, MediaPlayerActivity.class));
+        if (id == R.id.action_programs) {
+            startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -112,6 +109,7 @@ public class MainActivity extends BaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
         /**
          * Create SectionPagerAdapter, set it as adapter to viewPager with setOffscreenPageLimit(2)
          **/
@@ -148,13 +146,13 @@ public class MainActivity extends BaseActivity {
              */
             switch (position) {
                 case 0:
-                    fragment = TimelineFragment.newInstance();
+                    fragment = CurrentFragment.newInstance(mEncodedEmail);
                     break;
                 case 1:
                     fragment = ProgressFragment.newInstance();
                     break;
                 default:
-                    fragment = TimelineFragment.newInstance();
+                    fragment = CurrentFragment.newInstance(mEncodedEmail);
                     break;
             }
 
@@ -176,7 +174,7 @@ public class MainActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.pager_title_timeline);
+                    return getString(R.string.pager_title_current);
                 case 1:
                 default:
                     return getString(R.string.pager_title_progress);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/series_row_height"
     android:layout_margin="2dp"
@@ -18,10 +18,10 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/text_view_active_series_lesson_name"
-            style="@style/SeriesLessonText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:text="Hello" />
 
         <TextView
             android:id="@+id/text_view_bought_by"
@@ -33,18 +33,11 @@
             android:text="@string/bought_by"
             android:textColor="@color/light_black"
             android:textSize="@dimen/series_created_by_text_size"
-            android:visibility="invisible" />
+            android:visibility="visible"
+            tools:text="Hello" />
 
-        <TextView
-            android:id="@+id/text_view_bought_by_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textSize="@dimen/series_created_by_text_size"
-            android:textStyle="bold"
-            android:visibility="invisible" />
         <ImageView
-            android:id="@+id/view_lock_lesson"
+            android:id="@+id/view_lock_apple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -55,7 +48,7 @@
             android:src="@drawable/ic_lock_black_24dp"
             android:visibility="visible" />
         <ImageButton
-            android:id="@+id/button_download_lesson"
+            android:id="@+id/button_download_apple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -64,25 +57,26 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/download_lesson_option"
             android:src="@drawable/ic_file_download_black_24dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
         <ImageButton
-            android:id="@+id/button_play_lesson"
+            android:id="@+id/button_play_apple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/play_lesson_option"
+            android:contentDescription="@string/play_apple_option"
             android:src="@drawable/ic_play_circle_filled_black_24dp"
             android:visibility="gone" />
 
-        <com.sparshik.yogicapple.views.CircularProgressPlayerView
+        <ProgressBar
             android:id="@+id/custom_progressBar"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="10dp"
-            app:progress="35"
-            app:progressBarThickness="4dp"/>
+            android:max="100"
+            android:progress="10"
+            android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>
