@@ -3,7 +3,6 @@ package com.sparshik.yogicapple.ui.current;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -15,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +29,6 @@ import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
-import com.sparshik.yogicapple.views.CircleProgressBar;
 
 /**
  * Show current list of audio completed
@@ -40,7 +36,6 @@ import com.sparshik.yogicapple.views.CircleProgressBar;
 public class CurrentPackApplesFragment extends Fragment {
     private static final String LOG_TAG = CurrentPackApplesFragment.class.getSimpleName();
     private String mEncodedEmail;
-    private ListView mListView;
     private RecyclerView mRecycleView;
     private CurrentPackApplesRecyclerAdapter mCurrentPackAppleRecyclerAdapter;
     private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
@@ -136,7 +131,7 @@ public class CurrentPackApplesFragment extends Fragment {
                 if (userData != null) {
                     String programId = userData.getDefaultProgramId();
                     String packId = userData.getDefaultPackId();
-                    populateListView(programId, packId);
+                    populateFragmentList(programId, packId);
                 }
             }
 
@@ -170,7 +165,7 @@ public class CurrentPackApplesFragment extends Fragment {
     }
 
 
-    public void populateListView(final String programId, final String packId) {
+    public void populateFragmentList(final String programId, final String packId) {
 
         //Updating Header Pack Information
         mPackRef = FirebaseDatabase.getInstance()
@@ -195,7 +190,7 @@ public class CurrentPackApplesFragment extends Fragment {
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
                     mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple,
-                            PackApplesHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
+                            PackApplesViewHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
 
                     mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);
 
@@ -216,54 +211,5 @@ public class CurrentPackApplesFragment extends Fragment {
                 .registerReceiver(mDownloadReceiver, DownloadService.getIntentFilter());
     }
 
-
-    public static class PackApplesHolder extends RecyclerView.ViewHolder {
-        View mView;
-
-        public PackApplesHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setBackGroundColor(int color) {
-            RelativeLayout field = (RelativeLayout) mView.findViewById(R.id.container_list_item);
-            field.setBackgroundColor(color);
-        }
-
-        public void setSeqText(String seq) {
-            TextView field = (TextView) mView.findViewById(R.id.apple_number);
-            field.setText(seq);
-        }
-
-        public void setProgress(int progress) {
-            CircleProgressBar field = (CircleProgressBar) mView.findViewById(R.id.apple_progress_circle);
-            field.setProgress(progress);
-        }
-
-        public void setCircleColor(int color) {
-            int altColor = ColorUtils.darkenColor(color);
-            CircleProgressBar field = (CircleProgressBar) mView.findViewById(R.id.apple_progress_circle);
-            field.setBackgroundColor(color);
-            field.setInnerColor(altColor);
-            field.setStrokeColor(altColor);
-            field.setUseRing(true);
-        }
-
-        public void setLineColor(int color) {
-            View field = mView.findViewById(R.id.current_line);
-            field.setBackgroundColor(color);
-        }
-
-        public void setLockColor(int color) {
-            ImageView field = (ImageView) mView.findViewById(R.id.apple_locked);
-            field.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-        }
-
-        public void setDownloadTextColor(int color) {
-            TextView field = (TextView) mView.findViewById(R.id.download_text);
-            field.setBackgroundColor(color);
-        }
-
-    }
 
 }

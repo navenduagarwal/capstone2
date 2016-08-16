@@ -6,6 +6,7 @@
      -->
     <string name="app_name">YogicApple</string>
     <string name="activity_title_programs">Programs</string>
+    <string name="activity_title_packs">Choose a Pack</string>
     <string name="pager_title_current">Current Meditation</string>
     <string name="pager_title_progress">My Progress</string>
     <string name="remove_item_option">Remove Item</string>

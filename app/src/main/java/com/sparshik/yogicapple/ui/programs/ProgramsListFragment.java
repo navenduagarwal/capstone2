@@ -1,5 +1,6 @@
 package com.sparshik.yogicapple.ui.programs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Program;
+import com.sparshik.yogicapple.ui.packs.PacksListActivity;
 import com.sparshik.yogicapple.utils.Constants;
 
 /**
@@ -73,15 +75,15 @@ public class ProgramsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Program program = mProgramListAdapter.getItem(position);
                 if (program != null) {
-//                    Intent intent = new Intent(getActivity(), ProgramPacksListActivity.class);
-//                    /**
-//                     *Get the program ID using the adapter's get ref method to get the Firebase
-//                     * ref and then grab the key.
-//                     */
-//                    String programId = mProgramListAdapter.getRef(position).getKey();
-//                    intent.putExtra(Constants.KEY_PROGRAM_ID, programId);
-//                    /* Start an activity showing the packs for selected program */
-//                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), PacksListActivity.class);
+                    /**
+                     *Get the program ID using the adapter's get ref method to get the Firebase
+                     * ref and then grab the key.
+                     */
+                    String programId = mProgramListAdapter.getRef(position).getKey();
+                    intent.putExtra(Constants.KEY_PROGRAM_ID, programId);
+                    /* Start an activity showing the packs for selected program */
+                    startActivity(intent);
                 }
             }
         });

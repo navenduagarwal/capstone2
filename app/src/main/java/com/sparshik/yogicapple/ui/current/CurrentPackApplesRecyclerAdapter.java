@@ -21,7 +21,6 @@ import com.sparshik.yogicapple.model.PackApple;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.model.UserApplesStatus;
 import com.sparshik.yogicapple.services.DownloadService;
-import com.sparshik.yogicapple.ui.current.CurrentPackApplesFragment.PackApplesHolder;
 import com.sparshik.yogicapple.ui.player.ExoPlayerActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
@@ -31,7 +30,7 @@ import java.io.File;
 /**
  * Recycler Adapter to populate list of apples for current program
  */
-public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<PackApple, PackApplesHolder> {
+public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<PackApple, PackApplesViewHolder> {
     private static final String LOG_TAG = CurrentPackApplesRecyclerAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
@@ -41,7 +40,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     private int mPackColor;
     private Context context;
 
-    public CurrentPackApplesRecyclerAdapter(Context context, Class<PackApple> modelClass, int modelLayout, Class<PackApplesHolder> viewHolderClass, Query ref,
+    public CurrentPackApplesRecyclerAdapter(Context context, Class<PackApple> modelClass, int modelLayout, Class<PackApplesViewHolder> viewHolderClass, Query ref,
                                             String mPackId, String mProgramId, String mEncodedEmail, int mPackColor) {
         super(modelClass, modelLayout, viewHolderClass, ref);
         this.mPackId = mPackId;
@@ -52,7 +51,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     }
 
     @Override
-    protected void populateViewHolder(final PackApplesHolder viewHolder, PackApple model, int position) {
+    protected void populateViewHolder(final PackApplesViewHolder viewHolder, PackApple model, int position) {
 
         if (model.getAppleSeqNumber() < 10) {
             String sequenceText = "0" + model.getAppleSeqNumber();
@@ -134,10 +133,10 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     }
 
     @Override
-    public PackApplesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PackApplesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_empty, parent, false);
-            return new FooterViewHolder(v);
+            return new FooterViewViewHolder(v);
         }
         return super.onCreateViewHolder(parent, viewType);
     }
@@ -184,10 +183,10 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         });
     }
 
-    class FooterViewHolder extends PackApplesHolder {
+    class FooterViewViewHolder extends PackApplesViewHolder {
         TextView txtTitleFooter;
 
-        public FooterViewHolder(View itemView) {
+        public FooterViewViewHolder(View itemView) {
             super(itemView);
             this.txtTitleFooter = (TextView) itemView.findViewById(R.id.text_view_listview_footer);
         }
