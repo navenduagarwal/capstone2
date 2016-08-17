@@ -3,10 +3,15 @@ package com.sparshik.yogicapple.ui.packs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.model.Pack;
@@ -32,31 +37,43 @@ public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksView
     }
 
     @Override
-    protected void populateViewHolder(PacksViewHolder viewHolder, Pack model, int position) {
+    protected void populateViewHolder(final PacksViewHolder viewHolder, Pack model, int position) {
 
         if (model.getPackIconUrl() != null) {
-            viewHolder.setIconImage(mContext, model.getPackIconUrl());
+            viewHolder.mIconImage.setVisibility(View.VISIBLE);
+            Glide.with(mContext).load(model.getPackIconUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mIconImage) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable =
+                            RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    viewHolder.mIconImage.setImageDrawable(circularBitmapDrawable);
+                }
+            });
         } else {
-            viewHolder.setIconImageVisiblity(View.INVISIBLE);
+            viewHolder.mIconImage.setVisibility(View.INVISIBLE);
         }
 
         final String packId = this.getRef(position).getKey();
+
         if (packId.equals(mCurrentPackId)) {
-            viewHolder.setButtonState(View.GONE);
+            viewHolder.mStateButton.setVisibility(View.GONE);
         } else {
-            viewHolder.setBackGroundColor(View.VISIBLE);
+            viewHolder.mStateButton.setVisibility(View.VISIBLE);
         }
 
-        viewHolder.setTitleText(model.getPackTitle());
+        viewHolder.mTitleText.setText(model.getPackTitle());
 
-//        viewHolder.setBackGroundColor(mProgramColor);
+//        viewHolder.mContainer.setBackgroundColor(mProgramColor);
 
         if (model.getPackShortDesc() != null) {
-            viewHolder.setShortDescText(model.getPackShortDesc());
+            viewHolder.mShortDescText.setText(model.getPackShortDesc());
         } else {
-            viewHolder.setShortDescVisibility(View.INVISIBLE);
+            viewHolder.mShortDescText.setVisibility(View.INVISIBLE);
         }
-        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+
+
+        viewHolder.mStateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!packId.equals(mCurrentPackId)) {
