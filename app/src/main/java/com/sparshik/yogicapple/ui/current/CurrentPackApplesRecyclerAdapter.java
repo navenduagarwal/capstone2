@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.PackApple;
 import com.sparshik.yogicapple.model.User;
-import com.sparshik.yogicapple.model.UserApplesStatus;
+import com.sparshik.yogicapple.model.UserOfflineDownloads;
 import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.ui.player.ExoPlayerActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
@@ -39,15 +39,17 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     private BroadcastReceiver mDownloadReceiver;
     private int mPackColor;
     private Context context;
+    private String mInstallId;
 
     public CurrentPackApplesRecyclerAdapter(Context context, Class<PackApple> modelClass, int modelLayout, Class<PackApplesViewHolder> viewHolderClass, Query ref,
-                                            String mPackId, String mProgramId, String mEncodedEmail, int mPackColor) {
+                                            String mPackId, String mProgramId, String mEncodedEmail, int mPackColor, String installId) {
         super(modelClass, modelLayout, viewHolderClass, ref);
         this.mPackId = mPackId;
         this.mProgramId = mProgramId;
         this.mEncodedEmail = mEncodedEmail;
         this.mPackColor = mPackColor;
         this.context = context;
+        this.mInstallId = installId;
     }
 
     @Override
@@ -77,19 +79,21 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         }
 
         DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
-                .child(mEncodedEmail).child(appleId);
+                .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
+                .child(mEncodedEmail).child(mInstallId).child(appleId);
         userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserApplesStatus userApplesStatus = dataSnapshot.getValue(UserApplesStatus.class);
-                if (userApplesStatus != null) {
-
-                    File file = new File(userApplesStatus.getLocalAudioFile());
-
-                    if (userApplesStatus.isOffline() && file.exists()) {
+                UserOfflineDownloads userOfflineDownloads = dataSnapshot.getValue(UserOfflineDownloads.class);
+                if (userOfflineDownloads != null) {
+                    File file = new File(userOfflineDownloads.getLocalAudioFile());
+                    if (file.exists()) {
                         viewHolder.setProgress(100);
+                    } else {
+                        viewHolder.setProgress(0);
                     }
+                } else {
+                    viewHolder.setProgress(0);
                 }
             }
 
@@ -103,21 +107,22 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
             @Override
             public void onClick(View view) {
                 DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-                        .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
-                        .child(mEncodedEmail).child(appleId);
+                        .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
+                        .child(mEncodedEmail).child(mInstallId).child(appleId);
                 userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserApplesStatus userApplesStatus = dataSnapshot.getValue(UserApplesStatus.class);
-                        if (userApplesStatus != null) {
-                            File file = new File(userApplesStatus.getLocalAudioFile());
-
-                            if (userApplesStatus.isOffline() && file.exists()) {
-                                startPlayer(appleId, userApplesStatus);
+                        UserOfflineDownloads userOfflineDownloads = dataSnapshot.getValue(UserOfflineDownloads.class);
+                        if (userOfflineDownloads != null) {
+                            File file = new File(userOfflineDownloads.getLocalAudioFile());
+                            if (file.exists()) {
+                                startPlayer(appleId, userOfflineDownloads);
                             } else {
+                                viewHolder.setProgress(0);
                                 downloadAppleFiles(appleId, audioUrl);
                             }
                         } else {
+                            viewHolder.setProgress(0);
                             downloadAppleFiles(appleId, audioUrl);
                         }
                     }
@@ -151,7 +156,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         context.startService(intent);
     }
 
-    public void startPlayer(final String appleId, final UserApplesStatus userApplesStatus) {
+    public void startPlayer(final String appleId, final UserOfflineDownloads userOfflineDownloads) {
 
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
@@ -160,15 +165,15 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User userData = dataSnapshot.getValue(User.class);
                 if (userData != null) {
-                    String programId = userData.getDefaultProgramId();
-                    String packId = userData.getDefaultPackId();
+                    String programId = userData.getCurrentProgramId();
+                    String packId = userData.getCurrentPackId();
 
                     // Start Audio Player
                     Intent intent = new Intent(context, ExoPlayerActivity.class);
                     intent.putExtra(Constants.KEY_APPLE_ID, appleId);
                     intent.putExtra(Constants.KEY_PACK_ID, packId);
                     intent.putExtra(Constants.KEY_PROGRAM_ID, programId);
-                    intent.putExtra(Constants.KEY_AUDIO_URL, userApplesStatus.getLocalAudioFile());
+                    intent.putExtra(Constants.KEY_AUDIO_URL, userOfflineDownloads.getLocalAudioFile());
                     /* Start an activity showing the packs for selected program */
                     Log.d("To Player", packId + " " + appleId);
                     context.startActivity(intent);

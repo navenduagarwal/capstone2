@@ -12,7 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_play_dark" />
+        android:src="@drawable/ic_close_white_18dp" />
 
     <LinearLayout
         android:id="@+id/header"

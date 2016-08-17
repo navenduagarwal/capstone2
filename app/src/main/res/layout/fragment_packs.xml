@@ -3,8 +3,7 @@
     android:id="@+id/rl_fragment_packs"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/app_bar"
-    android:background="@color/grey">
+    android:layout_below="@+id/app_bar">
 
 
     <LinearLayout

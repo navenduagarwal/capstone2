@@ -3,7 +3,9 @@ package com.sparshik.yogicapple.ui.current;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,8 +37,10 @@ import com.sparshik.yogicapple.utils.Constants;
  */
 public class CurrentPackApplesFragment extends Fragment {
     private static final String LOG_TAG = CurrentPackApplesFragment.class.getSimpleName();
-    private String mEncodedEmail;
+    private static final String SELECTED_KEY = "selected_position";
+    private String mEncodedEmail, mInstallId;
     private RecyclerView mRecycleView;
+    private int mPosition = RecyclerView.NO_POSITION;
     private CurrentPackApplesRecyclerAdapter mCurrentPackAppleRecyclerAdapter;
     private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
     private ImageView mImageViewHeaderIcon, mImageViewHeaderPackImage;
@@ -76,6 +80,9 @@ public class CurrentPackApplesFragment extends Fragment {
 
         mEncodedEmail = this.getArguments().getString(Constants.KEY_ENCODED_EMAIL);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mInstallId = preferences.getString(Constants.KEY_INSTALL_ID, null);
+
 
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
@@ -107,19 +114,10 @@ public class CurrentPackApplesFragment extends Fragment {
         /* Inflate the layout for this fragment */
         View rootView = inflater.inflate(R.layout.fragment_current, container, false);
 
-
         /**
          * Link layout elements from XML and setup the toolbar
          */
         initializeScreen(rootView);
-
-
-        return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         //Initiating ListView
 
@@ -129,8 +127,8 @@ public class CurrentPackApplesFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User userData = dataSnapshot.getValue(User.class);
                 if (userData != null) {
-                    String programId = userData.getDefaultProgramId();
-                    String packId = userData.getDefaultPackId();
+                    String programId = userData.getCurrentProgramId();
+                    String packId = userData.getCurrentPackId();
                     populateFragmentList(programId, packId);
                 }
             }
@@ -140,6 +138,14 @@ public class CurrentPackApplesFragment extends Fragment {
                 Log.e(LOG_TAG, getResources().getString(R.string.log_error_the_read_failed));
             }
         });
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -151,6 +157,7 @@ public class CurrentPackApplesFragment extends Fragment {
         }
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mDownloadReceiver);
     }
+
 
     private void initializeScreen(View view) {
         View footer = getActivity().getLayoutInflater().inflate(R.layout.footer_empty, null);
@@ -190,7 +197,8 @@ public class CurrentPackApplesFragment extends Fragment {
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
                     mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple,
-                            PackApplesViewHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor);
+                            PackApplesViewHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor, mInstallId);
+
 
                     mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);
 

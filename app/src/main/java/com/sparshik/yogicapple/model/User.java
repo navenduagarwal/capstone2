@@ -10,19 +10,19 @@ public class User {
     private String name;
     private HashMap<String, Object> timestampJoined;
     private boolean verified;
-    private String defaultPackId;
-    private String defaultProgramId;
+    private String currentPackId;
+    private String currentProgramId;
 
     public User() {
     }
 
-    public User(String email, String name, boolean verified, String defaultProgramId, String defaultPackId, HashMap<String, Object> timestampJoined) {
+    public User(String email, String name, boolean verified, String currentProgramId, String currentPackId, HashMap<String, Object> timestampJoined) {
         this.email = email;
         this.name = name;
         this.timestampJoined = timestampJoined;
         this.verified = verified;
-        this.defaultPackId = defaultPackId;
-        this.defaultProgramId = defaultProgramId;
+        this.currentPackId = currentPackId;
+        this.currentProgramId = currentProgramId;
     }
 
     public String getEmail() {
@@ -41,11 +41,11 @@ public class User {
         return verified;
     }
 
-    public String getDefaultPackId() {
-        return defaultPackId;
+    public String getCurrentPackId() {
+        return currentPackId;
     }
 
-    public String getDefaultProgramId() {
-        return defaultProgramId;
+    public String getCurrentProgramId() {
+        return currentProgramId;
     }
 }

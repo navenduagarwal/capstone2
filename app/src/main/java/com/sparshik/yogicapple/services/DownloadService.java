@@ -3,7 +3,9 @@ package com.sparshik.yogicapple.services;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -17,7 +19,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.sparshik.yogicapple.model.UserApplesStatus;
+import com.sparshik.yogicapple.R;
+import com.sparshik.yogicapple.model.UserOfflineDownloads;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.FileUtils;
 
@@ -157,6 +160,12 @@ public class DownloadService extends Service {
 
     public void beginDownloadFile() {
         localFilePath = new File(path, mFileName);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final String installId = preferences.getString(Constants.KEY_INSTALL_ID, null);
+        if (installId == null) {
+            Log.e(TAG, getString(R.string.log_error_install_id));
+            return;
+        }
         fileStorageRef.getFile(localFilePath)
                 .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
@@ -172,10 +181,12 @@ public class DownloadService extends Service {
                                 .sendBroadcast(broadcast);
                         Log.d(TAG, "download:SUCCESS" + taskSnapshot.getTotalByteCount());
                         Log.d(TAG, "Local file path" + localFilePath);
+
+
                         DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-                                .getReferenceFromUrl(Constants.FIREBASE_URL_USER_APPLES_STATUS)
-                                .child(mEncodedEmail).child(mAppleId);
-                        UserApplesStatus userAppleStatus = new UserApplesStatus(true, localFilePath.toString());
+                                .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
+                                .child(mEncodedEmail).child(installId).child(mAppleId);
+                        UserOfflineDownloads userAppleStatus = new UserOfflineDownloads(localFilePath.toString());
                         userAppleStatusRef.setValue(userAppleStatus);
                         // Mark task completed
                         taskCompleted();

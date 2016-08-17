@@ -7,7 +7,7 @@
     <string name="app_name">YogicApple</string>
     <string name="activity_title_programs">Programs</string>
     <string name="activity_title_packs">Choose a Pack</string>
-    <string name="pager_title_current">Current Meditation</string>
+    <string name="pager_title_current">Current Pack</string>
     <string name="pager_title_progress">My Progress</string>
     <string name="remove_item_option">Remove Item</string>
     <string name="positive_button_create">Create</string>
@@ -22,6 +22,7 @@
     <string name="log_error_updating_data">Error updating data: </string>
     <string name="log_error_the_read_failed">The read failed: </string>
     <string name="log_error_occurred">"Error occurred: "</string>
+    <string name="log_error_install_id">"Install id is null"</string>
 
     <!-- Menu Strings -->
     <string name="action_logout">Logout</string>

@@ -48,6 +48,8 @@ import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.FireBaseUtils;
 
+import java.util.UUID;
+
 /**
  * Represents Sign in screen and functionality of the app
  */
@@ -117,6 +119,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
          * Get the newly registered user email if present, use null as default value
          */
         String signupEmail = mSharedPref.getString(Constants.KEY_SIGNUP_EMAIL, null);
+        String uniqueInstallationId = mSharedPref.getString(Constants.KEY_INSTALL_ID, null);
         /**
          * fill in the email editText and remove value from SharedPreferences if email is present
          */
@@ -128,6 +131,11 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
              * Clear signupEmail sharedPreferences to make sure that they are used just once
              */
             mSharedPrefEditor.putString(Constants.KEY_SIGNUP_EMAIL, null).apply();
+        }
+
+        if (uniqueInstallationId == null) {
+            String installId = UUID.randomUUID().toString();
+            mSharedPrefEditor.putString(Constants.KEY_INSTALL_ID, installId).apply();
         }
     }
 

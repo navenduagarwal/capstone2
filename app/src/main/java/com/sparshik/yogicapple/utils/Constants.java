@@ -12,7 +12,7 @@ public class Constants {
     public static final String FIREBASE_LOCATION_PROGRAMS = "programs";
     public static final String FIREBASE_LOCATION_PROGRAM_PACKS = "programPacks";
     public static final String FIREBASE_LOCATION_PACK_APPLES = "packApples";
-    public static final String FIREBASE_LOCATION_USER_APPLES_STATUS = "userApplesStatus";
+    public static final String FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS = "userOfflineDownloads";
 
     /**
      * Constants for Firebase object properties
@@ -24,7 +24,7 @@ public class Constants {
     public static final String FIREBASE_PROPERTY_LAST_CHANGED_BY = "lastChangedBy";
     public static final String FIREBASE_PROPERTY_USER_IS_VERIFIED = "verified";
     public static final String FIREBASE_PROPERTY_APPLE_SEQ_NUMBER = "appleSeqNumber";
-    public static final String FIREBASE_PROPERTY_APPLE_STATUS_OFFLINE = "offline";
+
     /**
      * Constants for Firebase Database URL
      */
@@ -33,7 +33,7 @@ public class Constants {
     public static final String FIREBASE_URL_PROGRAMS = FIREBASE_URL + "/" + FIREBASE_LOCATION_PROGRAMS;
     public static final String FIREBASE_URL_PROGRAM_PACKS = FIREBASE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
     public static final String FIREBASE_URL_PACK_APPLES = FIREBASE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
-    public static final String FIREBASE_URL_USER_APPLES_STATUS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_APPLES_STATUS;
+    public static final String FIREBASE_URL_USER_OFFLINE_DOWNLOADS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS;
 
     /**
      * Constants for Firebase Storage URL
@@ -54,6 +54,7 @@ public class Constants {
     public static final String KEY_PACK_ID = "PACK_ID";
     public static final String KEY_APPLE_ID = "APPLE_ID";
     public static final String KEY_AUDIO_URL = "AUDIO_URL";
+    public static final String KEY_INSTALL_ID = "INSTALL_ID";
 
     /**
      * Constants for Firebase login
