@@ -55,6 +55,8 @@ public class Constants {
     public static final String KEY_APPLE_ID = "APPLE_ID";
     public static final String KEY_AUDIO_URL = "AUDIO_URL";
     public static final String KEY_INSTALL_ID = "INSTALL_ID";
+    public static final String KEY_CURRENT_PROGRAM_ID = "CURRENT_PROGRAM_ID";
+    public static final String KEY_CURRENT_PACK_ID = "CURRENT_PACK_ID";
 
     /**
      * Constants for Firebase login

@@ -15,6 +15,7 @@
     <color name="black">#616161</color>
     <color name="google">#C6412C</color>
     <color name="activated">#E0E0E0</color>
+    <color name="background">#DCEDC8</color>
 
 
     <color name="current_line_color">#ffdad7cb</color>

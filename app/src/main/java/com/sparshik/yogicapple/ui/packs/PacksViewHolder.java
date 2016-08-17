@@ -6,6 +6,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,5 +63,10 @@ public class PacksViewHolder extends RecyclerView.ViewHolder {
     public void setBackGroundColor(int color) {
         FrameLayout field = (FrameLayout) mView.findViewById(R.id.container_list_item);
         field.setBackgroundColor(color);
+    }
+
+    public void setButtonState(int visibility) {
+        Button field = (Button) mView.findViewById(R.id.button_state_list);
+        field.setVisibility(visibility);
     }
 }

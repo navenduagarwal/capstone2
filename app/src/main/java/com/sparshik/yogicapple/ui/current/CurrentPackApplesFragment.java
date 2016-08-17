@@ -27,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.model.PackApple;
-import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
@@ -38,7 +37,7 @@ import com.sparshik.yogicapple.utils.Constants;
 public class CurrentPackApplesFragment extends Fragment {
     private static final String LOG_TAG = CurrentPackApplesFragment.class.getSimpleName();
     private static final String SELECTED_KEY = "selected_position";
-    private String mEncodedEmail, mInstallId;
+    private String mEncodedEmail, mInstallId, mCurrentProgramId, mCurrentPackId;
     private RecyclerView mRecycleView;
     private int mPosition = RecyclerView.NO_POSITION;
     private CurrentPackApplesRecyclerAdapter mCurrentPackAppleRecyclerAdapter;
@@ -80,10 +79,6 @@ public class CurrentPackApplesFragment extends Fragment {
 
         mEncodedEmail = this.getArguments().getString(Constants.KEY_ENCODED_EMAIL);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mInstallId = preferences.getString(Constants.KEY_INSTALL_ID, null);
-
-
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -114,6 +109,11 @@ public class CurrentPackApplesFragment extends Fragment {
         /* Inflate the layout for this fragment */
         View rootView = inflater.inflate(R.layout.fragment_current, container, false);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mInstallId = preferences.getString(Constants.KEY_INSTALL_ID, null);
+        mCurrentProgramId = preferences.getString(Constants.KEY_CURRENT_PROGRAM_ID, null);
+        mCurrentPackId = preferences.getString(Constants.KEY_CURRENT_PACK_ID, null);
+
         /**
          * Link layout elements from XML and setup the toolbar
          */
@@ -121,23 +121,7 @@ public class CurrentPackApplesFragment extends Fragment {
 
         //Initiating ListView
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userData = dataSnapshot.getValue(User.class);
-                if (userData != null) {
-                    String programId = userData.getCurrentProgramId();
-                    String packId = userData.getCurrentPackId();
-                    populateFragmentList(programId, packId);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(LOG_TAG, getResources().getString(R.string.log_error_the_read_failed));
-            }
-        });
+        populateFragmentList();
 
 
         return rootView;
@@ -172,11 +156,13 @@ public class CurrentPackApplesFragment extends Fragment {
     }
 
 
-    public void populateFragmentList(final String programId, final String packId) {
+    public void populateFragmentList() {
+
+        Log.d("Testing", mCurrentProgramId + mCurrentPackId);
 
         //Updating Header Pack Information
         mPackRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(programId).child(packId);
+                .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(mCurrentProgramId).child(mCurrentPackId);
         mPackRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -192,12 +178,12 @@ public class CurrentPackApplesFragment extends Fragment {
 
                     /** Create Firebase Ref **/
                     DatabaseReference applesListRef = FirebaseDatabase.getInstance()
-                            .getReferenceFromUrl(Constants.FIREBASE_URL_PACK_APPLES).child(packId);
+                            .getReferenceFromUrl(Constants.FIREBASE_URL_PACK_APPLES).child(mCurrentPackId);
                     Query orderdApplesListRef =
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
                     mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple,
-                            PackApplesViewHolder.class, orderdApplesListRef, packId, programId, mEncodedEmail, mPackColor, mInstallId);
+                            PackApplesViewHolder.class, orderdApplesListRef, mCurrentPackId, mCurrentProgramId, mEncodedEmail, mPackColor, mInstallId);
 
 
                     mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);

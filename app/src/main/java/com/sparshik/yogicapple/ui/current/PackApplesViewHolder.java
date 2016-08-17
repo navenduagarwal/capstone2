@@ -56,9 +56,18 @@ public class PackApplesViewHolder extends RecyclerView.ViewHolder {
         field.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
     }
 
-    public void setDownloadTextColor(int color) {
+    public void setDownloadTextVisibility(int visibility) {
         TextView field = (TextView) mView.findViewById(R.id.download_text);
-        field.setBackgroundColor(color);
+        field.setVisibility(visibility);
     }
 
+    public void setDownloadText(String text) {
+        TextView field = (TextView) mView.findViewById(R.id.download_text);
+        field.setText(text);
+    }
+
+    public void setDownloadTextColor(int color) {
+        TextView field = (TextView) mView.findViewById(R.id.download_text);
+        field.setTextColor(color);
+    }
 }

@@ -13,8 +13,8 @@
     <string name="positive_button_create">Create</string>
     <string name="text_you">You</string>
     <string name="lock_lesson_view">Lesson Locked</string>
-    <string name="download_lesson_option">Download Lesson</string>
-    <string name="download_progress_lesson_view">Lesson Downloading Progress</string>
+    <string name="download_apple_prepare">Waiting to download...</string>
+    <string name="download_apple_progress">Downloading...</string>
     <string name="play_apple_option">Play Lesson</string>
 
 
@@ -295,6 +295,8 @@
     <!-- Image Content Description -->
     <string name="image_icon">Icon Image</string>
     <string name="image_state">State Image</string>
+
+    <string name="pack_list_button">Select</string>
 
 
 </resources>

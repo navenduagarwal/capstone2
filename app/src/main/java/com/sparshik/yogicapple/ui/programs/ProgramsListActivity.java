@@ -1,10 +1,6 @@
 package com.sparshik.yogicapple.ui.programs;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.sparshik.yogicapple.R;
@@ -15,7 +11,6 @@ import com.sparshik.yogicapple.utils.Constants;
  * Handles list generation of programs
  */
 public class ProgramsListActivity extends BaseActivity {
-    private int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +32,6 @@ public class ProgramsListActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, programsListFragment)
                     .commit();
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
     }
 }

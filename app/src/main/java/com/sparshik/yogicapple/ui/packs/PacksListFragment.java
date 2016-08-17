@@ -1,7 +1,9 @@
 package com.sparshik.yogicapple.ui.packs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +37,7 @@ public class PacksListFragment extends Fragment {
     private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
     private ImageView mImageViewHeaderIcon, mImageViewHeaderPackImage;
     private LinearLayout mTopContainer;
-    private String mProgramId;
+    private String mProgramId, mCurrentProgramId, mCurrentPackId;
     private RecyclerView mRecycleView;
     private PacksRecylerAdapter mPacksRecylerAdapter;
 
@@ -58,6 +60,10 @@ public class PacksListFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_packs, container, false);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mCurrentProgramId = preferences.getString(Constants.KEY_CURRENT_PROGRAM_ID, null);
+        mCurrentPackId = preferences.getString(Constants.KEY_CURRENT_PACK_ID, null);
 
         Intent intent = getActivity().getIntent();
         mProgramId = intent.getStringExtra(Constants.KEY_PROGRAM_ID);
@@ -86,7 +92,7 @@ public class PacksListFragment extends Fragment {
                             .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(mProgramId);
 
                     mPacksRecylerAdapter = new PacksRecylerAdapter(getActivity(), Pack.class,
-                            R.layout.list_single_item_pack, PacksViewHolder.class, packsListRef, program.getProgramColorInt());
+                            R.layout.list_single_item_pack, PacksViewHolder.class, packsListRef, program.getProgramColorInt(), mProgramId, mCurrentPackId, mCurrentProgramId);
 
                     mRecycleView.setAdapter(mPacksRecylerAdapter);
                 }

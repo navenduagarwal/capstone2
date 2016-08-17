@@ -57,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
+                android:fontFamily="sans-serif"
                 android:hint="@string/hint_enter_password"
                 android:imeOptions="actionDone|flagNoExtractUi"
                 android:inputType="textPassword"

@@ -255,7 +255,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         final String unprocessedEmail = user.getEmail().toLowerCase();
         mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
         final String userName = user.getDisplayName();
-        FireBaseUtils.createUserInFirebaseHelper(mEncodedEmail, userName, user.getUid(), Constants.GOOGLE_PROVIDER);
+        FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, userName, user.getUid(), Constants.GOOGLE_PROVIDER);
     }
 
     /**

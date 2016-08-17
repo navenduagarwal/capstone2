@@ -23,8 +23,9 @@
             android:layout_height="40dp"
             android:layout_marginEnd="@dimen/abc_list_item_padding_horizontal_material"
             android:layout_marginRight="@dimen/abc_list_item_padding_horizontal_material"
+            android:background="@drawable/circle"
             android:contentDescription="@string/image_icon"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             tools:src="@drawable/ic_play_light" />
 
         <LinearLayout
@@ -39,7 +40,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
                 android:textStyle="bold"
                 tools:text="LEVEL 1" />
 
@@ -49,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
                 tools:text="Introduction" />
 
         </LinearLayout>
@@ -61,6 +60,19 @@
             android:layout_margin="8dp"
             android:contentDescription="@string/image_state"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             tools:src="@drawable/ic_pause_light" />
+
+        <Button
+            android:id="@+id/button_state_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/primary_light"
+            android:elevation="4dp"
+            android:text="@string/pack_list_button"
+            android:textColor="@color/black"
+            tools:targetApi="21" />
+
     </LinearLayout>
 </FrameLayout>

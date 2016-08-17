@@ -1,26 +1,34 @@
 package com.sparshik.yogicapple.ui.packs;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.model.Pack;
+import com.sparshik.yogicapple.ui.main.MainActivity;
+import com.sparshik.yogicapple.utils.Constants;
 
 /**
  * Program Packs List Adapter
  */
 public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksViewHolder> {
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_ITEM = 1;
-    private static final int TYPE_FOOTER = 2;
     private Context mContext;
     private int mProgramColor;
+    private String mProgramId, mCurrentProgramId, mCurrentPackId;
 
-    public PacksRecylerAdapter(Context context, Class<Pack> modelClass, int modelLayout, Class<PacksViewHolder> viewHolderClass, Query ref, int programColor) {
+    public PacksRecylerAdapter(Context context, Class<Pack> modelClass, int modelLayout, Class<PacksViewHolder> viewHolderClass,
+                               Query ref, int programColor, String programId, String currentPackId, String currentProgramId) {
         super(modelClass, modelLayout, viewHolderClass, ref);
         this.mContext = context;
         this.mProgramColor = programColor;
+        this.mProgramId = programId;
+        this.mCurrentPackId = currentPackId;
+        this.mCurrentProgramId = currentProgramId;
     }
 
     @Override
@@ -32,9 +40,16 @@ public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksView
             viewHolder.setIconImageVisiblity(View.INVISIBLE);
         }
 
+        final String packId = this.getRef(position).getKey();
+        if (packId.equals(mCurrentPackId)) {
+            viewHolder.setButtonState(View.GONE);
+        } else {
+            viewHolder.setBackGroundColor(View.VISIBLE);
+        }
+
         viewHolder.setTitleText(model.getPackTitle());
 
-        viewHolder.setBackGroundColor(mProgramColor);
+//        viewHolder.setBackGroundColor(mProgramColor);
 
         if (model.getPackShortDesc() != null) {
             viewHolder.setShortDescText(model.getPackShortDesc());
@@ -44,17 +59,18 @@ public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksView
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), PackApplesListActivity.class);
-//                /**
-//                 *Get the program ID using the adapter's get ref method to get the Firebase
-//                 * ref and then grab the key.
-//                 */
-//                String packId = mProgramPacksListAdapter.getRef(position).getKey();
-//                intent.putExtra(Constants.KEY_PACK_ID, packId);
-//                intent.putExtra(Constants.KEY_PROGRAM_ID, mProgramId);
-//                    /* Start an activity showing the packs for selected program */
-//                startActivity(intent);
+                if (!packId.equals(mCurrentPackId)) {
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    preferences.getString(Constants.KEY_ENCODED_EMAIL, null);
+                    SharedPreferences.Editor spe = preferences.edit();
+                    spe.putString(Constants.KEY_CURRENT_PACK_ID, packId).apply();
+                    spe.putString(Constants.KEY_CURRENT_PROGRAM_ID, mProgramId).apply();
+                    Toast.makeText(mContext, "Current Pack Changed Successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }
+
 }

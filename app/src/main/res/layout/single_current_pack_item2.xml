@@ -55,7 +55,7 @@
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/download_lesson_option"
+            android:contentDescription="@string/download"
             android:src="@drawable/ic_file_download_black_24dp"
             android:visibility="visible" />
         <ImageButton

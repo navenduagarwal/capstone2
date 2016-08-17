@@ -70,12 +70,13 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         int altColor = ColorUtils.darkenColor(mPackColor);
         viewHolder.setBackGroundColor(mPackColor);
         viewHolder.setLineColor(altColor);
-        viewHolder.setDownloadTextColor(altColor);
         viewHolder.setCircleColor(mPackColor);
         viewHolder.setLockColor(altColor);
+        viewHolder.setDownloadTextColor(altColor);
 
         if (DownloadService.getDownloadProgress(appleId) != 0) {
             viewHolder.setProgress(DownloadService.getDownloadProgress(appleId));
+            viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_progress));
         }
 
         DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
@@ -89,11 +90,8 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                     File file = new File(userOfflineDownloads.getLocalAudioFile());
                     if (file.exists()) {
                         viewHolder.setProgress(100);
-                    } else {
-                        viewHolder.setProgress(0);
+                        viewHolder.setDownloadTextVisibility(View.GONE);
                     }
-                } else {
-                    viewHolder.setProgress(0);
                 }
             }
 
@@ -106,32 +104,44 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
-                        .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
-                        .child(mEncodedEmail).child(mInstallId).child(appleId);
-                userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        UserOfflineDownloads userOfflineDownloads = dataSnapshot.getValue(UserOfflineDownloads.class);
-                        if (userOfflineDownloads != null) {
-                            File file = new File(userOfflineDownloads.getLocalAudioFile());
-                            if (file.exists()) {
-                                startPlayer(appleId, userOfflineDownloads);
+
+                Log.d("testing adapter", DownloadService.getDownloadProgress(appleId) + "");
+                if (DownloadService.getDownloadProgress(appleId) == 0) {
+                    DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
+                            .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
+                            .child(mEncodedEmail).child(mInstallId).child(appleId);
+
+                    userAppleStatusRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            UserOfflineDownloads userOfflineDownloads = dataSnapshot.getValue(UserOfflineDownloads.class);
+                            if (userOfflineDownloads != null) {
+                                File file = new File(userOfflineDownloads.getLocalAudioFile());
+                                if (file.exists()) {
+                                    startPlayer(appleId, userOfflineDownloads);
+                                } else {
+                                    viewHolder.setProgress(0);
+                                    downloadAppleFiles(appleId, audioUrl);
+                                    viewHolder.setDownloadTextVisibility(View.VISIBLE);
+                                    viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_prepare));
+                                }
                             } else {
                                 viewHolder.setProgress(0);
                                 downloadAppleFiles(appleId, audioUrl);
+                                viewHolder.setDownloadTextVisibility(View.VISIBLE);
+                                viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_prepare));
                             }
-                        } else {
-                            viewHolder.setProgress(0);
-                            downloadAppleFiles(appleId, audioUrl);
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e(LOG_TAG, context.getResources().getString(R.string.log_error_the_read_failed));
-                    }
-                });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(LOG_TAG, context.getResources().getString(R.string.log_error_the_read_failed));
+                        }
+                    });
+                } else {
+                    Log.d("Testing what", "Got stucked");
+                }
             }
         });
 
