@@ -183,7 +183,7 @@ public class CurrentPackApplesFragment extends Fragment {
                             applesListRef.orderByChild(Constants.FIREBASE_PROPERTY_APPLE_SEQ_NUMBER);
 
                     mCurrentPackAppleRecyclerAdapter = new CurrentPackApplesRecyclerAdapter(getContext(), PackApple.class, R.layout.list_single_item_apple,
-                            PackApplesViewHolder.class, orderdApplesListRef, mCurrentPackId, mCurrentProgramId, mEncodedEmail, mPackColor, mInstallId);
+                            CurrentPackApplesViewHolder.class, orderdApplesListRef, mCurrentPackId, mCurrentProgramId, mEncodedEmail, mPackColor, mInstallId);
 
 
                     mRecycleView.setAdapter(mCurrentPackAppleRecyclerAdapter);

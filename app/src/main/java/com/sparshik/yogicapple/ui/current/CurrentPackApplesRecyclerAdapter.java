@@ -3,6 +3,7 @@ package com.sparshik.yogicapple.ui.current;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ import java.io.File;
 /**
  * Recycler Adapter to populate list of apples for current program
  */
-public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<PackApple, PackApplesViewHolder> {
+public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<PackApple, CurrentPackApplesViewHolder> {
     private static final String LOG_TAG = CurrentPackApplesRecyclerAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
@@ -41,7 +42,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     private Context context;
     private String mInstallId;
 
-    public CurrentPackApplesRecyclerAdapter(Context context, Class<PackApple> modelClass, int modelLayout, Class<PackApplesViewHolder> viewHolderClass, Query ref,
+    public CurrentPackApplesRecyclerAdapter(Context context, Class<PackApple> modelClass, int modelLayout, Class<CurrentPackApplesViewHolder> viewHolderClass, Query ref,
                                             String mPackId, String mProgramId, String mEncodedEmail, int mPackColor, String installId) {
         super(modelClass, modelLayout, viewHolderClass, ref);
         this.mPackId = mPackId;
@@ -53,14 +54,14 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     }
 
     @Override
-    protected void populateViewHolder(final PackApplesViewHolder viewHolder, PackApple model, int position) {
+    protected void populateViewHolder(final CurrentPackApplesViewHolder viewHolder, PackApple model, int position) {
 
         if (model.getAppleSeqNumber() < 10) {
             String sequenceText = "0" + model.getAppleSeqNumber();
-            viewHolder.setSeqText(sequenceText);
+            viewHolder.mSeqNumberText.setText(sequenceText);
         } else {
             String sequenceText = "" + model.getAppleSeqNumber();
-            viewHolder.setSeqText(sequenceText);
+            viewHolder.mSeqNumberText.setText(sequenceText);
         }
 
 
@@ -68,15 +69,18 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         final String audioUrl = model.getAudioURL();
 
         int altColor = ColorUtils.darkenColor(mPackColor);
-        viewHolder.setBackGroundColor(mPackColor);
-        viewHolder.setLineColor(altColor);
-        viewHolder.setCircleColor(mPackColor);
-        viewHolder.setLockColor(altColor);
-        viewHolder.setDownloadTextColor(altColor);
+        viewHolder.mLineView.setBackgroundColor(altColor);
+        viewHolder.mContainer.setBackgroundColor(mPackColor);
+        viewHolder.mProgressBar.setBackgroundColor(mPackColor);
+        viewHolder.mProgressBar.setInnerColor(altColor);
+        viewHolder.mProgressBar.setStrokeColor(altColor);
+        viewHolder.mProgressBar.setUseRing(true);
+        viewHolder.mAppleState.setColorFilter(altColor, PorterDuff.Mode.MULTIPLY);
+        viewHolder.mDownloadText.setTextColor(altColor);
 
         if (DownloadService.getDownloadProgress(appleId) != 0) {
-            viewHolder.setProgress(DownloadService.getDownloadProgress(appleId));
-            viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_progress));
+            viewHolder.mProgressBar.setProgress(DownloadService.getDownloadProgress(appleId));
+            viewHolder.mDownloadText.setText(context.getResources().getString(R.string.download_apple_progress));
         }
 
         DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
@@ -89,8 +93,8 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                 if (userOfflineDownloads != null) {
                     File file = new File(userOfflineDownloads.getLocalAudioFile());
                     if (file.exists()) {
-                        viewHolder.setProgress(100);
-                        viewHolder.setDownloadTextVisibility(View.GONE);
+                        viewHolder.mProgressBar.setProgress(100);
+                        viewHolder.mDownloadText.setVisibility(View.GONE);
                     }
                 }
             }
@@ -101,7 +105,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
             }
         });
 
-        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -120,16 +124,16 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                                 if (file.exists()) {
                                     startPlayer(appleId, userOfflineDownloads);
                                 } else {
-                                    viewHolder.setProgress(0);
+                                    viewHolder.mProgressBar.setProgress(0);
                                     downloadAppleFiles(appleId, audioUrl);
-                                    viewHolder.setDownloadTextVisibility(View.VISIBLE);
-                                    viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_prepare));
+                                    viewHolder.mDownloadText.setVisibility(View.VISIBLE);
+                                    viewHolder.mDownloadText.setText(context.getResources().getString(R.string.download_apple_prepare));
                                 }
                             } else {
-                                viewHolder.setProgress(0);
+                                viewHolder.mProgressBar.setProgress(0);
                                 downloadAppleFiles(appleId, audioUrl);
-                                viewHolder.setDownloadTextVisibility(View.VISIBLE);
-                                viewHolder.setDownloadText(context.getResources().getString(R.string.download_apple_prepare));
+                                viewHolder.mDownloadText.setVisibility(View.VISIBLE);
+                                viewHolder.mDownloadText.setText(context.getResources().getString(R.string.download_apple_prepare));
                             }
 
                         }
@@ -148,10 +152,10 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
     }
 
     @Override
-    public PackApplesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CurrentPackApplesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_FOOTER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_empty, parent, false);
-            return new FooterViewViewHolder(v);
+            return new FooterViewViewHolderCurrent(v);
         }
         return super.onCreateViewHolder(parent, viewType);
     }
@@ -198,10 +202,10 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         });
     }
 
-    class FooterViewViewHolder extends PackApplesViewHolder {
+    class FooterViewViewHolderCurrent extends CurrentPackApplesViewHolder {
         TextView txtTitleFooter;
 
-        public FooterViewViewHolder(View itemView) {
+        public FooterViewViewHolderCurrent(View itemView) {
             super(itemView);
             this.txtTitleFooter = (TextView) itemView.findViewById(R.id.text_view_listview_footer);
         }
