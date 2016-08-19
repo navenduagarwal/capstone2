@@ -2,8 +2,10 @@ package com.sparshik.yogicapple.ui.groups;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -122,7 +124,10 @@ public class CreateChatProfileActivity extends BaseActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 mAddProgressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), getString(R.string.record_add_success), Toast.LENGTH_SHORT).show();
-//                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateChatProfileActivity.this);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateChatProfileActivity.this);
+                SharedPreferences.Editor spe = preferences.edit();
+                spe.putString(Constants.KEY_CHAT_NICK_NAME, mNickname).apply();
+                spe.putInt(Constants.KEY_CHAT_PROFILE_IMAGE_RES_ID, mChatProfileImageResId).apply();
                 Intent intentChat = new Intent(CreateChatProfileActivity.this, GroupChatActivity.class);
                 intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
                 startActivity(intentChat);

@@ -68,6 +68,8 @@ public class Constants {
     public static final String KEY_GROUP_ID = "GROUP_ID";
     public static final String KEY_CHAT_MESSAGE_LENGTH = "CHAT_MESSAGE_LENGTH";
     public static final String KEY_CHAT_PROFILE_ID = "CHAT_PROFILE_ID";
+    public static final String KEY_CHAT_NICK_NAME = "CHAT_NICK_NAME";
+    public static final String KEY_CHAT_PROFILE_IMAGE_RES_ID = "CHAT_PROFILE_IMAGE_RES_ID";
 
 
     /**

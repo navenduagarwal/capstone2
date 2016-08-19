@@ -2,7 +2,9 @@ package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -90,28 +92,37 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
      */
     public void checkForChatProfile(final String groupId) {
 
-        DatabaseReference chatProfileRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_GROUP_CHAT_PROFILES).child(mEncodedEmail);
-        chatProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                UserChatProfile userChatProfile = dataSnapshot.getValue(UserChatProfile.class);
-                if (userChatProfile != null) {
-                    Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
-                    intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
-                    mActivity.startActivity(intentChat);
-                } else {
-                    Intent intentCreate = new Intent(mActivity, CreateChatProfileActivity.class);
-                    intentCreate.putExtra(Constants.KEY_GROUP_ID, groupId);
-                    mActivity.startActivity(intentCreate);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        String nickName = preferences.getString(Constants.KEY_CHAT_NICK_NAME, null);
+        int profileImageResId = preferences.getInt(Constants.KEY_CHAT_PROFILE_IMAGE_RES_ID, 0);
+        if (nickName == null && profileImageResId == 0) {
+            DatabaseReference chatProfileRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_GROUP_CHAT_PROFILES).child(mEncodedEmail);
+            chatProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    UserChatProfile userChatProfile = dataSnapshot.getValue(UserChatProfile.class);
+                    if (userChatProfile != null) {
+                        Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
+                        intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
+                        mActivity.startActivity(intentChat);
+                    } else {
+                        Intent intentCreate = new Intent(mActivity, CreateChatProfileActivity.class);
+                        intentCreate.putExtra(Constants.KEY_GROUP_ID, groupId);
+                        mActivity.startActivity(intentCreate);
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(mActivity.getClass().getSimpleName(), mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(mActivity.getClass().getSimpleName(), mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
+                }
+            });
+        } else {
+            Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
+            intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
+            mActivity.startActivity(intentChat);
+        }
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {
