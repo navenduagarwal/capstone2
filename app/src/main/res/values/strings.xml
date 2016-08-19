@@ -192,6 +192,9 @@
     <string name="hint_select_chat_profile_image">Select profile image for group chat</string>
     <string name="button_create">Create</string>
 
+    <!-- Add Profile -->
+    <string name="hint_file_profile_pic">Select image for chat profile pic</string>
+
     <!--Firebase -->
     <string name="record_add_success">Record Added</string>
     <string name="format_upload_progress">Upload: <xliff:g id="progress">%1.0f</xliff:g> %% complete</string>

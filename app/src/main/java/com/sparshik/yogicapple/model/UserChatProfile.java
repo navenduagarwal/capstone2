@@ -6,21 +6,21 @@ package com.sparshik.yogicapple.model;
  */
 public class UserChatProfile {
     private String nickName;
-    private int chatImageResId;
+    private String chatProfilePicUrl;
 
     public UserChatProfile() {
     }
 
-    public UserChatProfile(String nickName, int chatImageResId) {
+    public UserChatProfile(String nickName, String chatProfilePicUrl) {
         this.nickName = nickName;
-        this.chatImageResId = chatImageResId;
+        this.chatProfilePicUrl = chatProfilePicUrl;
     }
 
     public String getNickName() {
         return nickName;
     }
 
-    public int getChatImageResId() {
-        return chatImageResId;
+    public String getChatProfilePicUrl() {
+        return chatProfilePicUrl;
     }
 }

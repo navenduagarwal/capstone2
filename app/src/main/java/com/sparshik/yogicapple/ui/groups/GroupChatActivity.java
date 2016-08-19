@@ -7,13 +7,14 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -41,9 +42,9 @@ public class GroupChatActivity extends BaseActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private ProgressBar mProgressBar;
     private EditText mMesssageEditText;
-    private String mGroupId;
-    private Button mSendButton;
-
+    private String mGroupId, mGroupName;
+    private ImageButton mSendButton;
+    private String mUserNickname, mUserProfileImageUrl;
     private GroupChatAdapter mGroupChatAdapter;
     private DatabaseReference mGroupChatRef;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -57,14 +58,24 @@ public class GroupChatActivity extends BaseActivity {
 
         Intent intent = getIntent();
         mGroupId = intent.getStringExtra(Constants.KEY_GROUP_ID);
+        mGroupName = intent.getStringExtra(Constants.KEY_GROUP_NAME);
 
-        if (mGroupId == null) {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUserNickname = mSharedPreferences.getString(Constants.KEY_CHAT_NICK_NAME, null);
+        mUserProfileImageUrl = mSharedPreferences.getString(Constants.KEY_CHAT_PROFILE_IMAGE_URL, null);
+
+        if (mGroupName == null | mGroupId == null || mUserNickname == null || mUserProfileImageUrl == null) {
             //No point in continuing with valid group id */
-            Toast.makeText(this, "Group Id not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "One among groupName, groupId, nickName or profileImage found", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, GroupsActivity.class));
         }
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        /* Add back button to the action bar */
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         initializeScreen();
 
@@ -77,6 +88,8 @@ public class GroupChatActivity extends BaseActivity {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 int chatMessageCount = mGroupChatAdapter.getItemCount();
+                String title = mGroupName + " (" + chatMessageCount + ")";
+                setTitle(title);
                 int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
                 // If the recycler view is initially being loaded or the user is at the bottom of the list, scroll
                 // to the bottom of the list to show the newly added message.
@@ -123,8 +136,11 @@ public class GroupChatActivity extends BaseActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
                     mSendButton.setEnabled(true);
+                    mSendButton.setBackgroundColor(getResources().getColor(R.color.primary_light));
                 } else {
                     mSendButton.setEnabled(false);
+                    mSendButton.setBackgroundColor(getResources().getColor(R.color.grey));
+
                 }
             }
 
@@ -139,8 +155,8 @@ public class GroupChatActivity extends BaseActivity {
             public void onClick(View view) {
                 HashMap<String, Object> timestampCreated = new HashMap<>();
                 timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-
-                ChatMessage newChatMessage = new ChatMessage(mMesssageEditText.getText().toString(), mEncodedEmail, false, timestampCreated);
+                timestampCreated.put(Constants.FIREBASE_PROPERTY_CREATED_BY, mEncodedEmail);
+                ChatMessage newChatMessage = new ChatMessage(mMesssageEditText.getText().toString(), mUserNickname, mUserProfileImageUrl, false, timestampCreated);
                 mGroupChatRef.push().setValue(newChatMessage);
                 mMesssageEditText.setText("");
                 mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);
@@ -157,7 +173,7 @@ public class GroupChatActivity extends BaseActivity {
     }
 
     public void initializeScreen() {
-        mSendButton = (Button) findViewById(R.id.sendButton);
+        mSendButton = (ImageButton) findViewById(R.id.sendButton);
         mMesssageEditText = (EditText) findViewById(R.id.edit_text_chat_message);
         mRecycleViewMessage = (RecyclerView) findViewById(R.id.recycler_view_chats);
         mLinearLayoutManager = new LinearLayoutManager(this);

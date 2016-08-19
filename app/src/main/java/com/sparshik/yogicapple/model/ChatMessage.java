@@ -7,16 +7,18 @@ import java.util.HashMap;
  */
 public class ChatMessage {
     private String text;
-    private String encodedEmail;
+    private String nickName;
+    private String userProfilePicUrl;
     private boolean flagged;
     private HashMap<String, Object> timestampCreated;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, String encodedEmail, boolean flagged, HashMap<String, Object> timestampCreated) {
+    public ChatMessage(String text, String nickName, String userProfilePicUrl, boolean flagged, HashMap<String, Object> timestampCreated) {
         this.text = text;
-        this.encodedEmail = encodedEmail;
+        this.nickName = nickName;
+        this.userProfilePicUrl = userProfilePicUrl;
         this.flagged = flagged;
         this.timestampCreated = timestampCreated;
     }
@@ -25,8 +27,12 @@ public class ChatMessage {
         return text;
     }
 
-    public String getEncodedEmail() {
-        return encodedEmail;
+    public String getNickName() {
+        return nickName;
+    }
+
+    public String getUserProfilePicUrl() {
+        return userProfilePicUrl;
     }
 
     public boolean isFlagged() {

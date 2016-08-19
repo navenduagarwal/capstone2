@@ -66,10 +66,11 @@ public class Constants {
     public static final String KEY_CURRENT_PROGRAM_ID = "CURRENT_PROGRAM_ID";
     public static final String KEY_CURRENT_PACK_ID = "CURRENT_PACK_ID";
     public static final String KEY_GROUP_ID = "GROUP_ID";
+    public static final String KEY_GROUP_NAME = "GROUP_NAME";
     public static final String KEY_CHAT_MESSAGE_LENGTH = "CHAT_MESSAGE_LENGTH";
     public static final String KEY_CHAT_PROFILE_ID = "CHAT_PROFILE_ID";
     public static final String KEY_CHAT_NICK_NAME = "CHAT_NICK_NAME";
-    public static final String KEY_CHAT_PROFILE_IMAGE_RES_ID = "CHAT_PROFILE_IMAGE_RES_ID";
+    public static final String KEY_CHAT_PROFILE_IMAGE_URL = "CHAT_PROFILE_IMAGE_RES_ID";
 
 
     /**
