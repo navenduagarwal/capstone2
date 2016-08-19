@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,8 @@ import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.main.MainActivity;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.views.InteractivePlayerView;
+
+import java.io.File;
 
 public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listener {
     private static final String LOG_TAG = ExoPlayerActivity.class.getSimpleName();
@@ -100,9 +103,6 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
         mainHandler = new Handler();
 
-        //Initializing Player UI
-        ipv = (InteractivePlayerView) findViewById(R.id.ipv);
-        ipv.setProgress(0);
 
         mPackRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(mProgramId).child(mPackId);
@@ -117,7 +117,6 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                     appleText.setText(packApple.getAppleTitle());
                     String duration = packApple.getAppleDuration() / 60 + " minutes";
                     durationText.setText(duration);
-                    ipv.setMax(packApple.getAppleDuration());
                 }
             }
 
@@ -150,10 +149,27 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
         mAudioUri = Uri.parse(mAudioUrl);
 
+        //Initializing Player UI
+        ipv = (InteractivePlayerView) findViewById(R.id.ipv);
+        ipv.setProgress(0);
+
+        //Converting local filename string to Uri
+        mAudioUri = Uri.parse(mAudioUrl);
+
         //Finding out media duration
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(this, mAudioUri);
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        int durationSecond = Integer.parseInt(durationStr) / 1000;
+        ipv.setMax(durationSecond);
 
-
+        stopPlayback();
         startPlayBack();
+        File file = new File(mAudioUrl);
+        if (!file.exists()) {
+            Toast.makeText(this, "File is not available", Toast.LENGTH_SHORT).show();
+            intentApplesList();
+        }
 
 
         control.setOnClickListener(new View.OnClickListener() {

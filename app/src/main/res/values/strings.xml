@@ -7,6 +7,10 @@
     <string name="app_name">YogicApple</string>
     <string name="activity_title_programs">Programs</string>
     <string name="activity_title_packs">Choose a Pack</string>
+    <string name="activity_title_create_group">Create New Support Group</string>
+    <string name="activity_title_join_group">Join Support Group</string>
+
+
     <string name="pager_title_current">Current Pack</string>
     <string name="pager_title_progress">My Progress</string>
     <string name="remove_item_option">Remove Item</string>
@@ -28,97 +32,13 @@
     <string name="action_logout">Logout</string>
     <string name="action_sort">Sort</string>
     <string name="action_programs">Programs</string>
+    <string name="action_create_group">Create New Support Group</string>
+    <string name="action_join_group">Join Support Group</string>
+    <string name="action_support_group">Support Groups</string>
 
+    == Login and Create Account Strings ==
 
-    <!--
-
-    == Active List Strings ==
-
-     -->
-    <!-- Add List Dialog-->
-    <string name="hint_add_shopping_list">Create a list</string>
-
-    <!-- List of Shopping Lists Strings -->
-    <string name="created_by">Created by </string>
-    <string name="person_shopping">%d person shopping</string>
-    <string name="people_shopping">%d people shopping</string>
-
-
-    <!--
-
-     == Active List Details Strings ==
-
-      -->
-    <!-- Activity Title  -->
-    <string name="title_activity_list_details">List Details</string>
-
-    <!-- Menu Items -->
-    <string name="action_edit_list_name">Edit list name</string>
-
-    <!-- Edit List and Add Item Dialogs -->
-    <string name="positive_button_add_list_item">Add item</string>
-    <string name="positive_button_edit_item">Edit name</string>
-    <string name="negative_button_cancel">Cancel</string>
-    <string name="dialog_message_are_you_sure_remove_list">Are you sure you want to remove this list?</string>
-    <string name="dialog_message_are_you_sure_remove_item">Are you sure you want to remove this item?</string>
-
-    <!-- Shopping Mode -->
-    <string name="button_stop_shopping">Stop Shopping</string>
-    <string name="button_start_shopping">Start Shopping</string>
-
-    <string name="text_you_are_shopping">You are shopping</string>
-    <string name="text_you_and_other_are_shopping">You and %s are shopping</string>
-    <string name="text_you_and_number_are_shopping">You and %d others are shopping</string>
-
-    <string name="text_other_is_shopping">%s is shopping</string>
-    <string name="text_other_and_other_are_shopping">%1$s and %2$s are shopping</string>
-    <string name="text_other_and_number_are_shopping">%1$s and %2$d others are shopping</string>
-
-    <string name="bought_by">Bought by</string>
-
-    <!--
-
-     == Meal Strings ==
-
-      -->
-
-    <!-- Activity Title  -->
-    <string name="title_activity_meal_details">Meal Details</string>
-    <string name="title_activity_add_items_from_meal">Add Meal</string>
-
-    <!-- Add, Edit and Remove Meal Dialogs -->
-    <string name="hint_add_meal">Create a meal</string>
-    <string name="dialog_title_remove_meal">Remove meal</string>
-    <string name="dialog_message_are_you_sure_remove_meal">Are you sure you want to remove this meal?</string>
-    <string name="hint_enter_meal_name">Enter meal name</string>
-
-
-    <!--
-
-     == Archived List Strings ==
-
-      -->
-    <!-- Activity Titles  -->
-    <string name="title_activity_archived_lists">Archived Lists</string>
-    <string name="title_activity_archived_list_details">Archived List Details</string>
-
-    <!-- Archive Dialogs  -->
-    <string name="dialog_title_copy_list">Copy List</string>
-    <string name="dialog_title_archive_list">Archive list</string>
-    <string name="dialog_message_are_you_sure_archive_list">Are you sure you want to archive this list?</string>
-    <string name="dialog_message_do_you_want_to_copy">Do you want to copy this list?</string>
-    <string name="toast_shopping_list_was_archived">Shopping List %s was archived.</string>
-
-
-    <!-- Archived Lists in Active Lists -->
-    <string name="button_footer_archived_lists">Archived Lists</string>
-
-
-    <!--
-
-     == Login and Create Account Strings ==
-
-      -->
+    -->
     <!-- Activity Titles  -->
     <string name="title_activity_create_account">Create Account</string>
 
@@ -137,9 +57,10 @@
 
     <!-- Instructions and Loading Text -->
     <string name="progress_dialog_loading">Loading…</string>
-    <string name="progress_dialog_authenticating_with_firebase">Authenticating with Firebase…</string>
+    <string name="progress_dialog_authenticating_with_firebase">Authenticating with Server…</string>
     <string name="progress_dialog_creating_user_with_firebase">Attempting to create account…</string>
     <string name="progress_dialog_check_inbox">Please check your inbox to reset password and login again</string>
+    <string name="progress_dialog_add">Attempting to create new record</string>
 
     <!-- Errors -->
     <string name="dialog_title_error">Error</string>
@@ -153,6 +74,7 @@
     <string name="error_invalid_password_not_valid">Please enter a password that is at least 6 characters long.</string>
     <string name="error_cannot_be_empty">This cannot be empty.</string>
     <string name="storage_permission_denied">You must give application permission to read external storage</string>
+    <string name="error_firebase_add">Record could not be added to Database</string>
 
 
     <!-- Google Errors -->
@@ -173,18 +95,6 @@
     <string name="log_message_password_changed_successfully">Password changed successfully from temporary password to </string>
     <string name="log_message_auth_successful">auth successful.</string>
 
-    <!--
-
-     == Sharing Strings ==
-
-      -->
-    <!-- Activity Titles -->
-    <string name="title_activity_share_list">Share List</string>
-    <string name="title_activity_add_friend">Add Friend</string>
-
-    <!-- Add a friend -->
-    <string name="hint_enter_friends_email">Enter your friend\'s email</string>
-    <string name="text_add_friend">Add New Friend</string>
 
     <!-- Toast Errors -->
     <string name="toast_is_already_your_friend">%s is already your friend!</string>
@@ -205,14 +115,7 @@
     <string name="pref_name_sort_order_lists">pref_sort_order_lists</string>
 
     <!-- Ordering Choices Labels : Lists -->
-    <string name="pref_sort_list_label_sortType">Order by</string>
-    <string name="pref_sort_list_label_publish_time_entry">Publish Time</string>
-    <string name="pref_sort_list_label_list_name_entry">List Name</string>
-    <string name="pref_sort_list_label_owner_entry">Owner Email</string>
-    <string name="pref_sort_list_label_most_recently_changed_entry">Most Recently Changed</string>
     <string name="title_activity_settings">Settings</string>
-
-    <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -224,41 +127,6 @@
 
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
@@ -297,6 +165,29 @@
     <string name="image_state">State Image</string>
 
     <string name="pack_list_button">Select</string>
+
+
+    <!-- Add group strings -->
+    <string name="hint_add_group_name">Add Name (max 40 alphabets)</string>
+    <string name="hint_add_group_desc">Add description (max 200 alphabets)</string>
+    <string name="hint_select_icon_file">Select icon image</string>
+    <string name="button_file_select">Select</string>
+    <string name="button_add">Add</string>
+    <string name="error_invalid_name">Invalid Group Name- min 3,max 40 char</string>
+    <string name="error_invalid_desc">Invalid Description- min 10, max 200 char</string>
+    <string name="error_invalid_file_name">Invalid file or no file selected</string>
+    <string name="hint_enter_groups_name">Start typing to search a group and join</string>
+    <string name="toast_is_already_your_group">You are already member of %s group!</string>
+    <string name="format_number_of_members"><xliff:g id="members">%1$s</xliff:g> members</string>
+    <string name="format_single_member"><xliff:g id="member">%1$s</xliff:g> member</string>
+
+
+    <!--Firebase -->
+    <string name="record_add_success">Record Added</string>
+    <string name="format_upload_progress">Upload: <xliff:g id="progress">%1.0f</xliff:g> %% complete</string>
+    <string name="record_delete_success"><xliff:g id="type">%1$s</xliff:g> record deleted successfully</string>
+    <string name="record_delete_error"><xliff:g id="type">%1$s</xliff:g> record delete unsuccessful</string>
+    <string name="title_activity_support_group">SupportGroupActivity</string>
 
 
 </resources>

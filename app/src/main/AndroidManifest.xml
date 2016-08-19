@@ -60,15 +60,15 @@
           Android N SDK has new restrictions around sharing file:// URIs
           https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition
         -->
-        <!--<provider-->
-        <!--android:name="android.support.v4.content.FileProvider"-->
-        <!--android:authorities="com.sparshik.yogicapple.ui.admin.fileprovider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/file_paths" />-->
-        <!--</provider>-->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="com.sparshik.yogicapple.ui.admin.fileprovider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/file_paths" /> -->
+        <!-- </provider> -->
 
         <activity
             android:name=".ui.player.ExoPlayerActivity"
@@ -95,6 +95,32 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.programs.ProgramsListActivity" />
         </activity>
+        <activity
+            android:name=".ui.groups.CreateGroupActivity"
+            android:label="@string/activity_title_create_group"
+            android:parentActivityName=".ui.groups.JoinGroupActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.groups.JoinGroupActivity" />
+        </activity>
+        <activity
+            android:name=".ui.groups.JoinGroupActivity"
+            android:label="@string/action_join_group"
+            android:parentActivityName=".ui.groups.GroupsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.groups.GroupsActivity" />
+        </activity>
+        <activity
+            android:name=".ui.groups.GroupsActivity"
+            android:label="@string/title_activity_support_group"
+            android:parentActivityName=".ui.main.MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sparshik.yogicapple.ui.main.MainActivity" />
+        </activity>
+        <activity android:name=".ui.groups.GroupChatsActivity"></activity>
     </application>
 
 </manifest>

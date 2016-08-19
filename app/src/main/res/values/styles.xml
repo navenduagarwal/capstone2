@@ -30,6 +30,7 @@
 
     <style name="HintText">
         <item name="android:textSize">8sp</item>
+        <item name="android:textColor">@color/dark_grey</item>
     </style>
 
     <style name="LoginCreateTextButton">

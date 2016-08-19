@@ -25,6 +25,7 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.current.CurrentPackApplesFragment;
+import com.sparshik.yogicapple.ui.groups.GroupsActivity;
 import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
 import com.sparshik.yogicapple.utils.Constants;
@@ -103,6 +104,8 @@ public class MainActivity extends BaseActivity {
         if (id == R.id.action_programs) {
             startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
             return true;
+        } else if (id == R.id.action_support_group) {
+            startActivity(new Intent(MainActivity.this, GroupsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

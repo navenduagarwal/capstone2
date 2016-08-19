@@ -3,19 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
     <item
-        android:id="@+id/action_programs"
+        android:id="@+id/action_create_groups"
         android:animateLayoutChanges="true"
-        android:icon="@drawable/ic_collections_bookmark_white_24dp"
+        android:icon="@drawable/fab_plus"
         android:orderInCategory="100"
-        android:title="@string/action_programs"
-        android:visible="true"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_support_group"
-        android:animateLayoutChanges="true"
-        android:icon="@drawable/ic_people_white_24dp"
-        android:orderInCategory="100"
-        android:title="@string/action_support_group"
+        android:title="@string/action_create_group"
         android:visible="true"
         app:showAsAction="ifRoom" />
 

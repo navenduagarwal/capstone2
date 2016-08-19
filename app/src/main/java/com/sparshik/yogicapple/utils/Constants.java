@@ -13,6 +13,8 @@ public class Constants {
     public static final String FIREBASE_LOCATION_PROGRAM_PACKS = "programPacks";
     public static final String FIREBASE_LOCATION_PACK_APPLES = "packApples";
     public static final String FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS = "userOfflineDownloads";
+    public static final String FIREBASE_LOCATION_SUPPORT_GROUPS = "supportGroups";
+    public static final String FIREBASE_LOCATION_USER_SUPPORT_GROUPS = "userSupportGroups";
 
     /**
      * Constants for Firebase object properties
@@ -24,6 +26,7 @@ public class Constants {
     public static final String FIREBASE_PROPERTY_LAST_CHANGED_BY = "lastChangedBy";
     public static final String FIREBASE_PROPERTY_USER_IS_VERIFIED = "verified";
     public static final String FIREBASE_PROPERTY_APPLE_SEQ_NUMBER = "appleSeqNumber";
+    public static final String FIREBASE_PROPERTY_GROUP_NAME = "groupName";
 
     /**
      * Constants for Firebase Database URL
@@ -34,7 +37,8 @@ public class Constants {
     public static final String FIREBASE_URL_PROGRAM_PACKS = FIREBASE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
     public static final String FIREBASE_URL_PACK_APPLES = FIREBASE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
     public static final String FIREBASE_URL_USER_OFFLINE_DOWNLOADS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS;
-
+    public static final String FIREBASE_URL_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_SUPPORT_GROUPS;
+    public static final String FIREBASE_URL_USER_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_SUPPORT_GROUPS;
     /**
      * Constants for Firebase Storage URL
      */
@@ -42,7 +46,7 @@ public class Constants {
     public static final String FIREBASE_STORAGE_URL_PROGRAMS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PROGRAMS;
     public static final String FIREBASE_STORAGE_URL_PROGRAM_PACKS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
     public static final String FIREBASE_STORAGE_URL_PACK_APPLES = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
-
+    public static final String FIREBASE_STORAGE_URL_SUPPORT_GROUPS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_SUPPORT_GROUPS;
     /**
      * Constants for bundles, extras and shared preferences keys
      */
