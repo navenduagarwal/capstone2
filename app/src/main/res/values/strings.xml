@@ -9,6 +9,8 @@
     <string name="activity_title_packs">Choose a Pack</string>
     <string name="activity_title_create_group">Create New Support Group</string>
     <string name="activity_title_join_group">Join Support Group</string>
+    <string name="title_activity_support_group">Support Groups</string>
+
 
 
     <string name="pager_title_current">Current Pack</string>
@@ -181,13 +183,15 @@
     <string name="format_number_of_members"><xliff:g id="members">%1$s</xliff:g> members</string>
     <string name="format_single_member"><xliff:g id="member">%1$s</xliff:g> member</string>
 
+    <!-- ChatMessage Message Strings -->
+    <string name="hint_chat_message">Type your message here...</string>
+    <string name="chat_send_button">Send</string>
 
     <!--Firebase -->
     <string name="record_add_success">Record Added</string>
     <string name="format_upload_progress">Upload: <xliff:g id="progress">%1.0f</xliff:g> %% complete</string>
     <string name="record_delete_success"><xliff:g id="type">%1$s</xliff:g> record deleted successfully</string>
     <string name="record_delete_error"><xliff:g id="type">%1$s</xliff:g> record delete unsuccessful</string>
-    <string name="title_activity_support_group">SupportGroupActivity</string>
 
 
 </resources>

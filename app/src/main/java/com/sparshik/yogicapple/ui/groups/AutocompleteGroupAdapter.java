@@ -1,6 +1,7 @@
 package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -55,7 +56,7 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (isNotAlreadyAdded(dataSnapshot, supportGroup)) {
                             supportGroupRef.setValue(supportGroup);
-                            mActivity.finish();
+                            mActivity.startActivity(new Intent(mActivity, GroupsActivity.class));
                         }
                     }
 

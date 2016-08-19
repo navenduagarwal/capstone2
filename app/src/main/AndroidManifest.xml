@@ -72,6 +72,7 @@
 
         <activity
             android:name=".ui.player.ExoPlayerActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_media_player"
             android:parentActivityName=".ui.main.MainActivity"
             android:theme="@style/AppTheme">
@@ -81,6 +82,7 @@
         </activity>
         <activity
             android:name=".ui.programs.ProgramsListActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/activity_title_programs"
             android:parentActivityName=".ui.main.MainActivity">
             <meta-data
@@ -89,6 +91,7 @@
         </activity>
         <activity
             android:name=".ui.packs.PacksListActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/activity_title_packs"
             android:parentActivityName=".ui.programs.ProgramsListActivity">
             <meta-data
@@ -97,6 +100,7 @@
         </activity>
         <activity
             android:name=".ui.groups.CreateGroupActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/activity_title_create_group"
             android:parentActivityName=".ui.groups.JoinGroupActivity">
             <meta-data
@@ -105,6 +109,7 @@
         </activity>
         <activity
             android:name=".ui.groups.JoinGroupActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/action_join_group"
             android:parentActivityName=".ui.groups.GroupsActivity">
             <meta-data
@@ -113,6 +118,7 @@
         </activity>
         <activity
             android:name=".ui.groups.GroupsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_support_group"
             android:parentActivityName=".ui.main.MainActivity"
             android:theme="@style/AppTheme">
@@ -120,7 +126,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sparshik.yogicapple.ui.main.MainActivity" />
         </activity>
-        <activity android:name=".ui.groups.GroupChatsActivity"></activity>
+        <activity
+            android:name=".ui.groups.GroupChatActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".ui.groups.GroupsActivity"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.groups.GroupsActivity" />
+        </activity>
     </application>
 
 </manifest>

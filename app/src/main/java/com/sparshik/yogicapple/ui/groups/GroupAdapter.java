@@ -1,6 +1,7 @@
 package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -20,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
 import com.sparshik.yogicapple.ui.groups.GroupAdapter.GroupViewHolder;
+import com.sparshik.yogicapple.utils.Constants;
 
 
 /**
@@ -37,6 +39,9 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
 
     @Override
     protected void populateViewHolder(final GroupViewHolder viewHolder, SupportGroup supportGroup, int position) {
+
+        final String groupId = this.getRef(position).getKey();
+
         viewHolder.mTextViewGroupName.setText(supportGroup.getGroupName());
         if (supportGroup.getMemberCount() < 2) {
             viewHolder.mTextViewGroupMembers.setText(mActivity.getString(R.string.format_single_member, supportGroup.getMemberCount()));
@@ -60,7 +65,9 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
         viewHolder.mGroupItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "Container", Toast.LENGTH_SHORT).show();
+                Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
+                intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
+                mActivity.startActivity(intentChat);
             }
         });
 

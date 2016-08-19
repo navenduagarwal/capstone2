@@ -9,7 +9,7 @@
     <dimen name="lists_title_bottom_margin">26dp</dimen>
     <dimen name="edit_text_padding">28dp</dimen>
     <dimen name="margin_small">36dp</dimen>
-    <dimen name="btn_shopping_height">60dp</dimen>
+    <dimen name="btn_chatting_height">60dp</dimen>
     <dimen name="margin_normal">72dp</dimen>
     <dimen name="input_field_height_land">84dp</dimen>
     <dimen name="input_field_height">100dp</dimen>

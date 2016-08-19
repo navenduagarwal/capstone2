@@ -15,6 +15,7 @@ public class Constants {
     public static final String FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS = "userOfflineDownloads";
     public static final String FIREBASE_LOCATION_SUPPORT_GROUPS = "supportGroups";
     public static final String FIREBASE_LOCATION_USER_SUPPORT_GROUPS = "userSupportGroups";
+    public static final String FIREBASE_LOCATION_GROUP_CHATS = "groupChats";
 
     /**
      * Constants for Firebase object properties
@@ -39,6 +40,8 @@ public class Constants {
     public static final String FIREBASE_URL_USER_OFFLINE_DOWNLOADS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_OFFLINE_DOWNLOADS;
     public static final String FIREBASE_URL_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_SUPPORT_GROUPS;
     public static final String FIREBASE_URL_USER_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_SUPPORT_GROUPS;
+    public static final String FIREBASE_URL_GROUP_CHATS = FIREBASE_URL + "/" + FIREBASE_LOCATION_GROUP_CHATS;
+
     /**
      * Constants for Firebase Storage URL
      */
@@ -61,6 +64,9 @@ public class Constants {
     public static final String KEY_INSTALL_ID = "INSTALL_ID";
     public static final String KEY_CURRENT_PROGRAM_ID = "CURRENT_PROGRAM_ID";
     public static final String KEY_CURRENT_PACK_ID = "CURRENT_PACK_ID";
+    public static final String KEY_GROUP_ID = "GROUP_ID";
+    public static final String KEY_CHAT_MESSAGE_LENGTH = "CHAT_MESSAGE_LENGTH";
+
 
     /**
      * Constants for Firebase login
@@ -79,5 +85,10 @@ public class Constants {
     public static final String SUFFIX_BANNER_IMAGE = "_bannerImage";
 
     public static final String DEFUALT_PROGRAM_COLOR = "#616161";
+
+    /**
+     * parameters for chat messages
+     */
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 180;
 
 }
