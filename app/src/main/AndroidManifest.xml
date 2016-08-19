@@ -135,6 +135,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.groups.GroupsActivity" />
         </activity>
+        <activity android:name=".ui.groups.CreateChatProfileActivity"></activity>
     </application>
 
 </manifest>

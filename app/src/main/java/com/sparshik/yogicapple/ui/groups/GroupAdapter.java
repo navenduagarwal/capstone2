@@ -7,6 +7,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,9 +18,15 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
+import com.sparshik.yogicapple.model.UserChatProfile;
 import com.sparshik.yogicapple.ui.groups.GroupAdapter.GroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
@@ -65,9 +72,7 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
         viewHolder.mGroupItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
-                intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
-                mActivity.startActivity(intentChat);
+                checkForChatProfile(groupId);
             }
         });
 
@@ -76,6 +81,35 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
             public void onClick(View view) {
                 Toast.makeText(mActivity, "Delete", Toast.LENGTH_SHORT).show();
 
+            }
+        });
+    }
+
+    /**
+     * method checks if user have chat nick name, if not request him to set one, also download random photo from Unsplash
+     */
+    public void checkForChatProfile(final String groupId) {
+
+        DatabaseReference chatProfileRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_GROUP_CHAT_PROFILES).child(mEncodedEmail);
+        chatProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserChatProfile userChatProfile = dataSnapshot.getValue(UserChatProfile.class);
+                if (userChatProfile != null) {
+                    Intent intentChat = new Intent(mActivity, GroupChatActivity.class);
+                    intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
+                    mActivity.startActivity(intentChat);
+                } else {
+                    Intent intentCreate = new Intent(mActivity, CreateChatProfileActivity.class);
+                    intentCreate.putExtra(Constants.KEY_GROUP_ID, groupId);
+                    mActivity.startActivity(intentCreate);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(mActivity.getClass().getSimpleName(), mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
             }
         });
     }

@@ -12,7 +12,6 @@
     <string name="title_activity_support_group">Support Groups</string>
 
 
-
     <string name="pager_title_current">Current Pack</string>
     <string name="pager_title_progress">My Progress</string>
     <string name="remove_item_option">Remove Item</string>
@@ -186,6 +185,12 @@
     <!-- ChatMessage Message Strings -->
     <string name="hint_chat_message">Type your message here...</string>
     <string name="chat_send_button">Send</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="format_full_friendly_timestamp"><xliff:g id="day">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g></string>
+    <string name="hint_add_nick_name">Enter your group chat name</string>
+    <string name="hint_select_chat_profile_image">Select profile image for group chat</string>
+    <string name="button_create">Create</string>
 
     <!--Firebase -->
     <string name="record_add_success">Record Added</string>

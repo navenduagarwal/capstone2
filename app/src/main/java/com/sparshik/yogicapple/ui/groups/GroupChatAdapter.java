@@ -11,6 +11,7 @@ import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.ChatMessage;
 import com.sparshik.yogicapple.utils.Constants;
+import com.sparshik.yogicapple.utils.DateUtils;
 
 /**
  * Adaptr to populate single message item
@@ -31,8 +32,9 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
     @Override
     protected void populateViewHolder(ChatMessageViewHolder viewHolder, ChatMessage chatMessage, int position) {
         viewHolder.mMessageBodyTextView.setText(chatMessage.getText());
-        String headerText = chatMessage.getEncodedEmail() + "-" + chatMessage.getTimestampCreated().get(Constants.FIREBASE_PROPERTY_TIMESTAMP);
-        viewHolder.mMessageHeaderTextView.setText(headerText);
+        long dateInmills = Long.parseLong(chatMessage.getTimestampCreated().get(Constants.FIREBASE_PROPERTY_TIMESTAMP).toString());
+        String formattedTimeStamp = DateUtils.getChatTimeStamp(mActivity, dateInmills);
+        viewHolder.mMessageHeaderTextView.setText(formattedTimeStamp);
 
     }
 

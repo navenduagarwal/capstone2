@@ -40,7 +40,6 @@ public class GroupsActivity extends BaseActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         DatabaseReference userGroupsRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
         mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupAdapter.GroupViewHolder.class, userGroupsRef, mEncodedEmail);
@@ -54,4 +53,5 @@ public class GroupsActivity extends BaseActivity {
             mGroupAdapter.cleanup();
         }
     }
+
 }

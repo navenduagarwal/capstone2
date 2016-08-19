@@ -16,6 +16,7 @@ public class Constants {
     public static final String FIREBASE_LOCATION_SUPPORT_GROUPS = "supportGroups";
     public static final String FIREBASE_LOCATION_USER_SUPPORT_GROUPS = "userSupportGroups";
     public static final String FIREBASE_LOCATION_GROUP_CHATS = "groupChats";
+    public static final String FIREBASE_LOCATION_GROUP_CHAT_PROFILES = "groupChatProfiles";
 
     /**
      * Constants for Firebase object properties
@@ -41,7 +42,7 @@ public class Constants {
     public static final String FIREBASE_URL_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_SUPPORT_GROUPS;
     public static final String FIREBASE_URL_USER_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_SUPPORT_GROUPS;
     public static final String FIREBASE_URL_GROUP_CHATS = FIREBASE_URL + "/" + FIREBASE_LOCATION_GROUP_CHATS;
-
+    public static final String FIREBASE_URL_GROUP_CHAT_PROFILES = FIREBASE_URL + "/" + FIREBASE_LOCATION_GROUP_CHAT_PROFILES;
     /**
      * Constants for Firebase Storage URL
      */
@@ -66,6 +67,7 @@ public class Constants {
     public static final String KEY_CURRENT_PACK_ID = "CURRENT_PACK_ID";
     public static final String KEY_GROUP_ID = "GROUP_ID";
     public static final String KEY_CHAT_MESSAGE_LENGTH = "CHAT_MESSAGE_LENGTH";
+    public static final String KEY_CHAT_PROFILE_ID = "CHAT_PROFILE_ID";
 
 
     /**
