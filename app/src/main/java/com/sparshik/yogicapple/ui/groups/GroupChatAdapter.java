@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -63,8 +64,11 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
         }
 
 
-        if (chatCreatorEmail.toString().equals(mEncodedEmail.toString())) {
-            viewHolder.mUserChatProfilePic.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_white));
+        if (chatCreatorEmail.equals(mEncodedEmail)) {
+            Log.d("Testing", chatCreatorName + chatCreatorEmail + mEncodedEmail);
+            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_grey));
+        } else {
+            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_dark));
         }
     }
 

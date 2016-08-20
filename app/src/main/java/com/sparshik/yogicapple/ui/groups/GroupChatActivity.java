@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,16 +58,17 @@ public class GroupChatActivity extends BaseActivity {
         Intent intent = getIntent();
         mGroupId = intent.getStringExtra(Constants.KEY_GROUP_ID);
         mGroupName = intent.getStringExtra(Constants.KEY_GROUP_NAME);
+        mUserNickname = intent.getStringExtra(Constants.KEY_CHAT_NICK_NAME);
+        mUserProfileImageUrl = intent.getStringExtra(Constants.KEY_CHAT_PROFILE_IMAGE_URL);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUserNickname = mSharedPreferences.getString(Constants.KEY_CHAT_NICK_NAME, null);
-        mUserProfileImageUrl = mSharedPreferences.getString(Constants.KEY_CHAT_PROFILE_IMAGE_URL, null);
 
-        if (mGroupName == null | mGroupId == null || mUserNickname == null || mUserProfileImageUrl == null) {
-            //No point in continuing with valid group id */
-            Toast.makeText(this, "One among groupName, groupId, nickName or profileImage found", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, GroupsActivity.class));
-        }
+
+//        if (mGroupName == null | mGroupId == null || mUserNickname == null || mUserProfileImageUrl == null) {
+//            //No point in continuing with valid group id */
+//            Toast.makeText(this, "One among groupName, groupId, nickName or profileImage found", Toast.LENGTH_SHORT).show();
+//            startActivity(new Intent(this, GroupsActivity.class));
+//        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);

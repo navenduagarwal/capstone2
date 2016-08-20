@@ -52,7 +52,7 @@ public class CreateChatProfileActivity extends BaseActivity {
     private ProgressDialog mAddProgressDialog;
     private StorageReference mGroupStorageRef, profileImageStorageRef;
     private UserChatProfile mUserChatProfile;
-    private String groupId, groupName;
+//    private String groupId, groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +73,13 @@ public class CreateChatProfileActivity extends BaseActivity {
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
 
-        Intent intent = getIntent();
-        groupId = intent.getStringExtra(Constants.KEY_GROUP_ID);
-        groupName = intent.getStringExtra(Constants.KEY_GROUP_NAME);
-        if (groupId == null || groupName == null) {
-            startActivity(new Intent(CreateChatProfileActivity.this, GroupsActivity.class));
-            Toast.makeText(this, "Group id or Group name not found", Toast.LENGTH_SHORT).show(); //TODO need to remove this
-        }
+//        Intent intent = getIntent();
+//        groupId = intent.getStringExtra(Constants.KEY_GROUP_ID);
+//        groupName = intent.getStringExtra(Constants.KEY_GROUP_NAME);
+//        if (groupId == null || groupName == null) {
+//            startActivity(new Intent(CreateChatProfileActivity.this, GroupsActivity.class));
+//            Toast.makeText(this, "Group id or Group name not found", Toast.LENGTH_SHORT).show(); //TODO need to remove this
+//        }
 
         initializeScreen();
 
@@ -210,10 +210,10 @@ public class CreateChatProfileActivity extends BaseActivity {
                 spe.putString(Constants.KEY_CHAT_NICK_NAME, mNickname).apply();
                 spe.putString(Constants.KEY_CHAT_PROFILE_IMAGE_URL, mUploadedPicUrl).apply();
 
-                Intent intentChat = new Intent(CreateChatProfileActivity.this, GroupChatActivity.class);
-                intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
-                intentChat.putExtra(Constants.KEY_GROUP_NAME, groupName);
-                startActivity(intentChat);
+                Intent intentChat = new Intent(CreateChatProfileActivity.this, GroupsActivity.class);
+//                intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
+//                intentChat.putExtra(Constants.KEY_GROUP_NAME, groupName);
+//                startActivity(intentChat);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

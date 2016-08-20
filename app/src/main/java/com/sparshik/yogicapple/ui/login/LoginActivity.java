@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     private ProgressDialog mAuthProgressDialog;
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
-    private String mUserEmail, mPassword;
+    private String mUserEmail, mPassword, mUserName;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private SharedPreferences mSharedPref;
@@ -251,12 +251,24 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
      * Helper method that makes sure a user is created if the user
      * logs in with Firebase's Google login provider.
      */
-    private void setAuthenticatedUserGoogle(UserInfo user) {
-        final String unprocessedEmail = user.getEmail().toLowerCase();
-        mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
-        final String userName = user.getDisplayName();
-        Log.d("Login username", user.getDisplayName());
-        FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, userName, user.getUid(), Constants.GOOGLE_PROVIDER);
+    private void setAuthenticatedUserGoogle(UserInfo user, UserInfo user1) {
+        if (user.getEmail() == null && user1.getEmail() == null) {
+            Log.d(LOG_TAG, "Login issue" + user.getDisplayName());
+            mAuth.signOut();
+        }
+        if (user.getEmail() != null) {
+            final String unprocessedEmail = user.getEmail().toLowerCase();
+            mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
+        } else {
+            final String unprocessedEmail = user1.getEmail().toLowerCase();
+            mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
+        }
+        if (user.getDisplayName() != null) {
+            mUserName = user.getDisplayName();
+        } else {
+            mUserName = user1.getDisplayName();
+        }
+        FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, mUserName, user.getUid(), Constants.GOOGLE_PROVIDER);
     }
 
     /**
@@ -396,14 +408,17 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     if (userProvider.equals(Constants.PASSWORD_PROVIDER)) {
                         setAuthenticatedUserPasswordProvider(user);
                     } else if (userProvider.equals(Constants.GOOGLE_PROVIDER)) {
-                        setAuthenticatedUserGoogle(user1);
+                        setAuthenticatedUserGoogle(user, user1);
                     } else {
                         Log.e(LOG_TAG, getString(R.string.log_error_invalid_provider) + userProvider);
                     }
                      /* Save provider name and encodedEmail for later use and start MainActivity */
                     mSharedPrefEditor.putString(Constants.KEY_PROVIDER_ID, userProvider).apply();
-                    mSharedPrefEditor.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
-
+                    if (mEncodedEmail != null) {
+                        mSharedPrefEditor.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
+                    } else {
+                        Log.e(LOG_TAG, "Login encodedEmail issue");
+                    }
                 /* Go to main activity */
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -415,4 +430,14 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             }
         }
     }
+
+
+//    public void checkSharedPreference(){
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor spe = preferences.edit();
+//        String encodedEmail = preferences.getString(Constants.KEY_ENCODED_EMAIL,null);
+//        if (!mEncodedEmail.equals(encodedEmail)){
+//            spe.remove(Constants.KEY_ENCODED_EMAIL).apply();
+//        }
+//    }
 }
