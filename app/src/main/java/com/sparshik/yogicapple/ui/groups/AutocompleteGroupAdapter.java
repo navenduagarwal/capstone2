@@ -38,6 +38,10 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
         viewHolder.mTextViewGroupName.setText(supportGroup.getGroupName());
 
         final String supportGroupId = this.getRef(position).getKey();
+        DatabaseReference supportGroupRef = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(Constants.FIREBASE_URL_SUPPORT_GROUPS).child(supportGroupId);
+
+
 
         viewHolder.mTextViewGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,17 +49,18 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
 
                 DatabaseReference currentUserGroupsRef = FirebaseDatabase.getInstance()
                         .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
+                final DatabaseReference userSupportGroupsRef = currentUserGroupsRef.child(supportGroupId);
 
-                final DatabaseReference supportGroupRef = currentUserGroupsRef.child(supportGroupId);
+
 
                 /**
                  * Add listener for single value event to perform a one time operation
                  */
-                supportGroupRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                userSupportGroupsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (isNotAlreadyAdded(dataSnapshot, supportGroup)) {
-                            supportGroupRef.setValue(supportGroup);
+                            userSupportGroupsRef.setValue(supportGroup);
                             mActivity.startActivity(new Intent(mActivity, GroupsActivity.class));
                         }
                     }

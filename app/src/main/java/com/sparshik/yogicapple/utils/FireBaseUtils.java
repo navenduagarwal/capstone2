@@ -59,7 +59,6 @@ public class FireBaseUtils {
         spe.putString(Constants.KEY_CURRENT_PROGRAM_ID, programId).apply();
         spe.putString(Constants.KEY_CURRENT_PACK_ID, packId).apply();
 
-
         User newUser = new User(encodedEmail, mUserName, verified, programId, packId, timestampJoined);
         HashMap<String, Object> newUserMap = (HashMap<String, Object>)
                 new ObjectMapper().convertValue(newUser, Map.class);
