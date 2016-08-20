@@ -51,9 +51,11 @@ public class DownloadService extends Service {
     private static final String TAG = "Storage#DownloadService";
     private static String mDownloadPath, mFileSuffix, mEncodedEmail, mFileName, mAppleId;
     private static HashMap<String, Integer> downloadProgresses;
+    private static HashMap<String, String> downloadError;
 
     static {
         downloadProgresses = new HashMap();
+        downloadError = new HashMap<>();
     }
 
     private long mFileSize;
@@ -82,6 +84,16 @@ public class DownloadService extends Service {
             return progress.intValue();
         }
         return 0;
+    }
+
+    public static String getDownloadError(String appleId) {
+        if (downloadError == null) {
+            return null;
+        } else if (downloadError.get(appleId) == null) {
+            return "unknown";
+        } else {
+            return downloadError.get(appleId);
+        }
     }
 
     @Override
@@ -126,7 +138,7 @@ public class DownloadService extends Service {
                         Log.e(TAG, "Disk Space not available");
                         return;
                     }
-                    mFileName = storageMetadata.getName();
+                    mFileName = mEncodedEmail + storageMetadata.getName();
                     beginDownloadFile();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -214,7 +226,7 @@ public class DownloadService extends Service {
                         broadcast.putExtra(EXTRA_DOWNLOAD_PATH, mDownloadPath);
                         LocalBroadcastManager.getInstance(getApplicationContext())
                                 .sendBroadcast(broadcast);
-
+                        downloadError.put(mAppleId, exception.getMessage());
                         // Mark task completed
                         taskCompleted();
                     }

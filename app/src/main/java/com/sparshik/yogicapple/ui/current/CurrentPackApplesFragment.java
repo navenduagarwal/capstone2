@@ -158,7 +158,7 @@ public class CurrentPackApplesFragment extends Fragment {
 
     public void populateFragmentList() {
 
-        Log.d("Testing", mCurrentProgramId + mCurrentPackId);
+//        Log.d(LOG_TAG, "Testing" + mCurrentProgramId + mCurrentPackId);
 
         //Updating Header Pack Information
         mPackRef = FirebaseDatabase.getInstance()

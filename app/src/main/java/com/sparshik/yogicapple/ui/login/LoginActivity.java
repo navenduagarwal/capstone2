@@ -255,6 +255,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         final String unprocessedEmail = user.getEmail().toLowerCase();
         mEncodedEmail = FireBaseUtils.encodeEmail(unprocessedEmail);
         final String userName = user.getDisplayName();
+        Log.d("Login username", user.getDisplayName());
         FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, userName, user.getUid(), Constants.GOOGLE_PROVIDER);
     }
 
@@ -387,12 +388,15 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 mAuthProgressDialog.dismiss();
                 Log.i(LOG_TAG, " " + getString(R.string.log_message_auth_successful));
                 UserInfo user = task.getResult().getUser().getProviderData().get(0);
+                UserInfo user1 = task.getResult().getUser().getProviderData().get(1);
+                Log.d("Testing Login", user.getDisplayName() + user.getProviderId());
+                Log.d("Testing Login1", user1.getDisplayName() + user1.getProviderId());
                 String userProvider = task.getResult().getUser().getProviderData().get(1).getProviderId();
                 if (user != null) {
                     if (userProvider.equals(Constants.PASSWORD_PROVIDER)) {
                         setAuthenticatedUserPasswordProvider(user);
                     } else if (userProvider.equals(Constants.GOOGLE_PROVIDER)) {
-                        setAuthenticatedUserGoogle(user);
+                        setAuthenticatedUserGoogle(user1);
                     } else {
                         Log.e(LOG_TAG, getString(R.string.log_error_invalid_provider) + userProvider);
                     }

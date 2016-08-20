@@ -108,9 +108,11 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//
+//                Log.d("testing adapter", DownloadService.getDownloadProgress(appleId) + "");
+//                Log.d("testing adapter", DownloadService.getDownloadError(appleId) + "");
 
-                Log.d("testing adapter", DownloadService.getDownloadProgress(appleId) + "");
-                if (DownloadService.getDownloadProgress(appleId) == 0) {
+                if ((DownloadService.getDownloadProgress(appleId) == 0 || DownloadService.getDownloadProgress(appleId) == 100) || DownloadService.getDownloadError(appleId) != null) {
                     DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
                             .getReferenceFromUrl(Constants.FIREBASE_URL_USER_OFFLINE_DOWNLOADS)
                             .child(mEncodedEmail).child(mInstallId).child(appleId);
@@ -144,7 +146,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                         }
                     });
                 } else {
-                    Log.d("Testing what", "Got stucked");
+                    Log.d(LOG_TAG, "Testing what" + "Got stucked");
                 }
             }
         });
