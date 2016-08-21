@@ -201,5 +201,5 @@
     <string name="record_delete_success"><xliff:g id="type">%1$s</xliff:g> record deleted successfully</string>
     <string name="record_delete_error"><xliff:g id="type">%1$s</xliff:g> record delete unsuccessful</string>
 
-
+    <string name="list_empty_groups">Join group to start discussion"</string>
 </resources>

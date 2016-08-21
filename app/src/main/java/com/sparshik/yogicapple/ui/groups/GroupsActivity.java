@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class GroupsActivity extends BaseActivity {
     private RecyclerView mRecyclerViewUserGroups;
     private DatabaseReference mChatProfileRef, userGroupsRef;
     private ValueEventListener mChatProfileRefValueListener;
+    private TextView emptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +93,31 @@ public class GroupsActivity extends BaseActivity {
     public void populateAdapter(String userChatName, String userProfileUrl) {
         userGroupsRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
+        emptyTextView = (TextView) findViewById(R.id.text_empty_groups);
         mRecyclerViewUserGroups = (RecyclerView) findViewById(R.id.recycler_view_user_groups);
         mRecyclerViewUserGroups.setHasFixedSize(true);
         mRecyclerViewUserGroups.setLayoutManager(new LinearLayoutManager(GroupsActivity.this));
         mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupAdapter.GroupViewHolder.class
                 , userGroupsRef, mEncodedEmail, userChatName, userProfileUrl);
         mRecyclerViewUserGroups.setAdapter(mGroupAdapter);
+        userGroupsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChildren()) {
+                    emptyTextView.setVisibility(View.VISIBLE);
+                    mRecyclerViewUserGroups.setVisibility(View.GONE);
+                } else {
+                    mRecyclerViewUserGroups.setVisibility(View.VISIBLE);
+                    emptyTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         Log.d(LOG_TAG, mEncodedEmail + userProfileUrl + userChatName + "inside populate");
     }
 }
