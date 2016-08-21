@@ -8,7 +8,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_user_groups"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -18,5 +19,5 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/list_empty_groups"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </FrameLayout>

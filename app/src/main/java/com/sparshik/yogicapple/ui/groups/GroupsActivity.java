@@ -118,6 +118,19 @@ public class GroupsActivity extends BaseActivity {
             }
         });
 
+//        RecyclerView.AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver(){
+//
+//            @Override
+//            public void onItemRangeChanged(int positionStart, int itemCount) {
+//                super.onItemRangeChanged(positionStart, itemCount);
+//                Log.d(LOG_TAG,""+itemCount);
+//            }
+//
+//
+//        };
+//
+//        mGroupAdapter.registerAdapterDataObserver(mObserver);
+
         Log.d(LOG_TAG, mEncodedEmail + userProfileUrl + userChatName + "inside populate");
     }
 }

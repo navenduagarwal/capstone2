@@ -46,8 +46,7 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
         }
         String chatCreatorName = chatMessage.getNickName();
         String formattedTimeStamp = DateUtils.getChatTimeStamp(mActivity, dateInMills);
-        String formattedChatMessageHeader = chatCreatorName + " - " + formattedTimeStamp;
-        viewHolder.mMessageHeaderTextView.setText(formattedChatMessageHeader);
+
 
         if (chatMessage.getUserProfilePicUrl() != null) {
             Glide.with(mActivity).load(chatMessage.getUserProfilePicUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mUserChatProfilePic) {
@@ -67,8 +66,12 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
         if (chatCreatorEmail.equals(mEncodedEmail)) {
             Log.d("Testing", chatCreatorName + chatCreatorEmail + mEncodedEmail);
             viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_dark));
+            String formattedChatMessageHeader = "You" + " - " + formattedTimeStamp;
+            viewHolder.mMessageHeaderTextView.setText(formattedChatMessageHeader);
         } else {
             viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_grey));
+            String formattedChatMessageHeader = chatCreatorName + " - " + formattedTimeStamp;
+            viewHolder.mMessageHeaderTextView.setText(formattedChatMessageHeader);
         }
     }
 
