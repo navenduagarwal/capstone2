@@ -432,12 +432,4 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
 
 
-//    public void checkSharedPreference(){
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor spe = preferences.edit();
-//        String encodedEmail = preferences.getString(Constants.KEY_ENCODED_EMAIL,null);
-//        if (!mEncodedEmail.equals(encodedEmail)){
-//            spe.remove(Constants.KEY_ENCODED_EMAIL).apply();
-//        }
-//    }
 }

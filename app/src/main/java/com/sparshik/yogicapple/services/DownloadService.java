@@ -81,6 +81,7 @@ public class DownloadService extends Service {
             if (progress == null) {
                 return 0;
             }
+            Log.d(TAG, "progress values testing " + progress.intValue());
             return progress.intValue();
         }
         return 0;

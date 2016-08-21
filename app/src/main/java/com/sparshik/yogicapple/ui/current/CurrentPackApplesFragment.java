@@ -92,6 +92,7 @@ public class CurrentPackApplesFragment extends Fragment {
                 }
 
                 if (DownloadService.ACTION_PROGRESS.equals(intent.getAction())) {
+                    Log.d(LOG_TAG, "Testing progress Reciever");
                     mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
                 }
 

@@ -78,6 +78,9 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         viewHolder.mAppleState.setColorFilter(altColor, PorterDuff.Mode.MULTIPLY);
         viewHolder.mDownloadText.setTextColor(altColor);
 
+        Log.d(LOG_TAG, "testing adapter" + DownloadService.getDownloadProgress(appleId));
+
+
         if (DownloadService.getDownloadProgress(appleId) != 0) {
             viewHolder.mProgressBar.setProgress(DownloadService.getDownloadProgress(appleId));
             viewHolder.mDownloadText.setText(context.getResources().getString(R.string.download_apple_progress));

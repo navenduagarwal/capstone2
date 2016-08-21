@@ -24,7 +24,7 @@ public class GroupsActivity extends BaseActivity {
     private static final String LOG_TAG = GroupsActivity.class.getSimpleName();
     private GroupAdapter mGroupAdapter;
     private RecyclerView mRecyclerViewUserGroups;
-    private DatabaseReference mChatProfileRef;
+    private DatabaseReference mChatProfileRef, userGroupsRef;
     private ValueEventListener mChatProfileRefValueListener;
 
     @Override
@@ -44,6 +44,9 @@ public class GroupsActivity extends BaseActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Log.d(LOG_TAG, mEncodedEmail + "outside");
+
+
         mChatProfileRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_GROUP_CHAT_PROFILES).child(mEncodedEmail);
         mChatProfileRefValueListener = mChatProfileRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -53,21 +56,11 @@ public class GroupsActivity extends BaseActivity {
                     String userChatName = userChatProfile.getNickName();
                     String userProfileUrl = userChatProfile.getChatProfilePicUrl();
 
-                    Log.d(LOG_TAG, mEncodedEmail);
-
-                    DatabaseReference userGroupsRef = FirebaseDatabase.getInstance()
-                            .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
-                    mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupAdapter.GroupViewHolder.class
-                            , userGroupsRef, mEncodedEmail, userChatName, userProfileUrl);
-                    mRecyclerViewUserGroups = (RecyclerView) findViewById(R.id.recyler_view_user_groups);
-                    mRecyclerViewUserGroups.setHasFixedSize(true);
-                    mRecyclerViewUserGroups.setLayoutManager(new LinearLayoutManager(GroupsActivity.this));
-                    mRecyclerViewUserGroups.setAdapter(mGroupAdapter);
+                    Log.d(LOG_TAG, mEncodedEmail + userProfileUrl + userChatName);
+                    populateAdapter(userChatName, userProfileUrl);
 
                 } else {
                     Intent intentCreate = new Intent(GroupsActivity.this, CreateChatProfileActivity.class);
-//                    intentCreate.putExtra(Constants.KEY_GROUP_ID, groupId);
-//                    intentCreate.putExtra(Constants.KEY_GROUP_NAME, groupName);
                     GroupsActivity.this.startActivity(intentCreate);
                 }
             }
@@ -89,4 +82,15 @@ public class GroupsActivity extends BaseActivity {
         mChatProfileRef.removeEventListener(mChatProfileRefValueListener);
     }
 
+    public void populateAdapter(String userChatName, String userProfileUrl) {
+        userGroupsRef = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
+        mRecyclerViewUserGroups = (RecyclerView) findViewById(R.id.recycler_view_user_groups);
+        mRecyclerViewUserGroups.setHasFixedSize(true);
+        mRecyclerViewUserGroups.setLayoutManager(new LinearLayoutManager(GroupsActivity.this));
+        mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupAdapter.GroupViewHolder.class
+                , userGroupsRef, mEncodedEmail, userChatName, userProfileUrl);
+        mRecyclerViewUserGroups.setAdapter(mGroupAdapter);
+        Log.d(LOG_TAG, mEncodedEmail + userProfileUrl + userChatName + "inside populate");
+    }
 }

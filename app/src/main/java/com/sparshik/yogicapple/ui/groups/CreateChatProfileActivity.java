@@ -73,14 +73,6 @@ public class CreateChatProfileActivity extends BaseActivity {
                     MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
         }
 
-//        Intent intent = getIntent();
-//        groupId = intent.getStringExtra(Constants.KEY_GROUP_ID);
-//        groupName = intent.getStringExtra(Constants.KEY_GROUP_NAME);
-//        if (groupId == null || groupName == null) {
-//            startActivity(new Intent(CreateChatProfileActivity.this, GroupsActivity.class));
-//            Toast.makeText(this, "Group id or Group name not found", Toast.LENGTH_SHORT).show(); //TODO need to remove this
-//        }
-
         initializeScreen();
 
         mButtonSelectFile.setOnClickListener(new View.OnClickListener() {
