@@ -51,8 +51,6 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
                         .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
                 final DatabaseReference userSupportGroupsRef = currentUserGroupsRef.child(supportGroupId);
 
-
-
                 /**
                  * Add listener for single value event to perform a one time operation
                  */

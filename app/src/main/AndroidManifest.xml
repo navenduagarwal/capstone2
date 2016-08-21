@@ -120,7 +120,42 @@
 
         <service
             android:name=".services.DownloadService"
-            android:exported="false" />
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.YAFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".services.YAFirebaseInstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!--
+  Android N SDK has new restrictions around sharing file:// URIs
+  https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition
+-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.google.firebase.quickstart.firebasestorage.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 package com.sparshik.yogicapple.ui.groups;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,10 +57,11 @@ public class GroupsActivity extends BaseActivity {
                 if (userChatProfile != null) {
                     String userChatName = userChatProfile.getNickName();
                     String userProfileUrl = userChatProfile.getChatProfilePicUrl();
-
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(GroupsActivity.this);
+                    SharedPreferences.Editor spe = preferences.edit();
+                    spe.putString(Constants.KEY_CHAT_NICK_NAME, userChatName).apply();
+                    spe.putString(Constants.KEY_CHAT_PROFILE_IMAGE_URL, userProfileUrl).apply();
                     Log.d(LOG_TAG, mEncodedEmail + userProfileUrl + userChatName);
-                    populateAdapter(userChatName, userProfileUrl);
-
                 } else {
                     Intent intentCreate = new Intent(GroupsActivity.this, CreateChatProfileActivity.class);
                     GroupsActivity.this.startActivity(intentCreate);
@@ -70,7 +73,10 @@ public class GroupsActivity extends BaseActivity {
 
             }
         });
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userChatName = sharedPreferences.getString(Constants.KEY_CHAT_NICK_NAME, "navenduDefault");
+        String userProfileUrl = sharedPreferences.getString(Constants.KEY_CHAT_PROFILE_IMAGE_URL, "https://firebasestorage.googleapis.com/v0/b/yogicapple-b288e.appspot.com/o/supportGroups%2Fnavendu%2Cagarwal%40gmail%2Ccom_iconImage.jpg?alt=media&token=5cf87141-8d7a-42f7-b99b-c8c35323778f");
+        populateAdapter(userChatName, userProfileUrl);
     }
 
     @Override

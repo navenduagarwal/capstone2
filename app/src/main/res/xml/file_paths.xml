@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path name="external" path="photos/" />
+    <external-path
+        name="external"
+        path="_audio/" />
+    <external-path
+        name="external"
+        path="_video/" />
+    <external-path
+        name="external"
+        path="_iconImage/" />
+    <external-path
+        name="external"
+        path="_bannerImage/" />
 </paths>
