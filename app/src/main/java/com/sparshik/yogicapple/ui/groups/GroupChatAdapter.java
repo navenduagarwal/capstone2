@@ -60,15 +60,15 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
                 }
             });
         } else {
-            viewHolder.mUserChatProfilePic.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_1));
+            viewHolder.mUserChatProfilePic.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_2));
         }
 
 
         if (chatCreatorEmail.equals(mEncodedEmail)) {
             Log.d("Testing", chatCreatorName + chatCreatorEmail + mEncodedEmail);
-            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_grey));
-        } else {
             viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_dark));
+        } else {
+            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_grey));
         }
     }
 
