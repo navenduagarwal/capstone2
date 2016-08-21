@@ -205,7 +205,7 @@ public class CreateChatProfileActivity extends BaseActivity {
                 Intent intentChat = new Intent(CreateChatProfileActivity.this, GroupsActivity.class);
 //                intentChat.putExtra(Constants.KEY_GROUP_ID, groupId);
 //                intentChat.putExtra(Constants.KEY_GROUP_NAME, groupName);
-//                startActivity(intentChat);
+                startActivity(intentChat);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

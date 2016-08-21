@@ -81,7 +81,7 @@ public class DownloadService extends Service {
             if (progress == null) {
                 return 0;
             }
-            Log.d(TAG, "progress values testing " + progress.intValue());
+//            Log.d(TAG, "progress values testing " + progress.intValue());
             return progress.intValue();
         }
         return 0;
@@ -161,7 +161,7 @@ public class DownloadService extends Service {
     }
 
     private synchronized void changeNumberOfTasks(int delta) {
-        Log.d(TAG, "changeNumberOfTasks:" + mNumTasks + ":" + delta);
+//        Log.d(TAG, "changeNumberOfTasks:" + mNumTasks + ":" + delta);
         mNumTasks += delta;
 
         // If there are no tasks left, stop the service

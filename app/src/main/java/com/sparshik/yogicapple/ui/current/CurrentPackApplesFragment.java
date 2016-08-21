@@ -82,7 +82,7 @@ public class CurrentPackApplesFragment extends Fragment {
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(LOG_TAG, "downloadReceiver:onReceive:" + intent);
+//                Log.d(LOG_TAG, "downloadReceiver:onReceive:" + intent);
 
                 if (DownloadService.ACTION_COMPLETED.equals(intent.getAction())) {
                     String path = intent.getStringExtra(DownloadService.EXTRA_DOWNLOAD_PATH);
@@ -92,7 +92,7 @@ public class CurrentPackApplesFragment extends Fragment {
                 }
 
                 if (DownloadService.ACTION_PROGRESS.equals(intent.getAction())) {
-                    Log.d(LOG_TAG, "Testing progress Reciever");
+//                    Log.d(LOG_TAG, "Testing progress Reciever");
                     mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
                 }
 
