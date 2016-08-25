@@ -35,10 +35,12 @@ public class DateUtils {
             return String.format(context.getString(formatId, yesterday, formattedTime));
         } else if (julianDay > currentJulianDay - 7) {
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
-            return String.format(context.getString(formatId, dayFormat, formattedTime));
+            String formattedDay = "Last " + dayFormat.format(dateInMillis);
+            return String.format(context.getString(formatId, formattedDay, formattedTime));
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
-            return String.format(context.getString(formatId, dateFormat, formattedTime));
+            String formattedDate = dateFormat.format(dateInMillis);
+            return String.format(context.getString(formatId, formattedDate, formattedTime));
         }
     }
 }

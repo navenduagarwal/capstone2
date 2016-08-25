@@ -46,7 +46,7 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
         }
         String chatCreatorName = chatMessage.getNickName();
         String formattedTimeStamp = DateUtils.getChatTimeStamp(mActivity, dateInMills);
-
+        Log.d("Chat Adapter", formattedTimeStamp);
 
         if (chatMessage.getUserProfilePicUrl() != null) {
             Glide.with(mActivity).load(chatMessage.getUserProfilePicUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mUserChatProfilePic) {
