@@ -1,5 +1,6 @@
 package com.sparshik.yogicapple.utils;
 
+import com.firebase.geofire.GeoLocation;
 import com.sparshik.yogicapple.BuildConfig;
 
 /**
@@ -17,6 +18,8 @@ public class Constants {
     public static final String FIREBASE_LOCATION_USER_SUPPORT_GROUPS = "userSupportGroups";
     public static final String FIREBASE_LOCATION_GROUP_CHATS = "groupChats";
     public static final String FIREBASE_LOCATION_GROUP_CHAT_PROFILES = "groupChatProfiles";
+    public static final String FIREBASE_LOCATION_EVENTS = "events";
+    public static final String FIREBASE_LOCATION_GEOFIRE = "_geofire";
 
     /**
      * Constants for Firebase object properties
@@ -43,6 +46,9 @@ public class Constants {
     public static final String FIREBASE_URL_USER_SUPPORT_GROUPS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USER_SUPPORT_GROUPS;
     public static final String FIREBASE_URL_GROUP_CHATS = FIREBASE_URL + "/" + FIREBASE_LOCATION_GROUP_CHATS;
     public static final String FIREBASE_URL_GROUP_CHAT_PROFILES = FIREBASE_URL + "/" + FIREBASE_LOCATION_GROUP_CHAT_PROFILES;
+    public static final String FIREBASE_URL_EVENTS = FIREBASE_URL + "/" + FIREBASE_LOCATION_EVENTS;
+    public static final String FIREBASE_URL_GEOFIRE = FIREBASE_URL + "/" + FIREBASE_LOCATION_GEOFIRE;
+
     /**
      * Constants for Firebase Storage URL
      */
@@ -51,6 +57,8 @@ public class Constants {
     public static final String FIREBASE_STORAGE_URL_PROGRAM_PACKS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PROGRAM_PACKS;
     public static final String FIREBASE_STORAGE_URL_PACK_APPLES = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_PACK_APPLES;
     public static final String FIREBASE_STORAGE_URL_SUPPORT_GROUPS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_SUPPORT_GROUPS;
+    public static final String FIREBASE_STORAGE_URL_EVENTS = FIREBASE_STORAGE_URL + "/" + FIREBASE_LOCATION_EVENTS;
+
     /**
      * Constants for bundles, extras and shared preferences keys
      */
@@ -71,6 +79,8 @@ public class Constants {
     public static final String KEY_CHAT_PROFILE_ID = "CHAT_PROFILE_ID";
     public static final String KEY_CHAT_NICK_NAME = "CHAT_NICK_NAME";
     public static final String KEY_CHAT_PROFILE_IMAGE_URL = "CHAT_PROFILE_IMAGE_RES_ID";
+    public static final String KEY_LATITUDE = "KEY_LATITUDE";
+    public static final String KEY_LONGITUDE = "KEY_LONGITUDE";
 
 
     /**
@@ -96,4 +106,13 @@ public class Constants {
      */
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 180;
 
+    /**
+     * GeoFire
+     */
+    public static final GeoLocation INITIAL_CENTER = new GeoLocation(12.9743926, 77.5935423);
+
+    /**
+     * Validation
+     */
+    public static final int URL_TIMEOUT = 5000;
 }

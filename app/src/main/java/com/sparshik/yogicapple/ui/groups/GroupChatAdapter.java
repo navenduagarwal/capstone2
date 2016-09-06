@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,51 +41,95 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
     @Override
     protected void populateViewHolder(final ChatMessageViewHolder viewHolder, ChatMessage chatMessage, int position) {
         String chatCreatorEmail = null;
-        viewHolder.mMessageBodyTextView.setText(chatMessage.getText());
+        String formattedChatMessageHeader;
         long dateInMills = Long.parseLong(chatMessage.getTimestampCreated().get(Constants.FIREBASE_PROPERTY_TIMESTAMP).toString());
+
+        String formattedTimeStamp = DateUtils.getChatTimeStamp(mActivity, dateInMills);
+        Log.d("Chat Adapter", formattedTimeStamp);
         if (chatMessage.getTimestampCreated().get(Constants.FIREBASE_PROPERTY_CREATED_BY) != null) {
             chatCreatorEmail = chatMessage.getTimestampCreated().get(Constants.FIREBASE_PROPERTY_CREATED_BY).toString();
         }
         String chatCreatorName = chatMessage.getNickName();
-        String formattedTimeStamp = DateUtils.getChatTimeStamp(mActivity, dateInMills);
-        Log.d("Chat Adapter", formattedTimeStamp);
-
-        if (chatMessage.getUserProfilePicUrl() != null) {
-            Glide.with(mActivity).load(chatMessage.getUserProfilePicUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mUserChatProfilePic) {
-                @Override
-                protected void setResource(Bitmap resource) {
-                    RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(mActivity.getResources(), resource);
-                    circularBitmapDrawable.setCircular(true);
-                    viewHolder.mUserChatProfilePic.setImageDrawable(circularBitmapDrawable);
-                }
-            });
-        } else {
-            viewHolder.mUserChatProfilePic.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_2));
-        }
-
 
         if (chatCreatorEmail.equals(mEncodedEmail)) {
+            viewHolder.mOutgoingContainer.setVisibility(View.VISIBLE);
+            viewHolder.mIncomingContainer.setVisibility(View.GONE);
+
+
             Log.d("Testing", chatCreatorName + chatCreatorEmail + mEncodedEmail);
-            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_dark));
-            String formattedChatMessageHeader = "You" + " - " + formattedTimeStamp;
-            viewHolder.mMessageHeaderTextView.setText(formattedChatMessageHeader);
+
+            //Set body
+            viewHolder.mMessageBodyTextViewOutgoing.setText(chatMessage.getText());
+
+            //Set header
+            formattedChatMessageHeader = "You" + " - " + formattedTimeStamp;
+            viewHolder.mMessageHeaderTextViewOutgoing.setText(formattedChatMessageHeader);
+
+            //set Image
+            if (chatMessage.getUserProfilePicUrl() != null) {
+                Glide.with(mActivity).load(chatMessage.getUserProfilePicUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mUserChatProfilePicOutgoing) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mActivity.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        viewHolder.mUserChatProfilePicOutgoing.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            } else {
+                viewHolder.mUserChatProfilePicOutgoing.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_2));
+            }
+
+
+
+
         } else {
-            viewHolder.mMessageBodyTextView.setBackground(mActivity.getResources().getDrawable(R.drawable.chat_message_shadow_grey));
-            String formattedChatMessageHeader = chatCreatorName + " - " + formattedTimeStamp;
-            viewHolder.mMessageHeaderTextView.setText(formattedChatMessageHeader);
+            viewHolder.mOutgoingContainer.setVisibility(View.GONE);
+            viewHolder.mIncomingContainer.setVisibility(View.VISIBLE);
+
+            formattedChatMessageHeader = chatCreatorName + " - " + formattedTimeStamp;
+            viewHolder.mMessageBodyTextViewIncoming.setText(chatMessage.getText());
+
+            if (chatMessage.getUserProfilePicUrl() != null) {
+                Glide.with(mActivity).load(chatMessage.getUserProfilePicUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(viewHolder.mUserChatProfilePicIncoming) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(mActivity.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        viewHolder.mUserChatProfilePicIncoming.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+            } else {
+                viewHolder.mUserChatProfilePicIncoming.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_2));
+            }
+
+            viewHolder.mMessageBodyTextViewIncoming.setBackground(mActivity.getResources().getDrawable(R.drawable.shape_bg_incoming_bubble));
+            viewHolder.mMessageHeaderTextViewIncoming.setText(formattedChatMessageHeader);
+
         }
+
     }
 
     public static class ChatMessageViewHolder extends RecyclerView.ViewHolder {
-        TextView mMessageBodyTextView, mMessageHeaderTextView;
-        ImageView mUserChatProfilePic;
+        TextView mMessageBodyTextViewIncoming, mMessageHeaderTextViewIncoming, mMessageBodyTextViewOutgoing, mMessageHeaderTextViewOutgoing;
+        ImageView mUserChatProfilePicIncoming, mUserChatProfilePicOutgoing;
+        LinearLayout mIncomingContainer;
+        RelativeLayout mOutgoingContainer;
 
         public ChatMessageViewHolder(View itemView) {
             super(itemView);
-            mMessageBodyTextView = (TextView) itemView.findViewById(R.id.text_view_chat_message);
-            mMessageHeaderTextView = (TextView) itemView.findViewById(R.id.text_view_chat_header);
-            mUserChatProfilePic = (ImageView) itemView.findViewById(R.id.image_view_user_chat_pic);
+            mMessageBodyTextViewIncoming = (TextView) itemView.findViewById(R.id.text_view_chat_message);
+            mMessageBodyTextViewOutgoing = (TextView) itemView.findViewById(R.id.text_view_outgoing_chat_message);
+
+            mMessageHeaderTextViewIncoming = (TextView) itemView.findViewById(R.id.text_view_chat_header);
+            mMessageHeaderTextViewOutgoing = (TextView) itemView.findViewById(R.id.text_view_outgoing_chat_header);
+
+            mUserChatProfilePicIncoming = (ImageView) itemView.findViewById(R.id.image_view_user_chat_pic);
+            mUserChatProfilePicOutgoing = (ImageView) itemView.findViewById(R.id.image_view_outgoing_chat_pic);
+
+            mIncomingContainer = (LinearLayout) itemView.findViewById(R.id.incoming_container);
+            mOutgoingContainer = (RelativeLayout) itemView.findViewById(R.id.outgoing_container);
         }
     }
 }

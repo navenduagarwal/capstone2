@@ -16,6 +16,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:name=".YogicAppleApplication"
         android:allowBackup="true"
@@ -116,7 +123,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.groups.GroupsActivity" />
         </activity>
-        <activity android:name=".ui.groups.CreateChatProfileActivity"></activity>
+        <activity android:name=".ui.groups.CreateChatProfileActivity" />
 
         <service
             android:name=".services.DownloadService"
@@ -132,7 +139,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".services.YAFirebaseInstanceIdService"
             android:exported="false">
@@ -144,7 +150,7 @@
         <!--
   Android N SDK has new restrictions around sharing file:// URIs
   https://developer.android.com/reference/android/support/v4/content/FileProvider.html#ProviderDefinition
--->
+        -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.google.firebase.quickstart.firebasestorage.fileprovider"
@@ -155,7 +161,30 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".ui.events.EventsActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_events"
+            android:parentActivityName=".ui.groups.GroupsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sparshik.yogicapple.ui.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.events.AddEventActivity"
+            android:label="@string/title_activity_add_event" />
     </application>
 
 </manifest>

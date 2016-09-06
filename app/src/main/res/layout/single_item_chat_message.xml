@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/incoming_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
@@ -17,7 +18,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="top"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            tools:src="@drawable/chat_image_1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:layout_weight="0"
                 android:textSize="10sp"
                 tools:text="Name" />
@@ -40,11 +43,73 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:background="@drawable/chat_message_shadow_dark"
-                android:padding="12dp"
+                android:background="@drawable/shape_bg_incoming_bubble"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="8dp"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/black"
                 tools:text="Message sjskdsjdksjk" />
         </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/outgoing_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image_view_outgoing_chat_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="top"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            tools:src="@drawable/chat_image_1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_toLeftOf="@id/image_view_outgoing_chat_pic"
+            android:layout_toStartOf="@id/image_view_outgoing_chat_pic"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_outgoing_chat_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="0"
+                android:textSize="10sp"
+                tools:text="Name" />
+
+            <TextView
+                android:id="@+id/text_view_outgoing_chat_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/shape_bg_outgoing_bubble"
+                android:paddingBottom="8dp"
+                android:paddingEnd="24dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="24dp"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/black"
+                tools:text="Message sjskdsjdksjk" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

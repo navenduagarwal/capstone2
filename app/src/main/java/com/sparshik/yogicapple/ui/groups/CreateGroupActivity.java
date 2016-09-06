@@ -229,8 +229,6 @@ public class CreateGroupActivity extends BaseActivity {
     }
 
     public void createGroup() {
-        //adding data to firebase
-
         //Adding data to Firebase
         mAddProgressDialog.show();
 

@@ -10,6 +10,8 @@
     <string name="activity_title_create_group">Create New Support Group</string>
     <string name="activity_title_join_group">Join Support Group</string>
     <string name="title_activity_support_group">Support Groups</string>
+    <string name="title_activity_events">Events Nearby</string>
+    <string name="title_activity_add_event">Add New Event</string>
 
 
     <string name="pager_title_current">Current Pack</string>
@@ -36,6 +38,8 @@
     <string name="action_create_group">Create New Support Group</string>
     <string name="action_join_group">Join Support Group</string>
     <string name="action_support_group">Support Groups</string>
+    <string name="action_events">Events</string>
+    <string name="action_search">Search</string>
 
     == Login and Create Account Strings ==
 
@@ -76,6 +80,7 @@
     <string name="error_cannot_be_empty">This cannot be empty.</string>
     <string name="storage_permission_denied">You must give application permission to read external storage</string>
     <string name="error_firebase_add">Record could not be added to Database</string>
+    <string name="error_invalid_url">Invalid Url</string>
 
 
     <!-- Google Errors -->
@@ -202,4 +207,18 @@
     <string name="record_delete_error"><xliff:g id="type">%1$s</xliff:g> record delete unsuccessful</string>
 
     <string name="list_empty_groups">Join group to start discussion"</string>
+
+    <!--    Permissions    -->
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+    <!-- Event Strings -->
+    <string name="hint_add_event_desc">Enter Event Desc</string>
+    <string name="hint_add_event_organizer">Enter Event Organizer name</string>
+    <string name="hint_add_event_title">Enter Event Title</string>
+    <string name="hint_select_image_file">Select Banner Image</string>
+    <string name="error_invalid_title">Invalid Title</string>
+    <string name="error_invalid_organizer">Invalid Organizer Name</string>
+    <string name="hint_add_event_url">Enter Event URL</string>
 </resources>
