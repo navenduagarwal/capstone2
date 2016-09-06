@@ -101,7 +101,7 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
                     }
                 });
             } else {
-                viewHolder.mUserChatProfilePicIncoming.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_2));
+                viewHolder.mUserChatProfilePicIncoming.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_5));
             }
 
             viewHolder.mMessageBodyTextViewIncoming.setBackground(mActivity.getResources().getDrawable(R.drawable.shape_bg_incoming_bubble));
