@@ -73,6 +73,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
     private Map<String, Marker> markers;
     private Circle mSearchCircle;
     private DatabaseReference mEventsRef;
+    private int mEventCount;
 
     @Override
     public Resources getResources() {
@@ -89,6 +90,8 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mEventCount = 0;
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -301,7 +304,9 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
                     final String url = eventData.getEventUrl();
 
                     markers.put(key, marker);
-                    loadMarkerIcon(marker, eventData.getEventImageUrl());
+                    mEventCount = mEventCount + 1;
+                    updateTitle();
+//                    loadMarkerIcon(marker, eventData.getEventImageUrl());
                     mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker markerInt) {
@@ -311,7 +316,6 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
                         }
                     });
                 }
-
             }
 
             @Override
@@ -329,7 +333,10 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
         if (marker != null) {
             marker.remove();
             this.markers.remove(key);
+            mEventCount = mEventCount - 1;
+            updateTitle();
         }
+
     }
 
     @Override
@@ -410,5 +417,13 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
                 marker.setIcon(icon);
             }
         });
+    }
+
+    private void updateTitle() {
+        if (mEventCount != 0) {
+            setTitle(getString(R.string.title_activity_events) + " (" + mEventCount + ")");
+        } else {
+            setTitle(getString(R.string.title_activity_events));
+        }
     }
 }

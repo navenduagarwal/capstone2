@@ -23,7 +23,7 @@ import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.DateUtils;
 
 /**
- * Adaptr to populate single message item
+ * Adapter to populate single message item
  */
 public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, GroupChatAdapter.ChatMessageViewHolder> {
     private ProgressBar mProgressBar;
@@ -103,12 +103,9 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
             } else {
                 viewHolder.mUserChatProfilePicIncoming.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.chat_image_5));
             }
-
             viewHolder.mMessageBodyTextViewIncoming.setBackground(mActivity.getResources().getDrawable(R.drawable.shape_bg_incoming_bubble));
             viewHolder.mMessageHeaderTextViewIncoming.setText(formattedChatMessageHeader);
-
         }
-
     }
 
     public static class ChatMessageViewHolder extends RecyclerView.ViewHolder {
