@@ -29,18 +29,18 @@ public class DateUtils {
 
         if (julianDay == currentJulianDay) {
             String today = context.getString(R.string.today);
-            return String.format(context.getString(formatId, today, formattedTime));
+            return context.getString(formatId, today, formattedTime);
         } else if (julianDay == currentJulianDay - 1) {
             String yesterday = context.getString(R.string.yesterday);
-            return String.format(context.getString(formatId, yesterday, formattedTime));
+            return context.getString(formatId, yesterday, formattedTime);
         } else if (julianDay > currentJulianDay - 7) {
             SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
             String formattedDay = "Last " + dayFormat.format(dateInMillis);
-            return String.format(context.getString(formatId, formattedDay, formattedTime));
+            return context.getString(formatId, formattedDay, formattedTime);
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd");
             String formattedDate = dateFormat.format(dateInMillis);
-            return String.format(context.getString(formatId, formattedDate, formattedTime));
+            return context.getString(formatId, formattedDate, formattedTime);
         }
     }
 }

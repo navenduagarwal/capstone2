@@ -13,8 +13,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
@@ -24,7 +26,6 @@
             android:focusableInTouchMode="true" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_username_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lists_title_bottom_margin"
@@ -44,7 +45,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_email_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_normal"
@@ -64,7 +64,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_create_account_final"
             android:layout_width="match_parent"
             android:layout_height="@dimen/input_field_height"
             android:background="@color/primary"
@@ -81,14 +80,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_already_have_account"
                 style="@style/LoginCreateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_already_have_account" />
 
             <TextView
-                android:id="@+id/tv_sign_in"
                 style="@style/LoginCreateTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

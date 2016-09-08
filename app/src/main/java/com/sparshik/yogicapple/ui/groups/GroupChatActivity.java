@@ -156,7 +156,7 @@ public class GroupChatActivity extends BaseActivity {
                 HashMap<String, Object> timestampCreated = new HashMap<>();
                 timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
                 timestampCreated.put(Constants.FIREBASE_PROPERTY_CREATED_BY, mEncodedEmail);
-                ChatMessage newChatMessage = new ChatMessage(mMesssageEditText.getText().toString(), mUserNickname, mUserProfileImageUrl, false, timestampCreated);
+                ChatMessage newChatMessage = new ChatMessage(mMesssageEditText.getText().toString(), mUserNickname, mUserProfileImageUrl, timestampCreated);
                 mGroupChatRef.push().setValue(newChatMessage);
                 mMesssageEditText.setText("");
                 mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);

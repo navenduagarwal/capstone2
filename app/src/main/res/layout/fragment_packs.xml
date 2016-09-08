@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_fragment_packs"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/app_bar">
@@ -14,7 +13,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/header_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="16dp"
@@ -39,7 +37,7 @@
                 style="@style/ListHeaderBodyText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="start"
                 android:textAlignment="gravity"
                 tools:text="Start working towards clearer and calmer mind by learning the basics of meditation and mindfulness." />
         </LinearLayout>

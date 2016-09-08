@@ -1,17 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="image_avatar_ids">
-        <item>@drawable/chat_image_1</item>
-        <item>@drawable/chat_image_2</item>
-        <item>@drawable/chat_image_3</item>
-        <item>@drawable/chat_image_4</item>
-        <item>@drawable/chat_image_5</item>
-        <item>@drawable/chat_image_6</item>
-        <item>@drawable/chat_image_7</item>
-        <item>@drawable/chat_image_8</item>
-        <item>@drawable/chat_image_9</item>
-        <item>@drawable/chat_image_10</item>
-    </string-array>
-
 </resources>

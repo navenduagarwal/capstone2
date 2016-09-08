@@ -15,11 +15,11 @@ public class ChatMessage {
     public ChatMessage() {
     }
 
-    public ChatMessage(String text, String nickName, String userProfilePicUrl, boolean flagged, HashMap<String, Object> timestampCreated) {
+    public ChatMessage(String text, String nickName, String userProfilePicUrl, HashMap<String, Object> timestampCreated) {
         this.text = text;
         this.nickName = nickName;
         this.userProfilePicUrl = userProfilePicUrl;
-        this.flagged = flagged;
+        this.flagged = false;
         this.timestampCreated = timestampCreated;
     }
 

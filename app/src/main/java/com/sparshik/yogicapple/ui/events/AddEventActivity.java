@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 
 public class AddEventActivity extends BaseActivity {
     private static final String LOG_TAG = AddEventActivity.class.getSimpleName();
-    private static int REQUEST_BANNER_IMAGE_FILE = 1;
+    private static final int REQUEST_BANNER_IMAGE_FILE = 1;
     private int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
     private Button mButtonSelectFile, mButtonAdd;
     private EditText mEditTextEventTitle, mEditTextEventDesc, mEditTextEventOrganizer, mEditTextEventUrl;

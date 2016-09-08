@@ -54,7 +54,7 @@ public class DownloadService extends Service {
     private static HashMap<String, String> downloadError;
 
     static {
-        downloadProgresses = new HashMap();
+        downloadProgresses = new HashMap<>();
         downloadError = new HashMap<>();
     }
 
@@ -77,7 +77,7 @@ public class DownloadService extends Service {
 
     public static int getDownloadProgress(String appleId) {
         if (downloadProgresses != null) {
-            Integer progress = (Integer) downloadProgresses.get(appleId);
+            Integer progress = downloadProgresses.get(appleId);
             if (progress == null) {
                 return 0;
             }

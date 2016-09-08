@@ -102,7 +102,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
         mGeoFire = new GeoFire(geoRef);
         mGeoQuery = mGeoFire.queryAtLocation(Constants.INITIAL_CENTER, 1);
 
-        markers = new HashMap<String, Marker>();
+        markers = new HashMap<>();
 
         mEventsRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_EVENTS);
     }

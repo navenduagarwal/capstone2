@@ -48,7 +48,7 @@ public class FireBaseUtils {
          * See if there is already a user (for example, if they already logged in with an associated
          * Google account.
          */
-        HashMap<String, Object> userAndUidMapping = new HashMap<String, Object>();
+        HashMap<String, Object> userAndUidMapping = new HashMap<>();
                      /* Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap */
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
