@@ -62,7 +62,7 @@ public class GroupChatAdapter extends FirebaseRecyclerAdapter<ChatMessage, Group
             viewHolder.mMessageBodyTextViewOutgoing.setText(chatMessage.getText());
 
             //Set header
-            formattedChatMessageHeader = "You" + " - " + formattedTimeStamp;
+            formattedChatMessageHeader = formattedTimeStamp;
             viewHolder.mMessageHeaderTextViewOutgoing.setText(formattedChatMessageHeader);
 
             //set Image
