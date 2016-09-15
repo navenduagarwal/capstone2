@@ -1,10 +1,12 @@
 package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,16 +15,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
 import com.sparshik.yogicapple.ui.groups.GroupAdapter.GroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
+
+import java.util.HashMap;
 
 
 /**
@@ -83,13 +88,41 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
             }
         });
 
+        final String groupToRemoveId = this.getRef(position).getKey();
         viewHolder.mGroupDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "Delete", Toast.LENGTH_SHORT).show();
 
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity, R.style.CustomTheme_Dialog)
+                        .setTitle(mActivity.getString(R.string.remove_selected_group_option))
+                        .setMessage(mActivity.getString(R.string.dialog_message_are_you_sure_remove_group))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (groupToRemoveId != null) {
+                                    removeGroup(groupToRemoveId);
+                                }
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                /* Dismiss the dialog */
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert);
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
+    }
+
+    private void removeGroup(String groupId) {
+        DatabaseReference userGroupsRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
+        HashMap<String, Object> removeGroup = new HashMap<String, Object>();
+        removeGroup.put("/" + groupId, null);
+        userGroupsRef.updateChildren(removeGroup);
     }
 
     /**

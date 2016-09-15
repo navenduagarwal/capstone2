@@ -129,7 +129,8 @@
     <string name="toast_is_already_your_group">You are already member of %s group!</string>
     <string name="format_number_of_members"><xliff:g id="members">%1$s</xliff:g> members</string>
     <string name="format_single_member"><xliff:g id="member">%1$s</xliff:g> member</string>
-
+    <string name="remove_selected_group_option">Remove selected group</string>
+    <string name="dialog_message_are_you_sure_remove_group">Are you sure you want to remove this group</string>
     <!-- ChatMessage Message Strings -->
     <string name="hint_chat_message">Type your message here...</string>
     <string name="today">Today</string>

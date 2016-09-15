@@ -46,11 +46,9 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
         viewHolder.mTextViewGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 DatabaseReference currentUserGroupsRef = FirebaseDatabase.getInstance()
                         .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
                 final DatabaseReference userSupportGroupsRef = currentUserGroupsRef.child(supportGroupId);
-
                 /**
                  * Add listener for single value event to perform a one time operation
                  */
@@ -62,7 +60,6 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
                             mActivity.startActivity(new Intent(mActivity, GroupsActivity.class));
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e(mActivity.getClass().getSimpleName(), mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
