@@ -74,18 +74,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
 
-                if (user != null && user.getName() != null) {
+                if (user != null) {
                     /* Assumes that the first word in the user's name is the user's first name. */
-                    String firstName = user.getName().split("\\s+")[0];
-                    String title = getString(R.string.format_nav_bar_name, firstName);
-                    TextView name = (TextView) findViewById(R.id.nav_bar_username);
-                    name.setText(title);
-                }
+                    if (user.getName() != null) {
+                        String firstName = user.getName().split("\\s+")[0];
+                        String title = getString(R.string.format_nav_bar_name, firstName);
+                        String header = getString(R.string.format_header_name, firstName);
+                        setTitle(header);
+                        TextView name = (TextView) findViewById(R.id.nav_bar_username);
+                        if (name != null) {
+                            name.setText(title);
+                        }
+                    }
 
-                if (user != null && user.getEmail() != null) {
-                    String email = FireBaseUtils.decodeEmail(user.getEmail());
-                    TextView emailText = (TextView) findViewById(R.id.nav_bar_email);
-                    emailText.setText(email);
+                    if (user.getEmail() != null) {
+                        String email = FireBaseUtils.decodeEmail(user.getEmail());
+                        TextView emailText = (TextView) findViewById(R.id.nav_bar_email);
+                        if (emailText != null) {
+                            emailText.setText(email);
+                        }
+                    }
                 }
             }
 
@@ -167,6 +175,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_programs) {
+            startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
+            return true;
+        } else if (id == R.id.nav_support) {
+            startActivity(new Intent(MainActivity.this, GroupsActivity.class));
+            return true;
+        } else if (id == R.id.nav_events) {
+            startActivity(new Intent(MainActivity.this, EventsActivity.class));
+            return true;
+        } else if (id == R.id.nav_logout) {
+            logout();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     /**
      * SectionPagerAdapter class that extends FragmentStatePagerAdapter to save fragments state
@@ -227,29 +257,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }
 
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_programs) {
-            startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
-            return true;
-        } else if (id == R.id.nav_support) {
-            startActivity(new Intent(MainActivity.this, GroupsActivity.class));
-            return true;
-        } else if (id == R.id.nav_events) {
-            startActivity(new Intent(MainActivity.this, EventsActivity.class));
-            return true;
-        } else if (id == R.id.nav_logout) {
-            logout();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }
 

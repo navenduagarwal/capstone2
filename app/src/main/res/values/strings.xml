@@ -22,7 +22,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="format_nav_bar_name">Hello, <xliff:g id="firstName">%1$s</xliff:g></string>
-
+    <string name="format_header_name">Yogic <xliff:g id="firstName">%1$s</xliff:g></string>
+    <string name="nav_header_first_default">Welcome to YogicApple!</string>
+    <string name="nav_header_second_default">Explore Mindfulness!</string>
     <!-- Base Error Strings-->
     <string name="log_error_the_read_failed">The read failed: </string>
     <string name="log_error_occurred">"Error occurred: "</string>

@@ -3,7 +3,6 @@ package com.sparshik.yogicapple.ui.programs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.sparshik.yogicapple.utils.Constants;
 public class ProgramsListFragment extends Fragment {
     private ListView mListView;
     private ProgramsListAdapter mProgramListAdapter;
-    private String mEncodedEmail;
 
     public ProgramsListFragment() {
         super();
@@ -44,8 +42,6 @@ public class ProgramsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mEncodedEmail = this.getArguments().getString(Constants.KEY_ENCODED_EMAIL);
-
     }
 
     @Override
@@ -53,7 +49,6 @@ public class ProgramsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         /* Inflate the layout for this fragment */
         View rootView = inflater.inflate(R.layout.fragment_programs_list, container, false);
-        Log.d("Testing", "Hello");
 
         /**
          * Link layout elements from XML and setup the toolbar

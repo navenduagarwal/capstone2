@@ -76,9 +76,9 @@ public class CurrentPackApplesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mEncodedEmail = this.getArguments().getString(Constants.KEY_ENCODED_EMAIL);
-
+        if (getArguments() != null) {
+            mEncodedEmail = this.getArguments().getString(Constants.KEY_ENCODED_EMAIL);
+        }
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -135,8 +135,8 @@ public class CurrentPackApplesFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
         if (mCurrentPackAppleRecyclerAdapter != null) {
             mCurrentPackAppleRecyclerAdapter.cleanup();
         }

@@ -2,23 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
-    android:orientation="vertical"
-    tools:context=".ui.current.CurrentPackApplesFragment">
+    android:layout_below="@+id/app_bar"
+    android:orientation="horizontal">
+
 
     <LinearLayout
         android:id="@+id/header_container"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="?colorPrimary"
-        android:elevation="4dp"
-        android:orientation="horizontal"
-        tools:targetApi="21">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/darker_gray"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/keyline_1"
+            android:layout_margin="16dp"
             android:layout_weight="2.5"
             android:orientation="vertical">
 
@@ -31,10 +30,8 @@
 
             <ImageView
                 android:id="@+id/image_view_icon_header"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 tools:src="@drawable/ic_play_dark" />
 
             <TextView
@@ -43,18 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                tools:text="Start and mindfulness." />
-
-            <TextView
-                android:id="@+id/text_view_built_by_partner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:visibility="gone"
-                tools:text="Built By: Auroville" />
-
+                android:textAlignment="gravity"
+                tools:text="Start working towards clearer and calmer mind by learning the basics of meditation and mindfulness." />
         </LinearLayout>
 
         <ImageView
@@ -65,9 +52,10 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_view_current_pack"
-        android:layout_width="match_parent"
+        android:id="@+id/recycle_view_pack"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:scrollbars="none"
         android:visibility="visible" />
 

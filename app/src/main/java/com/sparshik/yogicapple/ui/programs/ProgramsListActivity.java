@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.ui.BaseActivity;
-import com.sparshik.yogicapple.utils.Constants;
 
 /**
  * Handles list generation of programs
@@ -25,12 +24,8 @@ public class ProgramsListActivity extends BaseActivity {
         }
 
         if (savedInstanceState == null) {
-            Bundle bundle = new Bundle();
-            bundle.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail);
-            ProgramsListFragment programsListFragment = new ProgramsListFragment();
-            programsListFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, programsListFragment)
+                    .add(R.id.container, new ProgramsListFragment())
                     .commit();
         }
     }

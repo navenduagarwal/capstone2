@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'YogicAppleKey'
             keyPassword 'm1nku_dE'
-            storeFile file('C:/Users/navendu/keystore/yogicapple/android.jks')
+            storeFile file('keystore/android.jks')
             storePassword 'm1nku_dE'
         }
     }
@@ -59,15 +59,15 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.firebaseui:firebase-ui:2.0.0'
-    compile 'com.google.firebase:firebase-core:11.0.0'
-    compile 'com.google.firebase:firebase-database:11.0.0'
-    compile 'com.google.firebase:firebase-auth:11.0.0'
-    compile 'com.google.firebase:firebase-messaging:11.0.0'
-    compile 'com.google.android.gms:play-services-safetynet:11.0.0'
-    compile 'com.google.android.gms:play-services:11.0.0'
-    compile 'com.google.android.gms:play-services-auth:11.0.0'
-    compile 'com.google.firebase:firebase-storage:11.0.0'
+    compile 'com.firebaseui:firebase-ui:1.2.0'
+    compile 'com.google.firebase:firebase-core:10.2.0'
+    compile 'com.google.firebase:firebase-database:10.2.0'
+    compile 'com.google.firebase:firebase-auth:10.2.0'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
+    compile 'com.google.android.gms:play-services-safetynet:10.2.0'
+    compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile 'com.google.firebase:firebase-storage:10.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.android.exoplayer:exoplayer:r1.5.10'
     compile 'com.github.bumptech.glide:glide:3.8.0'
