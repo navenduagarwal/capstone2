@@ -20,6 +20,7 @@ import com.sparshik.yogicapple.model.Program;
  * Firebase Adapter for populating programs list
  */
 public class ProgramsListAdapter extends FirebaseListAdapter<Program> {
+     Activity mActivity;
 
     public ProgramsListAdapter(Activity activity, Class<Program> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);

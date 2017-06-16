@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="drawable" name="ic_menu_events">@drawable/ic_event_black_24dp</item>
+    <item type="drawable" name="ic_menu_groups">@drawable/ic_group_black_24dp</item>
+    <item type="drawable" name="ic_menu_home">@drawable/ic_home_black_24dp</item>
+    <item type="drawable" name="ic_menu_logout">@drawable/ic_exit_to_app_black_24dp</item>
+    <item type="drawable" name="ic_menu_programs">@drawable/ic_audiotrack_black_24dp</item>
+    <item type="drawable" name="notification_template_icon_bg">#3333b5e5</item>
+</resources>

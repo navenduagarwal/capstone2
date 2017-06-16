@@ -70,7 +70,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:background="@color/primary"
+                android:background="?colorPrimary"
                 android:gravity="center"
                 android:text="@string/button_file_select"
                 android:textColor="@android:color/white" />
@@ -83,7 +83,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/primary"
+            android:background="?colorPrimary"
             android:gravity="center"
             android:text="@string/button_create"
             android:textColor="@android:color/white" />

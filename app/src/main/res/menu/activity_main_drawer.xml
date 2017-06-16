@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/header">
+        <item
+            android:id="@+id/nav_invoices"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/action_home" />
+        <item
+            android:id="@+id/nav_programs"
+            android:icon="@drawable/ic_audiotrack_black_24dp"
+            android:title="@string/action_programs" />
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/action_support_group" />
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_audiotrack_black_24dp"
+            android:title="@string/action_events" />
+
+    </group>
+
+    <group android:id="@+id/footer">
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/action_logout" />
+    </group>
+
+</menu>

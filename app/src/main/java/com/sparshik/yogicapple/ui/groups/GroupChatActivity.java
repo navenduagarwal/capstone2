@@ -136,7 +136,7 @@ public class GroupChatActivity extends BaseActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
                     mSendButton.setEnabled(true);
-                    mSendButton.setBackgroundColor(getResources().getColor(R.color.primary_light));
+                    mSendButton.setBackgroundColor(getResources().getColor(R.color.teal_100));
                 } else {
                     mSendButton.setEnabled(false);
                     mSendButton.setBackgroundColor(getResources().getColor(R.color.grey));

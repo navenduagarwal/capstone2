@@ -173,7 +173,7 @@ public class CurrentPackApplesFragment extends Fragment {
                     mTextViewHeaderTitle.setText(pack.getPackTitle());
                     mTextViewHeaderBody.setText(pack.getPackDesc());
 
-                    int mPackColor = getResources().getColor(R.color.primary);  //pack.getPackColorInt();
+                    int mPackColor = getResources().getColor(R.color.teal_500);  //pack.getPackColorInt();
                     int backgroundColor = ColorUtils.darkenColor(mPackColor); //TODO
                     mTopContainer.setBackgroundColor(backgroundColor);
 

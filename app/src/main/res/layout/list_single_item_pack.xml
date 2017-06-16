@@ -26,7 +26,7 @@
             android:background="@drawable/circle"
             android:contentDescription="@string/image_icon"
             android:scaleType="center"
-            tools:src="@drawable/ic_play_light" />
+            tools:src="@drawable/ic_media_play_light" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -60,14 +60,14 @@
             android:contentDescription="@string/image_state"
             android:scaleType="centerCrop"
             android:visibility="gone"
-            tools:src="@drawable/ic_pause_light" />
+            tools:src="@drawable/ic_media_pause_light" />
 
         <Button
             android:id="@+id/button_state_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@color/primary_light"
+            android:background="@color/teal_100"
             android:elevation="4dp"
             android:text="@string/pack_list_button"
             android:textColor="@color/black"

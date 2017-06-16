@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="grey">#EDEEEF</color>
-    <color name="dark_green">#388E3C</color>
+    <color name="dark_green">#ff00695c</color>
 
-    <color name="dark_grey">#AEAEAE</color>
-
-    <color name="accent">#DF4A32</color>
-
-    <color name="primary">#83CF1C</color>
-    <color name="primary_dark">#5AB831</color>
-    <color name="primary_light">#DCEDC8</color>
+    <color name="dark_grey">#ffaeaeae</color>
 
     <color name="light_black">#747474</color>
     <color name="black">#616161</color>
     <color name="activated">#E0E0E0</color>
-    <color name="background">#DCEDC8</color>
-
+    <color name="background">#ffb2dfdb</color>
+    <color name="teal_100">#ffb2dfdb</color>
+    <color name="teal_400">#ff26a69a</color>
+    <color name="teal_500">#ff009688</color>
+    <color name="teal_700">#ff00796b</color>
+    <color name="red_a200">#ffff5252</color>
 
     <color name="current_line_color">#ffdad7cb</color>
     <color name="current_pack_title_color">#ff8f8e8b</color>
 
     <color name="ripple_color">#66000000</color>
+    <color name="white">#ffffffff</color>
 
 
 </resources>

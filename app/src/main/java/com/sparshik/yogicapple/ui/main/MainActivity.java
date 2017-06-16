@@ -4,17 +4,23 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +36,9 @@ import com.sparshik.yogicapple.ui.groups.GroupsActivity;
 import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.ui.progress.ProgressFragment;
 import com.sparshik.yogicapple.utils.Constants;
+import com.sparshik.yogicapple.utils.FireBaseUtils;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private DatabaseReference mUserRef;
     private ValueEventListener mUserRefListener;
@@ -70,8 +77,15 @@ public class MainActivity extends BaseActivity {
                 if (user != null && user.getName() != null) {
                     /* Assumes that the first word in the user's name is the user's first name. */
                     String firstName = user.getName().split("\\s+")[0];
-                    String title = firstName + "'s Discovery";
-                    setTitle(title);
+                    String title = getString(R.string.format_nav_bar_name, firstName);
+                    TextView name = (TextView) findViewById(R.id.nav_bar_username);
+                    name.setText(title);
+                }
+
+                if (user != null && user.getEmail() != null) {
+                    String email = FireBaseUtils.decodeEmail(user.getEmail());
+                    TextView emailText = (TextView) findViewById(R.id.nav_bar_email);
+                    emailText.setText(email);
                 }
             }
 
@@ -102,16 +116,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_programs) {
-            startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
-            return true;
-        } else if (id == R.id.action_support_group) {
-            startActivity(new Intent(MainActivity.this, GroupsActivity.class));
-            return true;
-        } else if (id == R.id.action_events) {
-            startActivity(new Intent(MainActivity.this, EventsActivity.class));
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,10 +130,12 @@ public class MainActivity extends BaseActivity {
      * Link layout elements from XML and setup the toolbar
      */
     public void initializeScreen() {
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         /**
          * Create SectionPagerAdapter, set it as adapter to viewPager with setOffscreenPageLimit(2)
@@ -141,7 +147,26 @@ public class MainActivity extends BaseActivity {
          * Setup the mTabLayout with view pager
          */
         tabLayout.setupWithViewPager(viewPager);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
     /**
      * SectionPagerAdapter class that extends FragmentStatePagerAdapter to save fragments state
@@ -203,4 +228,28 @@ public class MainActivity extends BaseActivity {
         }
 
     }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_programs) {
+            startActivity(new Intent(MainActivity.this, ProgramsListActivity.class));
+            return true;
+        } else if (id == R.id.nav_support) {
+            startActivity(new Intent(MainActivity.this, GroupsActivity.class));
+            return true;
+        } else if (id == R.id.nav_events) {
+            startActivity(new Intent(MainActivity.this, EventsActivity.class));
+            return true;
+        } else if (id == R.id.nav_logout) {
+            logout();
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
+
