@@ -20,6 +20,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.newrelic.agent.android.NewRelic;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.ui.login.LoginActivity;
 import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
@@ -40,6 +41,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        NewRelic.withApplicationToken(getString(R.string.NEW_RELIC_API_KEY)).start(this.getApplication());
+
 
         /* Setup the Google API object to allow Google logins */
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

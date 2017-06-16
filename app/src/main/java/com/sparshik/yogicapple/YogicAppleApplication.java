@@ -1,7 +1,11 @@
 package com.sparshik.yogicapple;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
 
 /**
  * Includes one-time initialization of Firebase related code
@@ -16,6 +20,12 @@ public class YogicAppleApplication extends android.app.Application{
 //            FirebaseDatabase.getInstance().setLogLevel(Logger.Level.DEBUG);
         }
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
 }

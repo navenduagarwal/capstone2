@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'newrelic'
 
 android {
     signingConfigs {
@@ -18,6 +19,9 @@ android {
         versionCode 2
         versionName "1.1"
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         release {
@@ -33,12 +37,17 @@ android {
     buildTypes.each {
         it.buildConfigField 'String', 'UNIQUE_FIREBASE_ROOT_URL', UniqueFirebaseRootUrl
         it.buildConfigField 'String', 'FIREBASE_STORAGE_ROOT_URL', FirebaseStorageUrl
+        it.resValue 'string', 'NEW_RELIC_API_KEY', NewRelicApiKey
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -63,5 +72,7 @@ dependencies {
     compile 'com.google.android.exoplayer:exoplayer:r1.5.10'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.firebase:geofire-android:2.1.1'
+    compile 'com.newrelic.agent.android:android-agent:5.9.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

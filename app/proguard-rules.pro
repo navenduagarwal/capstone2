@@ -19,3 +19,7 @@
 -dontwarn com.squareup.okhttp.**
 -dontwarn com.squareup.picasso.**
 -dontwarn com.fasterxml.jackson.**
+
+-keep class com.newrelic.** { *; }
+-dontwarn com.newrelic.**
+-keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
