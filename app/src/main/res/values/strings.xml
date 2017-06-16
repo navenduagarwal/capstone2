@@ -172,4 +172,6 @@
     <string name="error_invalid_title">Invalid Title</string>
     <string name="error_invalid_organizer">Invalid Organizer Name</string>
     <string name="hint_add_event_url">Enter Event URL</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

@@ -158,7 +158,9 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
         //Finding out media duration
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(this, mAudioUri);
+        if (mAudioUri != null) {
+            mediaMetadataRetriever.setDataSource(this, mAudioUri);
+        }
         String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         int durationSecond = Integer.parseInt(durationStr) / 1000;
         ipv.setMax(durationSecond);

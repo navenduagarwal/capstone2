@@ -185,6 +185,16 @@
         <activity
             android:name=".ui.events.AddEventActivity"
             android:label="@string/title_activity_add_event" />
+
+        <receiver android:name=".ui.widget.YogicAppleWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/yogic_apple_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
