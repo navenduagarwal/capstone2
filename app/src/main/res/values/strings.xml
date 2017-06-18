@@ -174,4 +174,15 @@
     <string name="hint_add_event_url">Enter Event URL</string>
     <string name="appwidget_name">YogicApple Support Groups</string>
     <string name="add_widget">Add widget</string>
+    <string name="dc_player_control">Player Control</string>
+    <string name="dc_apple_control">Apple Control</string>
+    <string name="dc_apple_lock_status">Apple Lock Status</string>
+    <string name="dc_apple_view_header">Apple View Header Image</string>
+    <string name="dc_pack_view_header">Pack View Header Image</string>
+    <string name="dc_pack_view_header_icon">Pack View Header Icon</string>
+    <string name="dc_group_image">Group Image</string>
+    <string name="dc_group_button">Group Delete Button</string>
+    <string name="dc_chat_image">Chat User Image</string>
+
+
 </resources>

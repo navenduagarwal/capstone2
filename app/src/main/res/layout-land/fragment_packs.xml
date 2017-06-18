@@ -32,6 +32,7 @@
                 android:id="@+id/image_view_icon_header"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="@string/dc_pack_view_header_icon"
                 tools:src="@drawable/ic_play_dark" />
 
             <TextView
@@ -48,7 +49,8 @@
             android:id="@+id/image_view_pack_image_header"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5" />
+            android:layout_weight="1.5"
+            android:contentDescription="@string/dc_pack_view_header" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

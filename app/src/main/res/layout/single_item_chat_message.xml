@@ -18,6 +18,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="top"
+            android:contentDescription="@string/dc_chat_image"
             tools:src="@drawable/chat_image_2" />
 
         <LinearLayout
@@ -69,6 +70,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="top"
+            android:contentDescription="@string/dc_chat_image"
             tools:src="@drawable/chat_image_5" />
 
         <LinearLayout

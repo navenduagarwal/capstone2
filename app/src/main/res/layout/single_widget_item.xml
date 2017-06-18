@@ -17,6 +17,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/abc_list_item_padding_horizontal_material"
         android:layout_marginRight="@dimen/abc_list_item_padding_horizontal_material"
+        android:contentDescription="@string/dc_group_image"
         android:scaleType="center"
         tools:src="@drawable/ic_media_pause" />
 

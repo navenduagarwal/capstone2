@@ -50,6 +50,7 @@
         android:layout_alignStart="@id/apple_progress_circle"
         android:layout_alignTop="@id/apple_progress_circle"
         android:background="@drawable/white_circle_with_shadow"
+        android:contentDescription="@string/dc_apple_lock_status"
         android:scaleType="fitCenter"
         android:src="@drawable/series_lock_small" />
 

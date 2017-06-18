@@ -36,6 +36,7 @@
                 android:layout_height="24dp"
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
+                android:contentDescription="@string/dc_apple_control"
                 tools:src="@drawable/ic_play_dark" />
 
             <TextView
@@ -62,7 +63,8 @@
             android:id="@+id/image_view_pack_image_header"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5" />
+            android:layout_weight="1.5"
+            android:contentDescription="@string/dc_apple_view_header" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
