@@ -85,7 +85,11 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
     @Override
     public int getCount() {
         Log.d("Test 1705", "onDataChange: " + SGList.size());
-        return 2;
+        if(SGList.size()>0){
+            return SGList.size();
+        } else {
+            return 2;
+        }
     }
 
     @Override
