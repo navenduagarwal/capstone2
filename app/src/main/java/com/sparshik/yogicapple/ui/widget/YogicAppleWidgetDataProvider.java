@@ -97,7 +97,7 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
         Log.d("Test 1708", "onDataChange: " + position);
 
         final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.single_widget_item);
-        if (SGList.size() > 0) {
+        if (SGList.size() > 0 && position <= SGList.size()) {
             SupportGroup newSG = SGList.get(position);
             remoteViews.setTextViewText(R.id.group_name, newSG.getGroupName());
             if (newSG.getMemberCount() < 2) {
