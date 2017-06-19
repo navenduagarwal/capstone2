@@ -182,11 +182,11 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                     if (!maybeRequestPermission()) {
                         player.setPlayWhenReady(true);
                         ipv.start();
-                        control.setBackgroundResource(R.drawable.ic_pause_dark);
+                        control.setBackgroundResource(R.drawable.ic_media_pause);
                     }
                 } else {
                     ipv.stop();
-                    control.setBackgroundResource(R.drawable.ic_play_dark);
+                    control.setBackgroundResource(R.drawable.ic_media_play);
                     player.setPlayWhenReady(false);
 
                 }
@@ -285,7 +285,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
             player = null;
             mAudio.abandonAudioFocus(afChangeListener);
             ipv.stop();
-            control.setBackgroundResource(R.drawable.ic_play_dark);
+            control.setBackgroundResource(R.drawable.ic_media_play);
             ipv.setProgress(0);
         }
     }

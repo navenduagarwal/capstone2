@@ -14,7 +14,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.cast.TextTrackStyle;
 
 /**
  * Circular progress bar
@@ -50,6 +49,7 @@ public class CircleProgressBar extends ProgressBar {
     private Paint normalPaint;
     private Paint strokePaint;
     private Canvas tempCanvas;
+    private int DEFAULT_FONT_SCALE = 1;
 
     public CircleProgressBar(Context context) {
         super(context);
@@ -143,7 +143,7 @@ public class CircleProgressBar extends ProgressBar {
         this.mCenterX = this.mWidth / 2.0f;
         this.mCenterY = this.mHeight / 2.0f;
         this.mStrokeRadius = (Math.min(this.mWidth, this.mHeight) - this.mStrokeWidth) / 2.0f;
-        this.mProgressRadius = ((Math.min(this.mWidth, this.mHeight) / 2.0f) - this.mStrokeWidth) + TextTrackStyle.DEFAULT_FONT_SCALE;
+        this.mProgressRadius = ((Math.min(this.mWidth, this.mHeight) / 2.0f) - this.mStrokeWidth) + DEFAULT_FONT_SCALE;
         this.mCanvasDistRect = new Rect((int) this.mStartX, (int) this.mStartY, (int) (this.mStartX + this.mSize), (int) (this.mStartY + this.mSize));
         this.canvasBitmap = null;
         this.mStrokeOval = new RectF(this.mStartX + (this.mStrokeWidth / 2.0f), this.mStartY + (this.mStrokeWidth / 2.0f), (this.mStartX + this.mSize) - (this.mStrokeWidth / 2.0f), (this.mStartY + this.mSize) - (this.mStrokeWidth / 2.0f));

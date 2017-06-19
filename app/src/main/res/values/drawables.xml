@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item type="drawable" name="ic_menu_events">@drawable/ic_event_black_24dp</item>
-    <item type="drawable" name="ic_menu_groups">@drawable/ic_group_black_24dp</item>
-    <item type="drawable" name="ic_menu_home">@drawable/ic_home_black_24dp</item>
-    <item type="drawable" name="ic_menu_logout">@drawable/ic_exit_to_app_black_24dp</item>
-    <item type="drawable" name="ic_menu_programs">@drawable/ic_audiotrack_black_24dp</item>
-    <item type="drawable" name="notification_template_icon_bg">#3333b5e5</item>
+    <item name="ic_menu_events" type="drawable">@drawable/ic_event_black_24dp</item>
+    <item name="ic_menu_groups" type="drawable">@drawable/ic_group_black_24dp</item>
+    <item name="ic_menu_home" type="drawable">@drawable/ic_home_black_24dp</item>
+    <item name="ic_menu_logout" type="drawable">@drawable/ic_exit_to_app_black_24dp</item>
+    <item name="ic_menu_programs" type="drawable">@drawable/ic_audiotrack_black_24dp</item>
+    <item name="notification_template_icon_bg" type="drawable">#3333b5e5</item>
+    <item name="ic_media_play" type="drawable">@drawable/ic_play_arrow_white_24dp</item>
+    <item name="ic_media_pause" type="drawable">@drawable/ic_pause_white_24dp</item>
 </resources>

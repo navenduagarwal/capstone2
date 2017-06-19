@@ -20,6 +20,9 @@
 -dontwarn com.squareup.picasso.**
 -dontwarn com.fasterxml.jackson.**
 
+-keepattributes Signature
+-keepattributes *Annotation*
+
 -keep class com.newrelic.** { *; }
 -dontwarn com.newrelic.**
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
