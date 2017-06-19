@@ -40,7 +40,7 @@ public class YAFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_yogi)
                 .setLargeIcon(largeIcon)
-                .setContentTitle("Meditation Alert")
+                .setContentTitle(getString(R.string.messaging_header))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);

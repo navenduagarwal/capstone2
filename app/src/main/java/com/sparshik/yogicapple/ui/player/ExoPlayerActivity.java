@@ -11,6 +11,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -115,7 +116,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                 PackApple packApple = dataSnapshot.getValue(PackApple.class);
                 if (packApple != null) {
                     appleText.setText(packApple.getAppleTitle());
-                    String duration = packApple.getAppleDuration() / 60 + " minutes";
+                    String duration = getString(R.string.format_duration,packApple.getAppleDuration() / 60);
                     durationText.setText(duration);
                 }
             }
@@ -169,7 +170,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
         startPlayBack();
         File file = new File(mAudioUrl);
         if (!file.exists()) {
-            Toast.makeText(this, "File is not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.file_unavailable), Toast.LENGTH_SHORT).show();
             intentApplesList();
         }
 
@@ -235,8 +236,8 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
     // Permission management methods
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startPlayBack();
         } else {

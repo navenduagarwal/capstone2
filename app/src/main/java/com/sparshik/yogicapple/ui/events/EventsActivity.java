@@ -112,7 +112,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
+                String toastMsg = getString(R.string.place_message,place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Places: " + place.getLatLng() + "\n" + place.getAddress() + "\n" + place.getAddress());
                 CameraPosition updatedPlace = CameraPosition.builder()
@@ -207,7 +207,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
             GooglePlayServicesUtil
                     .getErrorDialog(e.getConnectionStatusCode(), EventsActivity.this, 0);
         } catch (GooglePlayServicesNotAvailableException e) {
-            Toast.makeText(EventsActivity.this, "Google Play Services is not available.",
+            Toast.makeText(EventsActivity.this, getString(R.string.play_service_unavailable),
                     Toast.LENGTH_LONG)
                     .show();
         }
@@ -356,8 +356,8 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
     @Override
     public void onGeoQueryError(DatabaseError error) {
         new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage("There was an unexpected error querying GeoFire: " + error.getMessage())
+                .setTitle(getString(R.string.geofire_dialog_header))
+                .setMessage(getString(R.string.geofire_error,error.getMessage()))
                 .setPositiveButton(android.R.string.ok, null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();

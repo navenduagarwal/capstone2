@@ -15,8 +15,8 @@
 
     <string name="pager_title_current">Current Pack</string>
     <string name="pager_title_progress">My Progress</string>
-    <string name="download_apple_prepare">Waiting to download...</string>
-    <string name="download_apple_progress">Downloading...</string>
+    <string name="download_apple_prepare">Waiting to download&#8230;</string>
+    <string name="download_apple_progress">Downloading&#8230;</string>
 
     <!--navigation action menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -77,6 +77,7 @@
     <string name="storage_permission_denied">You must give application permission to read external storage</string>
     <string name="error_firebase_add">Record could not be added to Database</string>
     <string name="error_invalid_url">Invalid Url</string>
+    <string name="format_duration"><xliff:g id="minutes">%1$d</xliff:g> minutes</string>
 
 
     <!-- Google Errors -->
@@ -89,7 +90,11 @@
 
 
     <!-- Toast Errors -->
-
+    <string name="file_unavailable">File is not available</string>
+    <string name="place_message">Place: <xliff:g id="place">%1$s</xliff:g></string>
+    <string name="play_service_unavailable">Google Play Services is not available.</string>
+    <string name="geofire_dialog_header">Error</string>
+    <string name="geofire_error">There was an unexpected error querying GeoFire: <xliff:g id="error">%1$s</xliff:g></string>
     <!--
 
     == Settings Strings ==
@@ -106,6 +111,7 @@
     <!-- Example General settings -->
 
     <!-- Example settings for Notifications -->
+    <string name="messaging_header">Meditation Alert</string>
 
     <string name="format_built_by">Built by: <xliff:g id="partner">%1$s</xliff:g></string>
 
@@ -183,6 +189,7 @@
     <string name="dc_group_image">Group Image</string>
     <string name="dc_group_button">Group Delete Button</string>
     <string name="dc_chat_image">Chat User Image</string>
-
+    <string name="cd_send_button">Send Button</string>
+    <string name="cd_close_button">Close Button</string>
 
 </resources>
