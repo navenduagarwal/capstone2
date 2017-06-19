@@ -63,50 +63,51 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mEncodedEmail == null) {
             FirebaseAuth.getInstance().signOut();
             Log.d(LOG_TAG, "Encoded email not available");
-        }
-        mUserRef = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
-        /**
-         * Link layout elements from XML and setup the toolbar
-         */
-        initializeScreen();
+        } else {
+            mUserRef = FirebaseDatabase.getInstance()
+                    .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
+            /**
+             * Link layout elements from XML and setup the toolbar
+             */
+            initializeScreen();
 
-        /**
-         * Adding ValueListener to control get data and visibiliy of elements on UI
-         */
-        mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+            /**
+             * Adding ValueListener to control get data and visibiliy of elements on UI
+             */
+            mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
 
-                if (user != null) {
+                    if (user != null) {
                     /* Assumes that the first word in the user's name is the user's first name. */
-                    if (user.getName() != null) {
-                        String firstName = user.getName().split("\\s+")[0];
-                        String title = getString(R.string.format_nav_bar_name, firstName);
-                        String header = getString(R.string.format_header_name, firstName);
-                        setTitle(header);
-                        TextView name = (TextView) findViewById(R.id.nav_bar_username);
-                        if (name != null) {
-                            name.setText(title);
+                        if (user.getName() != null) {
+                            String firstName = user.getName().split("\\s+")[0];
+                            String title = getString(R.string.format_nav_bar_name, firstName);
+                            String header = getString(R.string.format_header_name, firstName);
+                            setTitle(header);
+                            TextView name = (TextView) findViewById(R.id.nav_bar_username);
+                            if (name != null) {
+                                name.setText(title);
+                            }
                         }
-                    }
 
-                    if (user.getEmail() != null) {
-                        String email = FireBaseUtils.decodeEmail(user.getEmail());
-                        TextView emailText = (TextView) findViewById(R.id.nav_bar_email);
-                        if (emailText != null) {
-                            emailText.setText(email);
+                        if (user.getEmail() != null) {
+                            String email = FireBaseUtils.decodeEmail(user.getEmail());
+                            TextView emailText = (TextView) findViewById(R.id.nav_bar_email);
+                            if (emailText != null) {
+                                emailText.setText(email);
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(LOG_TAG, R.string.log_error_occurred + databaseError.getMessage());
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(LOG_TAG, R.string.log_error_occurred + databaseError.getMessage());
+                }
+            });
+        }
     }
 
     /**
