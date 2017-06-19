@@ -192,5 +192,6 @@
     <string name="dc_chat_image">Chat User Image</string>
     <string name="cd_send_button">Send Button</string>
     <string name="cd_close_button">Close Button</string>
+    <string name="cd_add_support_button">Add new Support Group Button</string>
 
 </resources>
