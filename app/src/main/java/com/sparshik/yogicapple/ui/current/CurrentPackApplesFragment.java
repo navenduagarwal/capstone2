@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -162,6 +163,10 @@ public class CurrentPackApplesFragment extends Fragment {
 //        Log.d(LOG_TAG, "Testing" + mCurrentProgramId + mCurrentPackId);
 
         //Updating Header Pack Information
+        if (mCurrentPackId == null || mCurrentProgramId == null) {
+            FirebaseAuth.getInstance().signOut();
+            Log.d(LOG_TAG, "Current Pack details not available");
+        }
         mPackRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(mCurrentProgramId).child(mCurrentPackId);
         mPackRef.addListenerForSingleValueEvent(new ValueEventListener() {

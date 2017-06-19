@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,6 +60,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         /**
          * Create Firebase references
          */
+        if (mEncodedEmail == null) {
+            FirebaseAuth.getInstance().signOut();
+            Log.d(LOG_TAG, "Encoded email not available");
+        }
         mUserRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
         /**
