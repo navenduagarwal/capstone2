@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
+import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.ui.main.MainActivity;
 import com.sparshik.yogicapple.utils.Constants;
@@ -82,7 +83,7 @@ public class PacksRecylerAdapter extends FirebaseRecyclerAdapter<Pack, PacksView
                     SharedPreferences.Editor spe = preferences.edit();
                     spe.putString(Constants.KEY_CURRENT_PACK_ID, packId).apply();
                     spe.putString(Constants.KEY_CURRENT_PROGRAM_ID, mProgramId).apply();
-                    Toast.makeText(mContext, "Current Pack Changed Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.pack_change), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, MainActivity.class);
                     mContext.startActivity(intent);
                 }
