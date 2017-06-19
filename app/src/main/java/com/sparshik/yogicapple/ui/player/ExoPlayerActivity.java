@@ -180,6 +180,9 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
             public void onClick(View v) {
                 if (!ipv.isPlaying()) {
                     if (!maybeRequestPermission()) {
+                        if (player == null) {
+                            startPlayBack();
+                        }
                         player.setPlayWhenReady(true);
                         ipv.start();
                         control.setBackgroundResource(R.drawable.ic_media_pause);
