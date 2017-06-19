@@ -20,8 +20,19 @@
 -dontwarn com.squareup.picasso.**
 -dontwarn com.fasterxml.jackson.**
 
+-keepclassmembers class com.sparshik.yogicapple.model.** {
+*;
+}
+
 -keepattributes Signature
 -keepattributes *Annotation*
+-keep class org.apache.http.** { *; }
+-dontwarn org.apache.http.**
+-keep class android.support.v7.widget.SearchView { *; }
+-dontwarn android.net.**
+-keepattributes InnerClasses,EnclosingMethod
+# Basic ProGuard rules for Firebase Android SDK 2.0.0+
+-keep class com.firebase.** { *; }
 
 -keep class com.newrelic.** { *; }
 -dontwarn com.newrelic.**
