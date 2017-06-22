@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -42,19 +41,17 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
 
 
     private void populateListItem() {
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         mEncodedEmail = preferences.getString(Constants.KEY_ENCODED_EMAIL, null);
         DatabaseReference userGroupsRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_USER_SUPPORT_GROUPS).child(mEncodedEmail);
-//        DatabaseReference applesListRef = FirebaseDatabase.getInstance()
-//                .getReferenceFromUrl(Constants.FIREBASE_URL_PACK_APPLES).child(mCurrentPackId);
         userGroupsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapShot : dataSnapshot.getChildren()) {
                     SupportGroup newSG = postSnapShot.getValue(SupportGroup.class);
                     SGList.add(0, newSG);
-                    Log.d("Test 1706", "onDataChange: " + SGList.size());
                 }
             }
 
@@ -84,7 +81,6 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
 
     @Override
     public int getCount() {
-        Log.d("Test 1705", "onDataChange: " + SGList.size());
         if(SGList.size()>0){
             return SGList.size();
         } else {
@@ -94,7 +90,6 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
 
     @Override
     public RemoteViews getViewAt(int position) {
-        Log.d("Test 1708", "onDataChange: " + position);
 
         final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.single_widget_item);
         if (SGList.size() > 0 && position <= SGList.size()) {
@@ -111,7 +106,6 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.d("Test 1709", newSG.getGroupName());
         }
 
 //        PackApple packApple = SGList.get(position);
@@ -122,7 +116,6 @@ public class YogicAppleWidgetDataProvider implements RemoteViewsService.RemoteVi
 //            String sequenceText = "" + packApple.getAppleSeqNumber();
 //            remoteViews.setTextViewText(R.id.apple_number, sequenceText);
 //        }
-        Log.d("Test 1707", "onDataChange: " + SGList.size());
         return remoteViews;
     }
 

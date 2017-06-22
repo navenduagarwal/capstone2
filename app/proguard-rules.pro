@@ -37,3 +37,10 @@
 -keep class com.newrelic.** { *; }
 -dontwarn com.newrelic.**
 -keepattributes Exceptions, Signature, InnerClasses, LineNumberTable
+
+-keepnames class com.fasterxml.jackson.** {
+*;
+}
+-keepnames interface com.fasterxml.jackson.** {
+    *;
+}
