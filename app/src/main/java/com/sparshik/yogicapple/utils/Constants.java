@@ -81,6 +81,7 @@ public class Constants {
     public static final String KEY_CHAT_PROFILE_IMAGE_URL = "CHAT_PROFILE_IMAGE_RES_ID";
     public static final String KEY_LATITUDE = "KEY_LATITUDE";
     public static final String KEY_LONGITUDE = "KEY_LONGITUDE";
+    public static final String KEY_PLAYER_POSITION = "PLAYER_POSITION";
 
 
     /**

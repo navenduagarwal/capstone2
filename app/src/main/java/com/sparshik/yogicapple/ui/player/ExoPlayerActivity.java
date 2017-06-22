@@ -191,7 +191,6 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                     ipv.stop();
                     control.setBackgroundResource(R.drawable.ic_media_play);
                     player.setPlayWhenReady(false);
-
                 }
             }
         });
@@ -273,13 +272,33 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                 != PackageManager.PERMISSION_GRANTED;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     @Override
     public void onStop() {
         super.onStop();
+        savePlayback();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         stopPlayback();
     }
 
+    private void savePlayback() {
+        ipv.stop();
+        control.setBackgroundResource(R.drawable.ic_media_play);
+        player.setPlayWhenReady(false);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     private void stopPlayback() {
         if (player != null) {
@@ -291,6 +310,22 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
             control.setBackgroundResource(R.drawable.ic_media_play);
             ipv.setProgress(0);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current music state
+        savedInstanceState.putInt(Constants.KEY_PLAYER_POSITION, ipv.getProgress());
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore state members from saved instance
+        int savedProgress = savedInstanceState.getInt(Constants.KEY_PLAYER_POSITION);
+        ipv.setProgress(savedProgress);
     }
 
     @Override
