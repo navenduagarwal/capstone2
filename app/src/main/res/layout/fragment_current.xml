@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="?colorPrimary"
         android:elevation="4dp"
         android:orientation="horizontal"
@@ -36,7 +36,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:contentDescription="@string/dc_apple_control"
-                tools:src="@drawable/ic_play_dark" />
+                tools:src="@drawable/ic_play_arrow_white_24dp" />
 
             <TextView
                 android:id="@+id/text_view_body_header"

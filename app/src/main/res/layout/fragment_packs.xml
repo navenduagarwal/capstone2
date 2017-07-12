@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/header_container"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:orientation="horizontal">
 
@@ -31,7 +31,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:contentDescription="@string/dc_pack_view_header_icon"
-                tools:src="@drawable/ic_play_dark" />
+                tools:src="@drawable/ic_play_arrow_white_24dp" />
 
             <TextView
                 android:id="@+id/text_view_body_header"

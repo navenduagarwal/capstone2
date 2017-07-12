@@ -2,11 +2,15 @@ package com.sparshik.yogicapple.ui.packs;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -86,6 +92,21 @@ public class PacksListFragment extends Fragment {
                     mTextViewHeaderBody.setText(program.getProgramDesc());
                     int darColor = ColorUtils.darkenColor(program.getProgramColorInt());
                     mTopContainer.setBackgroundColor(darColor);
+
+                    if (!TextUtils.isEmpty(program.getProgramIconUrl())) {
+                        Glide.with(getActivity()).load(program.getProgramIconUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(mImageViewHeaderIcon) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getActivity().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                mImageViewHeaderIcon.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                    } else {
+                        mImageViewHeaderIcon.setVisibility(View.INVISIBLE);
+                    }
+
 
                     /** Create Firebase Ref **/
                     DatabaseReference packsListRef = FirebaseDatabase.getInstance()

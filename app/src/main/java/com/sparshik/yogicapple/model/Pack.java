@@ -16,6 +16,7 @@ public class Pack {
     private String packColor;
     private String packIconUrl;
     private String packBannerUrl;
+    private String packDevSiteUrl;
     private int packDuration;
     private HashMap<String, Object> timestampCreated;
     private HashMap<String, Object> timestampLastChanged;
@@ -24,16 +25,21 @@ public class Pack {
     }
 
     public Pack(String packTitle, String packShortDesc, String packDesc, String packColor, String packIconUrl,
-                String packBannerUrl, HashMap<String, Object> timestampCreated) {
+                String packBannerUrl, String packDevSiteUrl, HashMap<String, Object> timestampCreated) {
         this.packTitle = packTitle;
         this.packShortDesc = packShortDesc;
         this.packDesc = packDesc;
         this.packColor = packColor;
         this.packIconUrl = packIconUrl;
         this.packBannerUrl = packBannerUrl;
+        this.packDevSiteUrl = packDevSiteUrl;
         this.packDuration = 0;
         this.timestampCreated = timestampCreated;
         this.timestampLastChanged = null;
+    }
+
+    public String getPackDevSiteUrl() {
+        return packDevSiteUrl;
     }
 
     public String getPackBannerUrl() {

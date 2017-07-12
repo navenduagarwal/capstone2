@@ -10,6 +10,7 @@ public class PackApple {
     private String appleTitle;
     private String audioURL;
     private String videoUrl;
+    private String appleGuideSiteUrl;
     private int appleDuration;
     private HashMap<String, Object> timestampCreated;
     private HashMap<String, Object> timestampLastChanged;
@@ -19,14 +20,19 @@ public class PackApple {
     }
 
     public PackApple(int appleSeqNumber, String appleTitle, String audioURL,
-                     String videoUrl, int appleDuration, HashMap<String, Object> timestampCreated) {
+                     String videoUrl, int appleDuration, String appleGuideSiteUrl, HashMap<String, Object> timestampCreated) {
         this.appleSeqNumber = appleSeqNumber;
         this.appleTitle = appleTitle;
         this.audioURL = audioURL;
         this.videoUrl = videoUrl;
         this.appleDuration = appleDuration;
+        this.appleGuideSiteUrl = appleGuideSiteUrl;
         this.timestampCreated = timestampCreated;
         this.timestampLastChanged = null;
+    }
+
+    public String getAppleGuideSiteUrl() {
+        return appleGuideSiteUrl;
     }
 
     public int getAppleSeqNumber() {

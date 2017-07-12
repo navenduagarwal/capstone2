@@ -4,12 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -181,6 +187,20 @@ public class CurrentPackApplesFragment extends Fragment {
                     int mPackColor = getActivity().getResources().getColor(R.color.teal_500);  //pack.getPackColorInt();
                     int backgroundColor = ColorUtils.darkenColor(mPackColor); //TODO
                     mTopContainer.setBackgroundColor(backgroundColor);
+
+                    if (!TextUtils.isEmpty(pack.getPackIconUrl())) {
+                        Glide.with(getActivity()).load(pack.getPackIconUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(mImageViewHeaderIcon) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getActivity().getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                mImageViewHeaderIcon.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                    } else {
+                        mImageViewHeaderIcon.setVisibility(View.INVISIBLE);
+                    }
 
                     /** Create Firebase Ref **/
                     DatabaseReference applesListRef = FirebaseDatabase.getInstance()
