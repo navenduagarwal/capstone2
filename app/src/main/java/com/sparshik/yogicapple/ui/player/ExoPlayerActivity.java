@@ -291,8 +291,10 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
     private void savePlayback() {
         ipv.stop();
-        control.setBackgroundResource(R.drawable.ic_media_play);
-        player.setPlayWhenReady(false);
+        if (player != null) {
+            control.setBackgroundResource(R.drawable.ic_media_play);
+            player.setPlayWhenReady(false);
+        }
     }
 
     @Override
@@ -366,10 +368,11 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
     public void intentApplesList() {
         Intent intent = new Intent(ExoPlayerActivity.this, MainActivity.class);
-        intent.putExtra(Constants.KEY_PROGRAM_ID, mProgramId);
-        intent.putExtra(Constants.KEY_PACK_ID, mPackId);
-                    /* Start an activity showing the packs for selected program */
+//        intent.putExtra(Constants.KEY_PROGRAM_ID, mProgramId);
+//        intent.putExtra(Constants.KEY_PACK_ID, mPackId);
+//                    /* Start an activity showing the packs for selected program */
         startActivity(intent);
+        finish();
     }
 
     @Override
