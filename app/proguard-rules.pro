@@ -24,6 +24,13 @@
 *;
 }
 
+-keepclassmembers class com.sparshik.yogicapple.ui.packs.PacksViewHolder {
+*;
+}
+-keepclassmembers class com.sparshik.yogicapple.ui.current.CurrentPackApplesViewHolder {
+*;
+}
+
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class org.apache.http.** { *; }
