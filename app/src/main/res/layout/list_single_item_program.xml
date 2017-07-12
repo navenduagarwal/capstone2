@@ -24,7 +24,7 @@
             android:layout_marginRight="@dimen/abc_list_item_padding_horizontal_material"
             android:contentDescription="@string/image_icon"
             android:scaleType="center"
-            tools:src="@drawable/ic_play_light" />
+            tools:src="@drawable/ic_play_arrow_black_24dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
-                tools:text="Built By: Auroville" />
+                tools:text='Built By: Auroville' />
 
         </LinearLayout>
 
@@ -57,6 +57,6 @@
             android:layout_margin="8dp"
             android:contentDescription="@string/image_state"
             android:scaleType="centerCrop"
-            tools:src="@drawable/ic_pause_light" />
+            tools:src="@drawable/ic_pause_black_24dp" />
     </LinearLayout>
 </FrameLayout>
