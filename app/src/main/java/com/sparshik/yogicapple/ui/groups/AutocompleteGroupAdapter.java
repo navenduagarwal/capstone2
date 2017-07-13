@@ -2,10 +2,8 @@ package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -17,7 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
-import com.sparshik.yogicapple.ui.groups.AutocompleteGroupAdapter.AutoCompleteGroupViewHolder;
+import com.sparshik.yogicapple.ui.viewholders.AutoCompleteGroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
 /**
@@ -79,14 +77,5 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
             return false;
         }
         return true;
-    }
-
-    public static class AutoCompleteGroupViewHolder extends RecyclerView.ViewHolder {
-        TextView mTextViewGroupName;
-
-        public AutoCompleteGroupViewHolder(View itemView) {
-            super(itemView);
-            mTextViewGroupName = (TextView) itemView.findViewById(R.id.text_view_autocomplete_item);
-        }
     }
 }

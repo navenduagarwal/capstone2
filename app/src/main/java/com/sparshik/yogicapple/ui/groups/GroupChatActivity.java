@@ -28,6 +28,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.ChatMessage;
 import com.sparshik.yogicapple.ui.BaseActivity;
+import com.sparshik.yogicapple.ui.viewholders.ChatMessageViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
 import java.util.HashMap;
@@ -80,7 +81,7 @@ public class GroupChatActivity extends BaseActivity {
         initializeScreen();
 
         mGroupChatAdapter = new GroupChatAdapter(GroupChatActivity.this, ChatMessage.class, R.layout.single_item_chat_message,
-                GroupChatAdapter.ChatMessageViewHolder.class, mGroupChatRef, mEncodedEmail, mProgressBar);
+                ChatMessageViewHolder.class, mGroupChatRef, mEncodedEmail, mProgressBar);
         mRecycleViewMessage.setAdapter(mGroupChatAdapter);
 
         mGroupChatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {

@@ -21,6 +21,7 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
 import com.sparshik.yogicapple.model.UserChatProfile;
 import com.sparshik.yogicapple.ui.BaseActivity;
+import com.sparshik.yogicapple.ui.viewholders.GroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
 public class GroupsActivity extends BaseActivity {
@@ -97,7 +98,7 @@ public class GroupsActivity extends BaseActivity {
         mRecyclerViewUserGroups = (RecyclerView) findViewById(R.id.recycler_view_user_groups);
         mRecyclerViewUserGroups.setHasFixedSize(true);
         mRecyclerViewUserGroups.setLayoutManager(new LinearLayoutManager(GroupsActivity.this));
-        mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupAdapter.GroupViewHolder.class
+        mGroupAdapter = new GroupAdapter(GroupsActivity.this, SupportGroup.class, R.layout.single_group_item, GroupViewHolder.class
                 , userGroupsRef, mEncodedEmail, userChatName, userProfileUrl);
         mRecyclerViewUserGroups.setAdapter(mGroupAdapter);
         userGroupsRef.addListenerForSingleValueEvent(new ValueEventListener() {

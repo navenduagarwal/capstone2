@@ -199,8 +199,8 @@ public class CreateGroupActivity extends BaseActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Uri uploadedUri = taskSnapshot.getDownloadUrl();
-                            String fileName = taskSnapshot.getMetadata().getName();
+                            @SuppressWarnings("VisibleForTests") Uri uploadedUri = taskSnapshot.getDownloadUrl();
+                            @SuppressWarnings("VisibleForTests") String fileName = taskSnapshot.getMetadata().getName();
                             if (uploadedUri != null && fileName != null) {
                                 mUploadedIconUrl = uploadedUri.toString();
                                 Log.i(LOG_TAG, mUploadedIconUrl);
@@ -211,7 +211,7 @@ public class CreateGroupActivity extends BaseActivity {
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+                    @SuppressWarnings("VisibleForTests") double progress = ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
                     mTextViewIconFile.setText(getResources().getString(R.string.format_upload_progress, progress));
                     int progressInt = (int) progress;
                 }

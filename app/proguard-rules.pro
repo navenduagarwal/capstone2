@@ -30,6 +30,18 @@
 -keepclassmembers class com.sparshik.yogicapple.ui.current.CurrentPackApplesViewHolder {
 *;
 }
+-keepclassmembers class com.sparshik.yogicapple.ui.groups.AutocompleteGroupAdapter.AutoCompleteGroupViewHolder {
+ *;
+ }
+
+-keepclassmembers class com.sparshik.yogicapple.ui.groups.GroupChatAdapter.ChatMessageViewHolder {
+ *;
+ }
+
+ -keepclassmembers class com.sparshik.yogicapple.ui.viewholders.** {
+ *;
+ }
+
 
 -keepattributes Signature
 -keepattributes *Annotation*

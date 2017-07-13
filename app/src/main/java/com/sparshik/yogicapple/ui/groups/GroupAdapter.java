@@ -7,14 +7,9 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -24,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
-import com.sparshik.yogicapple.ui.groups.GroupAdapter.GroupViewHolder;
+import com.sparshik.yogicapple.ui.viewholders.GroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
 import java.util.HashMap;
@@ -166,19 +161,4 @@ public class GroupAdapter extends FirebaseRecyclerAdapter<SupportGroup, GroupVie
 //        }
 //    }
 
-    public static class GroupViewHolder extends RecyclerView.ViewHolder {
-        ImageView mGroupImageIcon;
-        TextView mTextViewGroupName, mTextViewGroupMembers;
-        ImageButton mGroupDelete;
-        LinearLayout mGroupItemContainer;
-
-        public GroupViewHolder(View itemView) {
-            super(itemView);
-            mTextViewGroupName = (TextView) itemView.findViewById(R.id.group_name);
-            mGroupImageIcon = (ImageView) itemView.findViewById(R.id.iv_group_image);
-            mGroupDelete = (ImageButton) itemView.findViewById(R.id.button_group_delete);
-            mGroupItemContainer = (LinearLayout) itemView.findViewById(R.id.single_group_container);
-            mTextViewGroupMembers = (TextView) itemView.findViewById(R.id.group_members);
-        }
-    }
 }

@@ -17,6 +17,7 @@ import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
 import com.sparshik.yogicapple.ui.BaseActivity;
+import com.sparshik.yogicapple.ui.viewholders.AutoCompleteGroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
 
 public class JoinGroupActivity extends BaseActivity {
@@ -44,7 +45,6 @@ public class JoinGroupActivity extends BaseActivity {
         mEditTextJoinGroupName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -65,7 +65,7 @@ public class JoinGroupActivity extends BaseActivity {
                 } else {
                     Query autoSearchQuery = mGroupsRef.orderByChild(Constants.FIREBASE_PROPERTY_GROUP_NAME).startAt(mInput).endAt(mInput + "~").limitToFirst(5);
                     mGroupsAutoCompleteAdapter = new AutocompleteGroupAdapter(JoinGroupActivity.this, SupportGroup.class, R.layout.single_autocomplete_group_item,
-                            AutocompleteGroupAdapter.AutoCompleteGroupViewHolder.class, autoSearchQuery, mEncodedEmail);
+                            AutoCompleteGroupViewHolder.class, autoSearchQuery, mEncodedEmail);
                     mRecyclerViewAutocomplete.setAdapter(mGroupsAutoCompleteAdapter);
                 }
             }
