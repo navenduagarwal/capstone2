@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,6 +43,7 @@ import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.model.PackApple;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.main.MainActivity;
+import com.sparshik.yogicapple.utils.CommonUtils;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.views.InteractivePlayerView;
 
@@ -58,7 +61,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
     private InteractivePlayerView ipv;
     private ImageView control, close;
     private DatabaseReference mAppleStatusRef, mPackRef, mAppleRef;
-    private TextView packTitle, appleText, durationText;
+    private TextView TextViewAppleGuideName, TextViewAppleText, TextViewDurationText, TextViewPackTitle;
     private int numRenderers = 1; // since only audio, if video too make it 2
     private ExoPlayer player;
     private TrackRenderer mAudioRenderer;
@@ -113,11 +116,28 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
         mAppleRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                PackApple packApple = dataSnapshot.getValue(PackApple.class);
+                final PackApple packApple = dataSnapshot.getValue(PackApple.class);
                 if (packApple != null) {
-                    appleText.setText(packApple.getAppleTitle());
-                    String duration = getString(R.string.format_duration,packApple.getAppleDuration() / 60);
-                    durationText.setText(duration);
+                    TextViewAppleText.setText(packApple.getAppleTitle());
+                    String duration = getString(R.string.format_duration, packApple.getAppleDuration() / 60);
+                    TextViewDurationText.setText(duration);
+                    if (packApple.getAppleGuideName() != null) {
+                        String guide = getString(R.string.format_guide, packApple.getAppleGuideName());
+                        SpannableString underline = new SpannableString(guide);
+                        underline.setSpan(new UnderlineSpan(), 0, underline.length(), 0);
+                        TextViewAppleGuideName.setText(underline);
+                    } else {
+                        TextViewAppleGuideName.setVisibility(View.GONE);
+                    }
+
+                    if (packApple.getAppleGuideSiteUrl() != null) {
+                        TextViewAppleGuideName.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CommonUtils.openWebsite(getApplicationContext(), packApple.getAppleGuideSiteUrl());
+                            }
+                        });
+                    }
                 }
             }
 
@@ -133,7 +153,8 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Pack pack = dataSnapshot.getValue(Pack.class);
                 if (pack != null) {
-                    packTitle.setText(pack.getPackTitle());
+                    String packTitleName = getString(R.string.format_pack_apple_title, pack.getPackTitle());
+                    TextViewPackTitle.setText(packTitleName);
                 }
             }
 
@@ -360,9 +381,10 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
     private void initializeView() {
         control = (ImageView) findViewById(R.id.control);
         close = (ImageView) findViewById(R.id.action_close);
-        packTitle = (TextView) findViewById(R.id.text_view_title_pack);
-        appleText = (TextView) findViewById(R.id.text_view_apples);
-        durationText = (TextView) findViewById(R.id.durationText);
+        TextViewPackTitle = (TextView) findViewById(R.id.text_view_pack_title);
+        TextViewAppleText = (TextView) findViewById(R.id.text_view_apples);
+        TextViewDurationText = (TextView) findViewById(R.id.durationText);
+        TextViewAppleGuideName = (TextView) findViewById(R.id.text_view_apple_guide);
     }
 
 
@@ -391,5 +413,4 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
         player.seekTo(0);
         setIntent(intent);
     }
-
 }

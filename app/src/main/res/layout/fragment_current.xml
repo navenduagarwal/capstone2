@@ -56,6 +56,17 @@
                 android:visibility="gone"
                 tools:text="Built By: Auroville" />
 
+            <Button
+                android:id="@+id/button_read_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/cd_button_read_more"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                tools:text="@string/read_more" />
+
         </LinearLayout>
 
         <ImageView

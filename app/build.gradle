@@ -75,5 +75,6 @@ dependencies {
     compile 'com.firebase:geofire-android:2.1.1'
     compile 'com.newrelic.agent.android:android-agent:5.9.0'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.jakewharton.timber:timber:4.5.1'
 }
 apply plugin: 'com.google.gms.google-services'

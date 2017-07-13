@@ -77,7 +77,6 @@
     <string name="storage_permission_denied">You must give application permission to read external storage</string>
     <string name="error_firebase_add">Record could not be added to Database</string>
     <string name="error_invalid_url">Invalid Url</string>
-    <string name="format_duration"><xliff:g id="minutes">%1$d</xliff:g> minutes</string>
 
 
     <!-- Google Errors -->
@@ -147,6 +146,7 @@
     <string name="format_single_member"><xliff:g id="member">%1$d</xliff:g> member</string>
     <string name="remove_selected_group_option">Remove selected group</string>
     <string name="dialog_message_are_you_sure_remove_group">Are you sure you want to remove this group</string>
+    <string name="read_more">Read More</string>
     <!-- ChatMessage Message Strings -->
     <string name="hint_chat_message">Type your message here&#8230;</string>
     <string name="today">Today</string>
@@ -193,5 +193,14 @@
     <string name="cd_send_button">Send Button</string>
     <string name="cd_close_button">Close Button</string>
     <string name="cd_add_support_button">Add New Support Group Button</string>
+    <string name="cd_built_buy">Built By</string>
+    <string name="cd_button_read_more">Read More</string>
+
+
+    <!-- Player page -->
+    <string name="format_duration"><xliff:g id="minutes">%1$d</xliff:g> minutes</string>
+    <string name="format_guide">By <u><xliff:g id="partner">%1$s</xliff:g></u></string>
+    <string name="format_pack_apple_title">(<xliff:g id="title">%1$s</xliff:g>)</string>
+
 
 </resources>

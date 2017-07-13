@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.model.Program;
 import com.sparshik.yogicapple.ui.programs.ProgramsListActivity;
 import com.sparshik.yogicapple.utils.ColorUtils;
+import com.sparshik.yogicapple.utils.CommonUtils;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.RecyclerViewUtils;
 
@@ -40,7 +42,8 @@ import com.sparshik.yogicapple.utils.RecyclerViewUtils;
 public class PacksListFragment extends Fragment {
 
     private final static String LOG_TAG = PacksListFragment.class.getSimpleName();
-    private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
+    private TextView mTextViewHeaderTitle, mTextViewHeaderBody, mTextViewPackBuiltBy;
+    private Button mButtonReadMore;
     private ImageView mImageViewHeaderIcon, mImageViewHeaderPackImage;
     private LinearLayout mTopContainer;
     private String mProgramId, mCurrentProgramId, mCurrentPackId;
@@ -86,12 +89,30 @@ public class PacksListFragment extends Fragment {
         programRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Program program = dataSnapshot.getValue(Program.class);
+                final Program program = dataSnapshot.getValue(Program.class);
                 if (program != null) {
                     mTextViewHeaderTitle.setText(program.getProgramTitle());
                     mTextViewHeaderBody.setText(program.getProgramDesc());
-                    int darColor = ColorUtils.darkenColor(program.getProgramColorInt());
-                    mTopContainer.setBackgroundColor(darColor);
+                    int lightColor = ColorUtils.darkenColorLess(program.getProgramColorInt());
+                    int darkColor = ColorUtils.darkenColor(program.getProgramColorInt());
+                    mTopContainer.setBackgroundColor(lightColor);
+                    if (program.getProgramBuiltBy() != null) {
+                        mTextViewPackBuiltBy.setText(getResources().getString(R.string.format_built_by, program.getProgramBuiltBy()));
+                    }
+                    if (program.getProgramDevSiteUrl() != null) {
+                        mButtonReadMore.setVisibility(View.VISIBLE);
+                        mButtonReadMore.setText(R.string.read_more);
+                        mButtonReadMore.setBackgroundColor(darkColor);
+                        mButtonReadMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CommonUtils.openWebsite(getContext(), program.getProgramDevSiteUrl());
+                            }
+                        });
+                    } else {
+                        mButtonReadMore.setVisibility(View.GONE);
+
+                    }
 
                     if (!TextUtils.isEmpty(program.getProgramIconUrl())) {
                         Glide.with(getActivity()).load(program.getProgramIconUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(mImageViewHeaderIcon) {
@@ -139,6 +160,8 @@ public class PacksListFragment extends Fragment {
         mTextViewHeaderTitle = (TextView) view.findViewById(R.id.text_view_title_header);
         mTextViewHeaderBody = (TextView) view.findViewById(R.id.text_view_body_header);
         mImageViewHeaderIcon = (ImageView) view.findViewById(R.id.image_view_icon_header);
+        mTextViewPackBuiltBy = (TextView) view.findViewById(R.id.text_view_built_by_partner);
+        mButtonReadMore = (Button) view.findViewById(R.id.button_read_more);
         mImageViewHeaderPackImage = (ImageView) view.findViewById(R.id.image_view_pack_image_header);
         mTopContainer = (LinearLayout) view.findViewById(R.id.header_container);
         mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view_pack);

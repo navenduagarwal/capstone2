@@ -33,7 +33,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:contentDescription="@string/dc_pack_view_header_icon"
-                tools:src="@drawable/ic_play_dark" />
+                tools:src="@drawable/ic_play_arrow_white_24dp" />
 
             <TextView
                 android:id="@+id/text_view_body_header"
@@ -43,6 +43,29 @@
                 android:gravity="start"
                 android:textAlignment="gravity"
                 tools:text="Start working towards clearer and calmer mind by learning the basics of meditation and mindfulness." />
+
+            <TextView
+                android:id="@+id/text_view_built_by_partner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/cd_built_buy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                tools:text="Built By: Auroville" />
+
+            <Button
+                android:id="@+id/button_read_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/cd_button_read_more"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                tools:text="@string/read_more" />
+
         </LinearLayout>
 
         <ImageView

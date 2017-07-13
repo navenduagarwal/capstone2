@@ -27,32 +27,42 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_view_title_pack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:layout_marginTop="16dp"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            tools:text="Level 1" />
-
-        <TextView
             android:id="@+id/text_view_apples"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="20sp"
             tools:text="Apple 9/10" />
+        <TextView
+            android:id="@+id/text_view_pack_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:text="(Apple 9/10)" />
 
         <TextView
             android:id="@+id/durationText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="12sp"
             tools:text="10 minutes" />
+
+        <TextView
+            android:id="@+id/text_view_apple_guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:text="By Navendu Agarwal" />
     </LinearLayout>
 
 

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.sparshik.yogicapple.model.Pack;
 import com.sparshik.yogicapple.model.PackApple;
 import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.utils.ColorUtils;
+import com.sparshik.yogicapple.utils.CommonUtils;
 import com.sparshik.yogicapple.utils.Constants;
 
 /**
@@ -49,6 +51,7 @@ public class CurrentPackApplesFragment extends Fragment {
     private int mPosition = RecyclerView.NO_POSITION;
     private CurrentPackApplesRecyclerAdapter mCurrentPackAppleRecyclerAdapter;
     private TextView mTextViewHeaderTitle, mTextViewHeaderBody;
+    private Button mButtonReadMore;
     private ImageView mImageViewHeaderIcon, mImageViewHeaderPackImage;
     private Pack mPack;
     private DatabaseReference mPackRef;
@@ -155,6 +158,7 @@ public class CurrentPackApplesFragment extends Fragment {
         View footer = getActivity().getLayoutInflater().inflate(R.layout.footer_empty, null);
         mTextViewHeaderTitle = (TextView) view.findViewById(R.id.text_view_title_header);
         mTextViewHeaderBody = (TextView) view.findViewById(R.id.text_view_body_header);
+        mButtonReadMore = (Button) view.findViewById(R.id.button_read_more);
         mImageViewHeaderIcon = (ImageView) view.findViewById(R.id.image_view_icon_header);
         mImageViewHeaderPackImage = (ImageView) view.findViewById(R.id.image_view_pack_image_header);
         mTopContainer = (LinearLayout) view.findViewById(R.id.header_container);
@@ -178,14 +182,13 @@ public class CurrentPackApplesFragment extends Fragment {
         mPackRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Pack pack = dataSnapshot.getValue(Pack.class);
+                final Pack pack = dataSnapshot.getValue(Pack.class);
                 if (pack != null) {
-                    mPack = pack;
                     mTextViewHeaderTitle.setText(pack.getPackTitle());
                     mTextViewHeaderBody.setText(pack.getPackDesc());
-
                     int mPackColor = getActivity().getResources().getColor(R.color.teal_500);  //pack.getPackColorInt();
-                    int backgroundColor = ColorUtils.darkenColor(mPackColor); //TODO
+                    int backgroundColor = ColorUtils.darkenColorLess(mPackColor); //TODO
+                    int darkColor = ColorUtils.darkenColor(mPackColor);
                     mTopContainer.setBackgroundColor(backgroundColor);
 
                     if (!TextUtils.isEmpty(pack.getPackIconUrl())) {
@@ -200,6 +203,21 @@ public class CurrentPackApplesFragment extends Fragment {
                         });
                     } else {
                         mImageViewHeaderIcon.setVisibility(View.INVISIBLE);
+                    }
+
+                    if (pack.getPackDevSiteUrl() != null) {
+                        mButtonReadMore.setVisibility(View.VISIBLE);
+                        mButtonReadMore.setText(R.string.read_more);
+                        mButtonReadMore.setBackgroundColor(darkColor);
+                        mButtonReadMore.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CommonUtils.openWebsite(getContext(), pack.getPackDevSiteUrl());
+                            }
+                        });
+                    } else {
+                        mButtonReadMore.setVisibility(View.GONE);
+
                     }
 
                     /** Create Firebase Ref **/
