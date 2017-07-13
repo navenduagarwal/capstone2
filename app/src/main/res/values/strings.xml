@@ -203,5 +203,15 @@
     <string name="format_guide">By <u><xliff:g id="partner">%1$s</xliff:g></u></string>
     <string name="format_pack_apple_title">(<xliff:g id="title">%1$s</xliff:g>)</string>
 
+    <!--Language -->
+    <string name="lang_00">English</string>
+    <string name="lang_01">Spanish</string>
+    <string name="lang_02">Hindi</string>
+    <string name="lang_03">Kannada</string>
+
+    <string name="lang_value_00">0</string>
+    <string name="lang_value_01">1</string>
+    <string name="lang_value_02">2</string>
+    <string name="lang_value_03">3</string>
 
 </resources>

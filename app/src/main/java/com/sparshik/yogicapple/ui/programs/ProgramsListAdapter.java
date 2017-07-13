@@ -16,6 +16,8 @@ import com.google.firebase.database.Query;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.Program;
 
+import timber.log.Timber;
+
 /**
  * Firebase Adapter for populating programs list
  */
@@ -31,9 +33,20 @@ public class ProgramsListAdapter extends FirebaseListAdapter<Program> {
 
         final ImageView iconImage = (ImageView) v.findViewById(R.id.image_view_icon_list);
         TextView titleText = (TextView) v.findViewById(R.id.text_view_title_list);
-        TextView builByText = (TextView) v.findViewById(R.id.text_view_built_by_partner);
+        TextView builtByText = (TextView) v.findViewById(R.id.text_view_built_by_partner);
+        TextView languageText = (TextView) v.findViewById(R.id.text_view_language);
 
+        int languageId = 0;
+        try {
+            languageId = Integer.parseInt(model.getProgramLanguage());
+        } catch (NumberFormatException e) {
+            Timber.e(e.getMessage());
+        }
 
+        String LangName = mActivity.getResources().getStringArray(R.array.lang_list_entries)[languageId];
+        Timber.d(LangName);
+
+        languageText.setText(LangName);
         if (!TextUtils.isEmpty(model.getProgramIconUrl())) {
             Glide.with(mActivity).load(model.getProgramIconUrl()).asBitmap().centerCrop().into(new BitmapImageViewTarget(iconImage) {
                 @Override
@@ -50,9 +63,9 @@ public class ProgramsListAdapter extends FirebaseListAdapter<Program> {
 
         titleText.setText(model.getProgramTitle());
         if (!TextUtils.isEmpty(model.getProgramBuiltBy())) {
-            builByText.setText(v.getResources().getString(R.string.format_built_by, model.getProgramBuiltBy()));
+            builtByText.setText(v.getResources().getString(R.string.format_built_by, model.getProgramBuiltBy()));
         } else {
-            builByText.setVisibility(View.GONE);
+            builtByText.setVisibility(View.GONE);
         }
     }
 }

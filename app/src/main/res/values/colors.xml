@@ -15,6 +15,7 @@
     <color name="teal_700">#ff00796b</color>
     <color name="red_a200">#ffff5252</color>
     <color name="orange_a200">#FFAB40</color>
+    <color name="amber_200">#FFD740</color>
 
     <color name="current_line_color">#ffdad7cb</color>
     <color name="current_pack_title_color">#ff8f8e8b</color>

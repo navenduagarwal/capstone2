@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="lang_list_entries">
+        <item>@string/lang_00</item>
+        <item>@string/lang_01</item>
+        <item>@string/lang_02</item>
+        <item>@string/lang_03</item>
 
+    </string-array>
+
+    <string-array name="lang_list_values">
+        <item>@string/lang_value_00</item>
+        <item>@string/lang_value_01</item>
+        <item>@string/lang_value_02</item>
+        <item>@string/lang_value_03</item>
+    </string-array>
 </resources>
