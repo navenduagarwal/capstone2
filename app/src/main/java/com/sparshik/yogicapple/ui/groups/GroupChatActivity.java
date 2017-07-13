@@ -33,6 +33,9 @@ import com.sparshik.yogicapple.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import static com.sparshik.yogicapple.utils.Constants.badWords;
 
 public class GroupChatActivity extends BaseActivity {
     private static final String LOG_TAG = GroupChatActivity.class.getSimpleName();
@@ -157,7 +160,13 @@ public class GroupChatActivity extends BaseActivity {
                 HashMap<String, Object> timestampCreated = new HashMap<>();
                 timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
                 timestampCreated.put(Constants.FIREBASE_PROPERTY_CREATED_BY, mEncodedEmail);
-                ChatMessage newChatMessage = new ChatMessage(mMesssageEditText.getText().toString(), mUserNickname, mUserProfileImageUrl, timestampCreated);
+                String chatText = mMesssageEditText.getText().toString();
+                String chatTextUpdated = chatText;
+                for (String word : badWords) {
+                    Pattern rx = Pattern.compile("\\b" + word + "\\b", Pattern.CASE_INSENSITIVE);
+                    chatTextUpdated = rx.matcher(chatTextUpdated).replaceAll(new String(new char[word.length()]).replace('\0', '*'));
+                }
+                ChatMessage newChatMessage = new ChatMessage(chatTextUpdated, mUserNickname, mUserProfileImageUrl, timestampCreated);
                 mGroupChatRef.push().setValue(newChatMessage);
                 mMesssageEditText.setText("");
                 mFirebaseAnalytics.logEvent(MESSAGE_SENT_EVENT, null);

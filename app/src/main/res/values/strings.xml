@@ -154,6 +154,7 @@
     <string name="format_full_friendly_timestamp"><xliff:g id="day">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g></string>
     <string name="hint_add_nick_name">Enter your group chat name</string>
     <string name="button_create">Create</string>
+    <string name="toast_text_censored">Your message contains offensive words, kindly avoid posting such messages on public group otherwise your account may be blocked</string>
 
     <!-- Add Profile -->
     <string name="hint_file_profile_pic">Select image for chat profile pic</string>
