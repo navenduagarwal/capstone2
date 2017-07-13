@@ -1,6 +1,6 @@
 package com.sparshik.yogicapple.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -10,9 +10,9 @@ import android.net.Uri;
 
 public class CommonUtils {
 
-    public static void openWebsite(Context context, String link) {
+    public static void openWebsite(Activity activity, String link) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(link));
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 }

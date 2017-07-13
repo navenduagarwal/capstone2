@@ -134,7 +134,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                         TextViewAppleGuideName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.openWebsite(getApplicationContext(), packApple.getAppleGuideSiteUrl());
+                                CommonUtils.openWebsite(ExoPlayerActivity.this, packApple.getAppleGuideSiteUrl());
                             }
                         });
                     }

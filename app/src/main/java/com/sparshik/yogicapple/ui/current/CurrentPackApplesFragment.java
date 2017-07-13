@@ -212,7 +212,7 @@ public class CurrentPackApplesFragment extends Fragment {
                         mButtonReadMore.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.openWebsite(getContext(), pack.getPackDevSiteUrl());
+                                CommonUtils.openWebsite(getActivity(), pack.getPackDevSiteUrl());
                             }
                         });
                     } else {

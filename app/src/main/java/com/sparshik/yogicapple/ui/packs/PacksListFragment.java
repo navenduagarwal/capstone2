@@ -106,7 +106,7 @@ public class PacksListFragment extends Fragment {
                         mButtonReadMore.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CommonUtils.openWebsite(getContext(), program.getProgramDevSiteUrl());
+                                CommonUtils.openWebsite(getActivity(), program.getProgramDevSiteUrl());
                             }
                         });
                     } else {
