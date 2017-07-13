@@ -17,6 +17,7 @@ public class Program {
     private String programBannerUrl;
     private String programDevSiteUrl;
     private String programColor;
+    private String programLanguage;
     private HashMap<String, Object> timestampCreated;
     private HashMap<String, Object> timestampLastChanged;
 
@@ -25,7 +26,7 @@ public class Program {
     }
 
     public Program(String programTitle, String programBuiltBy, String programDesc, String programColor,
-                   String programIconUrl, String programBannerUrl, String programDevSiteUrl, HashMap<String, Object> timestampCreated) {
+                   String programIconUrl, String programBannerUrl, String programDevSiteUrl, String programLanguage, HashMap<String, Object> timestampCreated) {
         this.programTitle = programTitle;
         this.programBuiltBy = programBuiltBy;
         this.programDesc = programDesc;
@@ -34,7 +35,12 @@ public class Program {
         this.programBannerUrl = programBannerUrl;
         this.timestampCreated = timestampCreated;
         this.programDevSiteUrl = programDevSiteUrl;
+        this.programLanguage = programLanguage;
         this.timestampLastChanged = null;
+    }
+
+    public String getProgramLanguage() {
+        return programLanguage;
     }
 
     public String getProgramDevSiteUrl() {
