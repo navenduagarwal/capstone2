@@ -141,7 +141,7 @@
     <string name="error_invalid_name">Invalid Group Name- min 3,max 40 char</string>
     <string name="error_invalid_desc">Invalid Description- min 10, max 200 char</string>
     <string name="error_invalid_file_name">Invalid file or no file selected</string>
-    <string name="hint_enter_groups_name">Start typing to search a group and join</string>
+    <string name="hint_enter_groups_name">Start typing to find more groups</string>
     <string name="toast_is_already_your_group">You are already member of %s group!</string>
     <string name="format_number_of_members"><xliff:g id="members">%1$d</xliff:g> members</string>
     <string name="format_single_member"><xliff:g id="member">%1$d</xliff:g> member</string>
@@ -164,7 +164,7 @@
     <string name="record_delete_success"><xliff:g id="type">%1$s</xliff:g> record deleted successfully</string>
     <string name="record_delete_error"><xliff:g id="type">%1$s</xliff:g> record delete unsuccessful</string>
 
-    <string name="list_empty_groups">Join group to start discussion"</string>
+    <string name="list_empty_groups">Join a group to start mindful discussion"</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
@@ -192,6 +192,6 @@
     <string name="dc_chat_image">Chat User Image</string>
     <string name="cd_send_button">Send Button</string>
     <string name="cd_close_button">Close Button</string>
-    <string name="cd_add_support_button">Add new Support Group Button</string>
+    <string name="cd_add_support_button">Add New Support Group Button</string>
 
 </resources>

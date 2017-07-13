@@ -61,7 +61,10 @@ public class JoinGroupActivity extends BaseActivity {
                 if (mGroupsAutoCompleteAdapter != null) mGroupsAutoCompleteAdapter.cleanup();
                 /* Nullify the adapter data if the input length is less than 2 characters */
                 if (mInput.equals("") || mInput.length() < 2) {
-                    mRecyclerViewAutocomplete.setAdapter(null);
+                    Query autoSearchQuery = mGroupsRef.orderByChild(Constants.FIREBASE_PROPERTY_GROUP_NAME).limitToFirst(10);
+                    mGroupsAutoCompleteAdapter = new AutocompleteGroupAdapter(JoinGroupActivity.this, SupportGroup.class, R.layout.single_autocomplete_group_item,
+                            AutoCompleteGroupViewHolder.class, autoSearchQuery, mEncodedEmail);
+                    mRecyclerViewAutocomplete.setAdapter(mGroupsAutoCompleteAdapter);
                 } else {
                     Query autoSearchQuery = mGroupsRef.orderByChild(Constants.FIREBASE_PROPERTY_GROUP_NAME).startAt(mInput).endAt(mInput + "~").limitToFirst(5);
                     mGroupsAutoCompleteAdapter = new AutocompleteGroupAdapter(JoinGroupActivity.this, SupportGroup.class, R.layout.single_autocomplete_group_item,
@@ -115,6 +118,11 @@ public class JoinGroupActivity extends BaseActivity {
         mRecyclerViewAutocomplete = (RecyclerView) findViewById(R.id.recyle_view_groups_autocomplete);
         mRecyclerViewAutocomplete.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewAutocomplete.setHasFixedSize(true);
+        Query autoSearchQuery = mGroupsRef.orderByChild(Constants.FIREBASE_PROPERTY_GROUP_NAME).limitToFirst(10);
+        mGroupsAutoCompleteAdapter = new AutocompleteGroupAdapter(JoinGroupActivity.this, SupportGroup.class, R.layout.single_autocomplete_group_item,
+                AutoCompleteGroupViewHolder.class, autoSearchQuery, mEncodedEmail);
+        mRecyclerViewAutocomplete.setAdapter(mGroupsAutoCompleteAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
                 /* Add back button to the action bar */
