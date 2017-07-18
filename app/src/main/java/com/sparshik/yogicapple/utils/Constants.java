@@ -85,6 +85,8 @@ public class Constants {
     public static final String KEY_LATITUDE = "KEY_LATITUDE";
     public static final String KEY_LONGITUDE = "KEY_LONGITUDE";
     public static final String KEY_PLAYER_POSITION = "PLAYER_POSITION";
+    public static final String KEY_CONFIG_PROGRAM_ID = "default_program_id";
+    public static final String KEY_CONFIG_PACK_ID = "default_pack_id";
 
 
     /**

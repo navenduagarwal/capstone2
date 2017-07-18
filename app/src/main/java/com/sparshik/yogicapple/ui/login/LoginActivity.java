@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -45,10 +44,13 @@ import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.main.MainActivity;
 import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
+import com.sparshik.yogicapple.utils.ConnectivityUtils;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.FireBaseUtils;
 
 import java.util.UUID;
+
+import timber.log.Timber;
 
 /**
  * Represents Sign in screen and functionality of the app
@@ -57,7 +59,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
     /* Request code used to invoke sign in user interactions for Google+ */
     public static final int RC_SIGN_IN = 9001;
-    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     private ProgressDialog mAuthProgressDialog;
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
     private String mUserEmail, mPassword, mUserName;
@@ -110,7 +111,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     finish();
                 } else {
                     // User is signed out
-                    Log.d(LOG_TAG, "onAuthStateChanged:signed_out");
+                    Timber.d("onAuthStateChanged:signed_out");
                 }
             }
         };
@@ -167,8 +168,12 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
      * Open CreateAccountActivity when user taps on "Sign up" TextView
      */
     public void onSignUpPressed(View view) {
-        Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
-        startActivity(intent);
+        if (ConnectivityUtils.isConnected(this)) {
+            Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+            startActivity(intent);
+        } else {
+            showErrorToast(getString(R.string.error_message_failed_sign_in_no_network));
+        }
     }
 
     /**
@@ -253,7 +258,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
      */
     private void setAuthenticatedUserGoogle(UserInfo user, UserInfo user1) {
         if (user.getEmail() == null && user1.getEmail() == null) {
-            Log.d(LOG_TAG, "Login issue" + user.getDisplayName());
+            Timber.d("Login issue" + user.getDisplayName());
             mAuth.signOut();
         }
         if (user.getEmail() != null) {
@@ -268,7 +273,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         } else {
             mUserName = user1.getDisplayName();
         }
-        FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, mUserName, user.getUid(), Constants.GOOGLE_PROVIDER);
+        FireBaseUtils.createUserInFirebaseHelper(this, mEncodedEmail, mUserName, user.getUid(), Constants.GOOGLE_PROVIDER, mDefaultProgramId, mDefaultPackId);
     }
 
     /**
@@ -311,7 +316,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
          */
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
-        Log.d(LOG_TAG, "onConnectionFailed:" + result);
+        Timber.d("onConnectionFailed:" + result);
         mAuthProgressDialog.dismiss();
         showErrorToast("Google Play Services error." + result.toString());
     }
@@ -339,7 +344,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(LOG_TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Timber.d("firebaseAuthWithGoogle:" + acct.getId());
         mAuthProgressDialog.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -378,7 +383,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
-            Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
+            Timber.i(provider + " " + getString(R.string.log_message_auth_successful));
             if (!task.isSuccessful()) {
                 mAuthProgressDialog.dismiss();
                             /* Error occurred, log the error and dismiss the progress dialog */
@@ -394,15 +399,15 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     showErrorToast(getString(R.string.error_message_failed_sign_in_no_network));
                 } catch (Exception e) {
                     showErrorToast(e.getMessage());
-                    Log.e(LOG_TAG, e.getMessage());
+                    Timber.e(e.getMessage());
                 }
             } else {
                 mAuthProgressDialog.dismiss();
-                Log.i(LOG_TAG, " " + getString(R.string.log_message_auth_successful));
+                Timber.i(" " + getString(R.string.log_message_auth_successful));
                 UserInfo user = task.getResult().getUser().getProviderData().get(0);
                 UserInfo user1 = task.getResult().getUser().getProviderData().get(1);
-                Log.d("Testing Login", user.getDisplayName() + user.getProviderId());
-                Log.d("Testing Login1", user1.getDisplayName() + user1.getProviderId());
+                Timber.d(user.getDisplayName() + user.getProviderId());
+                Timber.d(user1.getDisplayName() + user1.getProviderId());
                 String userProvider = task.getResult().getUser().getProviderData().get(1).getProviderId();
                 if (user != null) {
                     if (userProvider.equals(Constants.PASSWORD_PROVIDER)) {
@@ -410,14 +415,14 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     } else if (userProvider.equals(Constants.GOOGLE_PROVIDER)) {
                         setAuthenticatedUserGoogle(user, user1);
                     } else {
-                        Log.e(LOG_TAG, getString(R.string.log_error_invalid_provider) + userProvider);
+                        Timber.e(getString(R.string.log_error_invalid_provider) + userProvider);
                     }
                      /* Save provider name and encodedEmail for later use and start MainActivity */
                     mSharedPrefEditor.putString(Constants.KEY_PROVIDER_ID, userProvider).apply();
                     if (mEncodedEmail != null) {
                         mSharedPrefEditor.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
                     } else {
-                        Log.e(LOG_TAG, "Login encodedEmail issue");
+                        Timber.e("Login encodedEmail issue");
                     }
                 /* Go to main activity */
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -425,7 +430,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.d(LOG_TAG, "user not found");
+                    Timber.d("user not found");
                 }
             }
         }

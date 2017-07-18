@@ -35,6 +35,8 @@
     <dimen name="current_line_width">4dp</dimen>
 
     <dimen name="keyline_1">16dp</dimen>
+    <dimen name="player_dim">200dp</dimen>
+    <dimen name="player_margin">34dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

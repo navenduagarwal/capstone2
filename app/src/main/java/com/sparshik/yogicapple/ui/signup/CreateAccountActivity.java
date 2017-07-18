@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.View;
@@ -24,17 +23,19 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.ui.BaseActivity;
 import com.sparshik.yogicapple.ui.login.LoginActivity;
+import com.sparshik.yogicapple.utils.ConnectivityUtils;
 import com.sparshik.yogicapple.utils.Constants;
 import com.sparshik.yogicapple.utils.FireBaseUtils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+import timber.log.Timber;
+
 /**
  * Represents Signup Screen and functionality of the app
  */
 public class CreateAccountActivity extends BaseActivity {
-    private static final String LOG_TAG = CreateAccountActivity.class.getSimpleName();
     private ProgressDialog mAuthProgressDialog;
     private EditText mEditTextUsernameCreate, mEditTextEmailCreate;
     private String mUserName, mUserEmail, mPassword;
@@ -90,10 +91,14 @@ public class CreateAccountActivity extends BaseActivity {
      * Open LoginActivity when user taps on "Sign in" textView
      */
     public void onSignInPressed(View view) {
-        Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        if (ConnectivityUtils.isConnected(this)) {
+            Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        } else {
+            showErrorToast(getString(R.string.error_message_failed_sign_in_no_network));
+        }
     }
 
     /**
@@ -130,7 +135,7 @@ public class CreateAccountActivity extends BaseActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
                             /* Error occurred, log the error and dismiss the progress dialog */
-                            Log.d(LOG_TAG, getString(R.string.log_error_occurred) + task.getException().getMessage());
+                            Timber.d(getString(R.string.log_error_occurred) + task.getException().getMessage());
                             mAuthProgressDialog.dismiss();
                             try {
                                 throw task.getException();
@@ -142,7 +147,7 @@ public class CreateAccountActivity extends BaseActivity {
                                 mEditTextEmailCreate.requestFocus();
                             } catch (Exception e) {
                                 showErrorToast(e.getMessage());
-                                Log.e(LOG_TAG, e.getMessage());
+                                Timber.e(e.getMessage());
                             }
 
                         } else {
@@ -153,12 +158,12 @@ public class CreateAccountActivity extends BaseActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (!task.isSuccessful()) {
-                                                Log.d(LOG_TAG, getString(R.string.log_error_occurred) +
+                                                Timber.d(getString(R.string.log_error_occurred) +
                                                         task.getException().getMessage());
                                                 mAuthProgressDialog.dismiss();
                                             } else {
                                                 mAuthProgressDialog.dismiss();
-                                                Log.i(LOG_TAG, getString(R.string.log_message_auth_successful));
+                                                Timber.i(getString(R.string.log_message_auth_successful));
                                                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(CreateAccountActivity.this);
                                                 SharedPreferences.Editor spe = preferences.edit();
                                                 /**
@@ -166,8 +171,8 @@ public class CreateAccountActivity extends BaseActivity {
                                                  *  when the registered user will sign in for the first time
                                                  */
                                                 spe.putString(Constants.KEY_SIGNUP_EMAIL, mUserEmail).apply();
-                                                Log.d(LOG_TAG, mUserEmail + mUserName + uid);
-                                                FireBaseUtils.createUserInFirebaseHelper(getApplicationContext(), mUserEmail, mUserName, uid, Constants.PASSWORD_PROVIDER);
+                                                Timber.d(mUserEmail + mUserName + uid);
+                                                FireBaseUtils.createUserInFirebaseHelper(getApplicationContext(), mUserEmail, mUserName, uid, Constants.PASSWORD_PROVIDER, mDefaultProgramId, mDefaultPackId);
 
                                                 /**
                                                  * Password reset email sent, open app chooser to pick app
@@ -180,7 +185,7 @@ public class CreateAccountActivity extends BaseActivity {
                                                     startActivity(intent);
                                                     finish();
                                                 } catch (android.content.ActivityNotFoundException ex) {
-                                                    Log.e(LOG_TAG, "Email Application not found:" + ex.getMessage());
+                                                    Timber.e("Email Application not found:" + ex.getMessage());
                                                 }
                                             }
                                         }

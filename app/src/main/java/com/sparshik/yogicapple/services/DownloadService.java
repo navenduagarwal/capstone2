@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +25,8 @@ import com.sparshik.yogicapple.utils.FileUtils;
 
 import java.io.File;
 import java.util.HashMap;
+
+import timber.log.Timber;
 
 /**
  * To download file from Firebase
@@ -48,7 +49,6 @@ public class DownloadService extends Service {
     public static final String EXTRA_PROGRESS_COMPLETED = "extra_progress_completed";
     public static final String EXTRA_DOWNLOADED_PATH = "extra_downloaded_path";
     public static final String EXTRA_ENCODED_EMAIL = "extra_encoded_email";
-    private static final String TAG = "Storage#DownloadService";
     private static String mDownloadPath, mFileSuffix, mEncodedEmail, mFileName, mAppleId;
     private static HashMap<String, Integer> downloadProgresses;
     private static HashMap<String, String> downloadError;
@@ -112,7 +112,7 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand:" + intent + ":" + startId);
+        Timber.d("onStartCommand:" + intent + ":" + startId);
 
         if (ACTION_DOWNLOAD.equals(intent.getAction())) {
             // Get the path to download from the intent
@@ -124,7 +124,7 @@ public class DownloadService extends Service {
             path = new File(FileUtils.getSaveFolder(getApplicationContext()), mFileSuffix);
             path.mkdirs();
             // Mark task started
-            Log.d(TAG, ACTION_DOWNLOAD + ":" + mDownloadPath);
+            Timber.d(ACTION_DOWNLOAD + ":" + mDownloadPath);
             taskStarted();
 
             fileStorageRef = mStorage.getReferenceFromUrl(mDownloadPath);
@@ -136,7 +136,7 @@ public class DownloadService extends Service {
                     // Metadata now contains the metadata for 'images/forest.jpg'
                     mFileSize = storageMetadata.getSizeBytes();
                     if (!FileUtils.diskSpaceAvailable(getApplicationContext(), mFileSize)) {
-                        Log.e(TAG, "Disk Space not available");
+                        Timber.e("Disk Space not available");
                         return;
                     }
                     mFileName = mEncodedEmail + storageMetadata.getName();
@@ -166,7 +166,7 @@ public class DownloadService extends Service {
 
         // If there are no tasks left, stop the service
         if (mNumTasks <= 0) {
-            Log.d(TAG, "stopping");
+            Timber.d("stopping");
             stopSelf();
         }
     }
@@ -176,14 +176,14 @@ public class DownloadService extends Service {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final String installId = preferences.getString(Constants.KEY_INSTALL_ID, null);
         if (installId == null) {
-            Log.e(TAG, getString(R.string.log_error_install_id));
+            Timber.e(getString(R.string.log_error_install_id));
             return;
         }
         fileStorageRef.getFile(localFilePath)
                 .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Log.d(TAG, "download:SUCCESS");
+                        Timber.d("download:SUCCESS");
 
                         // Send success broadcast with number of bytes downloaded
                         Intent broadcast = new Intent(ACTION_COMPLETED);
@@ -192,8 +192,8 @@ public class DownloadService extends Service {
                         broadcast.putExtra(EXTRA_DOWNLOADED_PATH, localFilePath);
                         LocalBroadcastManager.getInstance(getApplicationContext())
                                 .sendBroadcast(broadcast);
-                        Log.d(TAG, "download:SUCCESS" + taskSnapshot.getTotalByteCount());
-                        Log.d(TAG, "Local file path" + localFilePath);
+                        Timber.d("download:SUCCESS" + taskSnapshot.getTotalByteCount());
+                        Timber.d("Local file path" + localFilePath);
 
 
                         DatabaseReference userAppleStatusRef = FirebaseDatabase.getInstance()
@@ -209,7 +209,7 @@ public class DownloadService extends Service {
                     @Override
                     public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         //Send progress broadcast
-                        double progress = 100 * (taskSnapshot.getBytesTransferred()) / mFileSize;
+                        @SuppressWarnings("VisibleForTests") double progress = 100 * (taskSnapshot.getBytesTransferred()) / mFileSize;
                         Intent broadcast = new Intent(ACTION_PROGRESS);
                         broadcast.putExtra(EXTRA_PROGRESS_COMPLETED, progress);
                         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(broadcast);
@@ -220,7 +220,7 @@ public class DownloadService extends Service {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Log.w(TAG, "download:FAILURE", exception);
+                        Timber.w("download:FAILURE", exception);
 
                         // Send failure broadcast
                         Intent broadcast = new Intent(ACTION_ERROR);

@@ -36,7 +36,8 @@ public class FireBaseUtils {
         return userEmail.replace(",", ".");
     }
 
-    public static void createUserInFirebaseHelper(Context context, final String mUserEmail, final String mUserName, final String uid, final String provider) {
+    public static void createUserInFirebaseHelper(final Context context, final String mUserEmail, final String mUserName, final String uid,
+                                                  final String provider, final String programId, final String packId) {
         final String encodedEmail = FireBaseUtils.encodeEmail(mUserEmail);
         final DatabaseReference firebaseRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL);
@@ -52,8 +53,6 @@ public class FireBaseUtils {
                      /* Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap */
         HashMap<String, Object> timestampJoined = new HashMap<>();
         timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-        String programId = "-KPE5BVPM7DiGyHN5yZ5";
-        String packId = "-KPEAjnMfnFsYRuw8cee";
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor spe = preferences.edit();
         spe.putString(Constants.KEY_CURRENT_PROGRAM_ID, programId).apply();

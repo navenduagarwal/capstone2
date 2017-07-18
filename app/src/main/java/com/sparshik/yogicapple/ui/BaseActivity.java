@@ -18,13 +18,23 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.newrelic.agent.android.NewRelic;
+import com.sparshik.yogicapple.BuildConfig;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.ui.login.LoginActivity;
 import com.sparshik.yogicapple.ui.signup.CreateAccountActivity;
 import com.sparshik.yogicapple.utils.Constants;
+
+import timber.log.Timber;
+
+import static com.sparshik.yogicapple.utils.Constants.KEY_CONFIG_PACK_ID;
+import static com.sparshik.yogicapple.utils.Constants.KEY_CONFIG_PROGRAM_ID;
 
 /**
  * BaseActivity class is used as a base class for all activities in the app
@@ -33,10 +43,12 @@ import com.sparshik.yogicapple.utils.Constants;
  */
 public abstract class BaseActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
-    protected String mProvider, mEncodedEmail;
+    protected String mProvider, mEncodedEmail, mDefaultProgramId, mDefaultPackId;
     protected GoogleApiClient mGoogleApiClient;
     protected FirebaseAuth.AuthStateListener mAuthListener;
     protected FirebaseAuth mAuth;
+    protected FirebaseRemoteConfig mFirebaseRemoteConfig;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +71,14 @@ public abstract class BaseActivity extends AppCompatActivity implements
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+        fetchRemoteValues();
 
         /**
          * Get provider and encoded email from SharedPreferences
@@ -168,6 +188,29 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+    private void fetchRemoteValues() {
+        long cacheExpiration = 3600; // 1 hour in seconds.
+        if (mFirebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Timber.i("Fetch Succeeded");
+                            // After config data is successfully fetched, it must be activated before newly fetched
+                            // values are returned.
+                            mFirebaseRemoteConfig.activateFetched();
+                        } else {
+                            Timber.i("Fetch Failed");
+                        }
+                        mDefaultProgramId = mFirebaseRemoteConfig.getString(KEY_CONFIG_PROGRAM_ID);
+                        mDefaultPackId = mFirebaseRemoteConfig.getString(KEY_CONFIG_PACK_ID);
+                    }
+                });
     }
 
 }
