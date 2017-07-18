@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,8 +45,9 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 public class AddEventActivity extends BaseActivity {
-    private static final String LOG_TAG = AddEventActivity.class.getSimpleName();
     private static final int REQUEST_BANNER_IMAGE_FILE = 1;
     private int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
     private Button mButtonSelectFile, mButtonAdd;
@@ -83,7 +83,7 @@ public class AddEventActivity extends BaseActivity {
         mLon = intent.getDoubleExtra(Constants.KEY_LONGITUDE, 999);
         if (mLat == 999 || mLon == 999) {
             /* No point in continuing without a valid ID. */
-            Log.e(LOG_TAG, "lat or lon intent invalid");
+            Timber.e("lat or lon intent invalid");
             startActivity(new Intent(this, EventsActivity.class));
         }
 
@@ -112,10 +112,10 @@ public class AddEventActivity extends BaseActivity {
                 boolean validUrl = ValidationUtils.isUrlValid(getApplicationContext(), mEditTextEventUrl, mEventUrl);
 
                 if (!validTitle || !validDesc || !validFile || !validOrganizer || !validUrl) {
-                    Log.d(LOG_TAG, "Donno"); //TODO
+                    Timber.d("Donno"); //TODO
                     return;
                 }
-                Log.d(LOG_TAG, "yeh!");
+                Timber.d("yeh!");
                 addBannerImage();
             }
         });
@@ -139,7 +139,7 @@ public class AddEventActivity extends BaseActivity {
             //GET PATHS
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             mBannerImageFilePath = cursor.getString(columnIndex);
-            Log.d(getClass().getSimpleName(), "Banner Image File PATH IN PHONE: " + mBannerImageFilePath);
+            Timber.d("Banner Image File PATH IN PHONE: " + mBannerImageFilePath);
             cursor.close();
             Uri file = Uri.fromFile(new File(mBannerImageFilePath));
             String fileName = file.getLastPathSegment();
@@ -161,11 +161,11 @@ public class AddEventActivity extends BaseActivity {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Uri uploadedUri = taskSnapshot.getDownloadUrl();
-                            String fileName = taskSnapshot.getMetadata().getName();
+                            @SuppressWarnings("VisibleForTests") Uri uploadedUri = taskSnapshot.getDownloadUrl();
+                            @SuppressWarnings("VisibleForTests") String fileName = taskSnapshot.getMetadata().getName();
                             if (uploadedUri != null && fileName != null) {
                                 mUploadedBannerUrl = uploadedUri.toString();
-                                Log.i(LOG_TAG, mUploadedBannerUrl);
+                                Timber.i(mUploadedBannerUrl);
                                 mTextViewBannerFile.setText(fileName);
                             }
                             addEvent();
@@ -173,14 +173,14 @@ public class AddEventActivity extends BaseActivity {
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+                    @SuppressWarnings("VisibleForTests") double progress = ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
                     mTextViewBannerFile.setText(getResources().getString(R.string.format_upload_progress, progress));
                     int progressInt = (int) progress;
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
+                    Timber.e(e.getMessage());
                     addEvent();
                 }
             });
@@ -237,12 +237,12 @@ public class AddEventActivity extends BaseActivity {
         bannerStorageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.i(LOG_TAG, getResources().getString(R.string.record_delete_success, Constants.SUFFIX_ICON_IMAGE));
+                Timber.i(getResources().getString(R.string.record_delete_success, Constants.SUFFIX_ICON_IMAGE));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(LOG_TAG, getResources().getString(R.string.record_delete_error, Constants.SUFFIX_ICON_IMAGE));
+                Timber.e(getResources().getString(R.string.record_delete_error, Constants.SUFFIX_ICON_IMAGE));
             }
         });
     }

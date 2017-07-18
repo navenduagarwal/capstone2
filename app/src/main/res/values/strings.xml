@@ -129,6 +129,7 @@
     <string name="image_state">State Image</string>
 
     <string name="pack_list_button">Select</string>
+    <string name="pack_list_selected_button">Selected</string>
 
 
     <!-- Add group strings -->

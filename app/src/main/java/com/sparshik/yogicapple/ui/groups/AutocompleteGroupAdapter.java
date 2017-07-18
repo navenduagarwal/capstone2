@@ -2,7 +2,6 @@ package com.sparshik.yogicapple.ui.groups;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +16,8 @@ import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.SupportGroup;
 import com.sparshik.yogicapple.ui.viewholders.AutoCompleteGroupViewHolder;
 import com.sparshik.yogicapple.utils.Constants;
+
+import timber.log.Timber;
 
 /**
  * Firebase Recycler Adapter to auto populate list of groups for user
@@ -60,7 +61,7 @@ public class AutocompleteGroupAdapter extends FirebaseRecyclerAdapter<SupportGro
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.e(mActivity.getClass().getSimpleName(), mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
+                        Timber.e(mActivity.getResources().getString(R.string.log_error_the_read_failed) + databaseError.getMessage());
                     }
                 });
             }

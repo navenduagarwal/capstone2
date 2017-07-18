@@ -14,7 +14,6 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,8 @@ import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.CommonUtils;
 import com.sparshik.yogicapple.utils.Constants;
+
+import timber.log.Timber;
 
 /**
  * Show current list of audio completed
@@ -92,7 +93,7 @@ public class CurrentPackApplesFragment extends Fragment {
         mDownloadReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-//                Log.d(LOG_TAG, "downloadReceiver:onReceive:" + intent);
+                Timber.d("downloadReceiver:onReceive:" + intent);
 
                 if (DownloadService.ACTION_COMPLETED.equals(intent.getAction())) {
                     String path = intent.getStringExtra(DownloadService.EXTRA_DOWNLOAD_PATH);
@@ -102,7 +103,7 @@ public class CurrentPackApplesFragment extends Fragment {
                 }
 
                 if (DownloadService.ACTION_PROGRESS.equals(intent.getAction())) {
-//                    Log.d(LOG_TAG, "Testing progress Reciever");
+                    Timber.d("Testing progress Reciever");
                     mCurrentPackAppleRecyclerAdapter.notifyDataSetChanged();
                 }
 
@@ -156,13 +157,13 @@ public class CurrentPackApplesFragment extends Fragment {
 
     private void initializeScreen(View view) {
         View footer = getActivity().getLayoutInflater().inflate(R.layout.footer_empty, null);
-        mTextViewHeaderTitle = (TextView) view.findViewById(R.id.text_view_title_header);
-        mTextViewHeaderBody = (TextView) view.findViewById(R.id.text_view_body_header);
-        mButtonReadMore = (Button) view.findViewById(R.id.button_read_more);
-        mImageViewHeaderIcon = (ImageView) view.findViewById(R.id.image_view_icon_header);
-        mImageViewHeaderPackImage = (ImageView) view.findViewById(R.id.image_view_pack_image_header);
-        mTopContainer = (LinearLayout) view.findViewById(R.id.header_container);
-        mRecycleView = (RecyclerView) view.findViewById(R.id.recycle_view_current_pack);
+        mTextViewHeaderTitle = view.findViewById(R.id.text_view_title_header);
+        mTextViewHeaderBody = view.findViewById(R.id.text_view_body_header);
+        mButtonReadMore = view.findViewById(R.id.button_read_more);
+        mImageViewHeaderIcon = view.findViewById(R.id.image_view_icon_header);
+        mImageViewHeaderPackImage = view.findViewById(R.id.image_view_pack_image_header);
+        mTopContainer = view.findViewById(R.id.header_container);
+        mRecycleView = view.findViewById(R.id.recycle_view_current_pack);
         mRecycleView.setHasFixedSize(true);
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -170,12 +171,11 @@ public class CurrentPackApplesFragment extends Fragment {
 
     public void populateFragmentList() {
 
-//        Log.d(LOG_TAG, "Testing" + mCurrentProgramId + mCurrentPackId);
 
         //Updating Header Pack Information
         if (mCurrentPackId == null || mCurrentProgramId == null) {
             FirebaseAuth.getInstance().signOut();
-            Log.d(LOG_TAG, "Current Pack details not available");
+            Timber.d("Current Pack details not available");
         }
         mPackRef = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(Constants.FIREBASE_URL_PROGRAM_PACKS).child(mCurrentProgramId).child(mCurrentPackId);
@@ -237,8 +237,7 @@ public class CurrentPackApplesFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(getActivity().getClass().getSimpleName(),
-                        getResources().getString(R.string.log_error_the_read_failed)
+                Timber.e(getResources().getString(R.string.log_error_the_read_failed)
                                 + databaseError.getMessage());
             }
         });

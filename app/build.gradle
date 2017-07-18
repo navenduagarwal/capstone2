@@ -10,14 +10,14 @@ android {
             storePassword 'm1nku_dE'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.sparshik.yogicapple"
         minSdkVersion 17
-        targetSdkVersion 25
-        versionCode 4
-        versionName "2.0"
+        targetSdkVersion 26
+        versionCode 5
+        versionName "2.1"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

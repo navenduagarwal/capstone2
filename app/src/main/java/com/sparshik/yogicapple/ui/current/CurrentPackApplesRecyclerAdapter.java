@@ -19,7 +19,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sparshik.yogicapple.R;
 import com.sparshik.yogicapple.model.PackApple;
-import com.sparshik.yogicapple.model.User;
 import com.sparshik.yogicapple.model.UserOfflineDownloads;
 import com.sparshik.yogicapple.services.DownloadService;
 import com.sparshik.yogicapple.ui.player.ExoPlayerActivity;
@@ -27,6 +26,8 @@ import com.sparshik.yogicapple.utils.ColorUtils;
 import com.sparshik.yogicapple.utils.Constants;
 
 import java.io.File;
+
+import timber.log.Timber;
 
 /**
  * Recycler Adapter to populate list of apples for current program
@@ -127,7 +128,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                             if (userOfflineDownloads != null) {
                                 File file = new File(userOfflineDownloads.getLocalAudioFile());
                                 if (file.exists()) {
-                                    startPlayer(appleId, userOfflineDownloads);
+                                    startPlayer(appleId, mPackId, mProgramId, userOfflineDownloads);
                                 } else {
                                     viewHolder.mProgressBar.setProgress(0);
                                     downloadAppleFiles(appleId, audioUrl);
@@ -175,18 +176,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         context.startService(intent);
     }
 
-    public void startPlayer(final String appleId, final UserOfflineDownloads userOfflineDownloads) {
-
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReferenceFromUrl(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User userData = dataSnapshot.getValue(User.class);
-                if (userData != null) {
-                    String programId = userData.getCurrentProgramId();
-                    String packId = userData.getCurrentPackId();
-
+    public void startPlayer(String appleId, String packId, String programId, UserOfflineDownloads userOfflineDownloads) {
                     // Start Audio Player
                     Intent intent = new Intent(context, ExoPlayerActivity.class);
                     intent.putExtra(Constants.KEY_APPLE_ID, appleId);
@@ -194,17 +184,8 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
                     intent.putExtra(Constants.KEY_PROGRAM_ID, programId);
                     intent.putExtra(Constants.KEY_AUDIO_URL, userOfflineDownloads.getLocalAudioFile());
                     /* Start an activity showing the packs for selected program */
-                    Log.d("To Player", packId + " " + appleId);
+        Timber.d(packId + " " + appleId);
                     context.startActivity(intent);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(LOG_TAG, context.getResources().getString(R.string.log_error_the_read_failed));
-            }
-        });
     }
 
     class FooterViewViewHolderCurrent extends CurrentPackApplesViewHolder {
@@ -212,7 +193,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
 
         public FooterViewViewHolderCurrent(View itemView) {
             super(itemView);
-            this.txtTitleFooter = (TextView) itemView.findViewById(R.id.text_view_listview_footer);
+            this.txtTitleFooter = itemView.findViewById(R.id.text_view_listview_footer);
         }
     }
 }

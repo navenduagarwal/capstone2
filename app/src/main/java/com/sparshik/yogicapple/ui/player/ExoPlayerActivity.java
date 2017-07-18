@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +48,9 @@ import com.sparshik.yogicapple.views.InteractivePlayerView;
 
 import java.io.File;
 
+import timber.log.Timber;
+
 public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listener {
-    private static final String LOG_TAG = ExoPlayerActivity.class.getSimpleName();
     private static final int BUFFER_SEGMENT_SIZE = 64 * 1024;
     private static final int BUFFER_SEGMENT_COUNT = 256;
     private static final int RENDERER_COUNT = 1;
@@ -102,7 +102,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
         mAppleId = intent.getStringExtra(Constants.KEY_APPLE_ID);
         mProgramId = intent.getStringExtra(Constants.KEY_PROGRAM_ID);
         mAudioUrl = intent.getStringExtra(Constants.KEY_AUDIO_URL);
-
+        Timber.d(mPackId + " " + mAppleId + " " + mProgramId + " ");
         initializeView();
 
         mainHandler = new Handler();
@@ -119,6 +119,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
                 final PackApple packApple = dataSnapshot.getValue(PackApple.class);
                 if (packApple != null) {
                     TextViewAppleText.setText(packApple.getAppleTitle());
+                    Timber.d(packApple.getAppleTitle());
                     String duration = getString(R.string.format_duration, packApple.getAppleDuration() / 60);
                     TextViewDurationText.setText(duration);
                     if (packApple.getAppleGuideName() != null) {
@@ -160,7 +161,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(LOG_TAG, getString(R.string.log_error_the_read_failed));
+                Timber.e(getString(R.string.log_error_the_read_failed));
             }
         });
 
@@ -360,7 +361,7 @@ public class ExoPlayerActivity extends BaseActivity implements ExoPlayer.Listene
             case ExoPlayer.STATE_ENDED:
                 playerState = "ended";
                 stopPlayback();
-                Log.d("Testing Player", "ended");
+                Timber.d("ended");
                 break;
             case ExoPlayer.STATE_IDLE:
                 playerState = "idle";

@@ -15,7 +15,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -60,9 +59,10 @@ import com.sparshik.yogicapple.utils.PermissionUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import timber.log.Timber;
+
 public class EventsActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnCameraChangeListener, GeoQueryEventListener {
-    private final static String TAG = "Events Map";
     private static final int PLACE_PICKER_REQUEST = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
     boolean mapReady = false;
@@ -114,7 +114,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
                 Place place = PlacePicker.getPlace(data, this);
                 String toastMsg = getString(R.string.place_message,place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                Log.i(TAG, "Places: " + place.getLatLng() + "\n" + place.getAddress() + "\n" + place.getAddress());
+                Timber.i("Places: " + place.getLatLng() + "\n" + place.getAddress() + "\n" + place.getAddress());
                 CameraPosition updatedPlace = CameraPosition.builder()
                         .target(place.getLatLng())
                         .zoom(14)
@@ -155,7 +155,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
             @Override
             public void onMapLongClick(LatLng latLng) {
                 if (latLng != null) {
-                    Log.i(TAG, "On Click latlng: " + latLng.toString());
+                    Timber.i("On Click latlng: " + latLng.toString());
                     Intent intent = new Intent(EventsActivity.this, AddEventActivity.class);
                     intent.putExtra(Constants.KEY_LATITUDE, latLng.latitude);
                     intent.putExtra(Constants.KEY_LONGITUDE, latLng.longitude);
@@ -323,7 +323,7 @@ public class EventsActivity extends BaseActivity implements OnMapReadyCallback, 
 
             }
         });
-        Log.d(TAG, key);
+        Timber.d(key);
     }
 
     @Override

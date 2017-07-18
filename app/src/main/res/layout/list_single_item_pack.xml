@@ -26,7 +26,7 @@
             android:background="@drawable/circle"
             android:contentDescription="@string/image_icon"
             android:scaleType="center"
-            tools:src="@drawable/ic_play_dark" />
+            tools:src="@drawable/ic_play_arrow_white_24dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -60,7 +60,7 @@
             android:contentDescription="@string/image_state"
             android:scaleType="centerCrop"
             android:visibility="gone"
-            tools:src="@drawable/ic_pause_light" />
+            tools:src="@drawable/ic_pause_white_24dp" />
 
         <Button
             android:id="@+id/button_state_list"

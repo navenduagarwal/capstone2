@@ -16,7 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,8 +39,9 @@ import com.sparshik.yogicapple.utils.Constants;
 
 import java.io.File;
 
+import timber.log.Timber;
+
 public class CreateChatProfileActivity extends BaseActivity {
-    private static final String LOG_TAG = CreateChatProfileActivity.class.getSimpleName();
     private static int REQUEST_PROFILE_IMAGE_FILE = 1;
     private int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE;
     private EditText mEditTextNickName;
@@ -129,7 +129,7 @@ public class CreateChatProfileActivity extends BaseActivity {
             //GET PATHS
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             mProfilePicImageFilePath = cursor.getString(columnIndex);
-            Log.d(getClass().getSimpleName(), "Profile Image File PATH IN PHONE: " + mProfilePicImageFilePath);
+            Timber.d("Profile Image File PATH IN PHONE: " + mProfilePicImageFilePath);
             cursor.close();
             Uri file = Uri.fromFile(new File(mProfilePicImageFilePath));
             String fileName = file.getLastPathSegment();
@@ -162,7 +162,7 @@ public class CreateChatProfileActivity extends BaseActivity {
                             @SuppressWarnings("VisibleForTests") String fileName = taskSnapshot.getMetadata().getName();
                             if (uploadedUri != null && fileName != null) {
                                 mUploadedPicUrl = uploadedUri.toString();
-                                Log.i(LOG_TAG, mUploadedPicUrl);
+                                Timber.i(mUploadedPicUrl);
                                 mTextViewProfilePic.setText(fileName);
                             }
                             addChatProfile();
@@ -177,7 +177,7 @@ public class CreateChatProfileActivity extends BaseActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
+                    Timber.e(e.getMessage());
                     addChatProfile();
                 }
             });
