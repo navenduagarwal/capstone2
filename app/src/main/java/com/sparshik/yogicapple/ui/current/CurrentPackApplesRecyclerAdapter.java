@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import timber.log.Timber;
  * Recycler Adapter to populate list of apples for current program
  */
 public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<PackApple, CurrentPackApplesViewHolder> {
-    private static final String LOG_TAG = CurrentPackApplesRecyclerAdapter.class.getSimpleName();
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
@@ -79,7 +77,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
         viewHolder.mAppleState.setColorFilter(altColor, PorterDuff.Mode.MULTIPLY);
         viewHolder.mDownloadText.setTextColor(altColor);
 
-        Log.d(LOG_TAG, "testing adapter" + DownloadService.getDownloadProgress(appleId));
+        Timber.d("testing adapter" + DownloadService.getDownloadProgress(appleId));
 
 
         if (DownloadService.getDownloadProgress(appleId) != 0) {
@@ -105,7 +103,7 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(LOG_TAG, context.getResources().getString(R.string.log_error_the_read_failed));
+                Timber.e(context.getResources().getString(R.string.log_error_the_read_failed));
             }
         });
 
@@ -146,11 +144,11 @@ public class CurrentPackApplesRecyclerAdapter extends FirebaseRecyclerAdapter<Pa
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Log.e(LOG_TAG, context.getResources().getString(R.string.log_error_the_read_failed));
+                            Timber.e(context.getResources().getString(R.string.log_error_the_read_failed));
                         }
                     });
                 } else {
-                    Log.d(LOG_TAG, "Testing what" + "Got stucked");
+                    Timber.d("Testing what" + "Got stucked");
                 }
             }
         });
