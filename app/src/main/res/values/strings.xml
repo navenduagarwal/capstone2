@@ -58,6 +58,7 @@
     <string name="hint_enter_username">Enter your name</string>
     <string name="hint_enter_password">Enter password</string>
     <string name="image_view_logo_image">Logo Image</string>
+    <string name="login_forgot_password">Forgot password?</string>
 
 
     <!-- Instructions and Loading Text -->

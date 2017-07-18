@@ -54,7 +54,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        NewRelic.withApplicationToken(getString(R.string.NEW_RELIC_API_KEY)).start(this.getApplication());
+        NewRelic.withApplicationToken(getString(R.string.NEW_RELIC_API_KEY))
+                .start(this.getApplication());
 
 
         /* Setup the Google API object to allow Google logins */

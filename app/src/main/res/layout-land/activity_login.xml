@@ -56,7 +56,6 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
             app:hintTextAppearance="@style/HintText">
 
             <EditText
@@ -73,6 +72,16 @@
                 android:textColorHint="@color/dark_grey"
                 android:textSize="@dimen/login_buttons_text_size" />
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgot_password"
+            style="@style/LoginCreateTextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="forgotPassword"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding"
+            android:text="@string/login_forgot_password" />
 
         <Button
             style="@style/Widget.Udacity.Button.Login"

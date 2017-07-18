@@ -373,6 +373,44 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         return true;
     }
 
+    public void forgotPassword(View view) {
+
+        mUserEmail = mEditTextEmailInput.getText().toString();
+
+        /* validation on text fields */
+        boolean validUserEmail = isEmailValid(mUserEmail);
+
+        if (!validUserEmail) {
+            return;
+        }
+
+        mAuth.sendPasswordResetEmail(mUserEmail)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()) {
+                            Timber.d(getString(R.string.log_error_occurred) +
+                                    task.getException().getMessage());
+                        } else {
+                            /**
+                             * Password reset email sent, open app chooser to pick app
+                             * for handling inbox email intent
+                             */
+                            Toast.makeText(LoginActivity.this, getResources().getString(R.string.progress_dialog_check_inbox), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                            try {
+                                startActivity(intent);
+                                finish();
+                            } catch (android.content.ActivityNotFoundException ex) {
+                                Timber.e("Email Application not found:" + ex.getMessage());
+                            }
+                        }
+                    }
+                });
+        //Email Reset Ends
+    }
+
     private class MyAuthResultHandler implements OnCompleteListener<AuthResult> {
 
         private final String provider;

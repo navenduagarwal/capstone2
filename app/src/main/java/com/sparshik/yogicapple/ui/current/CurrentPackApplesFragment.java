@@ -45,7 +45,6 @@ import timber.log.Timber;
  * Show current list of audio completed
  */
 public class CurrentPackApplesFragment extends Fragment {
-    private static final String LOG_TAG = CurrentPackApplesFragment.class.getSimpleName();
     private static final String SELECTED_KEY = "selected_position";
     private String mEncodedEmail, mInstallId, mCurrentProgramId, mCurrentPackId;
     private RecyclerView mRecycleView;
