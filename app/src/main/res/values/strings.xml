@@ -53,6 +53,7 @@
     <string name="text_already_have_account">Already have an account?</string>
     <string name="button_create_account">Sign Up</string>
     <string name="button_sign_in">Sign In</string>
+    <string name="login_heading">Welcome Back</string>
     <string name="button_signin_with_password">SIGN IN</string>
     <string name="hint_enter_email">Enter your email</string>
     <string name="hint_enter_username">Enter your name</string>
